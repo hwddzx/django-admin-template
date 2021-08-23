@@ -1,0 +1,111 @@
+<div class="task-container replay-detail">
+    <div class="head" tb-fix-button>
+        <div class="text-right">
+            <h3>任务详情</h3>
+            <p class="explain">当前{{ pagination.data.length }}项,总计{{ vm.totalLength }}项</p>
+            <a href="" class="btn btn-sm btn-default" ng-click="vm.goBack(-1)">返回</a>
+            <a href="" class="btn btn-sm btn-default input-alarm" ng-click="vm.autoRefreshTable()">
+                <input type="checkbox" id="open-timer" name="open-timer" ng-model="vm.isAutoRefresh">
+                <label for="open-timer">自动刷新</label>
+            </a>
+            <!--<button class="btn btn-sm btn-primary is-disabled" ng-click="vm.getTestdetailExcel()">导出excel</button>-->
+            <button class="btn btn-sm btn-danger is-disabled" ng-click="deleteExecutions()">删除</button>
+            <button class="btn btn-sm btn-primary is-disabled" ng-click="vm.stopExecutions()">批量停止执行</button>
+            <button class="btn btn-sm btn-primary is-disabled" ng-click="vm.cancelExecutions()">批量取消执行</button>
+            <button class="btn btn-sm btn-primary is-disabled" ng-click="vm.updateReplayResult(true)">批量修改结果</button>
+        </div>
+    </div>
+    <div ng-if="replay.failed_devices.length||vm.progress<1">
+        <div tb-show-progress data-progress="vm.progress" class="show-progress" ng-if="vm.progress<1"></div>
+        <p class="issue-devices-link" ng-if="replay.failed_devices.length"><i class="icon icon-warning-red"></i><a href="javascript:void(0);" ng-click="showFailedDevices()">{{replay.failed_devices.length}}台设备租用失败，点击查看所有失败手机</a></p>
+    </div>
+    <table class="tb-table-striped" tb-sorting tb-paging-table data-table-ctrl="pagination">
+        <thead>
+            <tr class="filter">
+                <th></th>
+                <th></th>
+                <th>
+                    <input type="text" ng-model="vm.controllerShortName" ng-change="vm.deviceFilter(vm.controllerShortName, 'controller_short_name')" ng-enter="vm.getFilterTable()" />
+                </th>
+                <th>
+                    <input type="text" ng-model="vm.scenario" ng-change="vm.inputFilter(vm.scenario, 'scenario')" ng-enter="vm.getFilterTable()" />
+                </th>
+                <th>
+                    <input type="text" ng-model="vm.name" ng-change="vm.inputFilter(vm.name, 'name')" ng-enter="vm.getFilterTable()" />
+                </th>
+                <th></th>
+                <th>
+                    <input type="text" ng-model="vm.deviceName" ng-change="vm.deviceFilter(vm.deviceName, 'name')" ng-enter="vm.getFilterTable()" />
+                </th>
+                <th></th>
+                <th></th>
+                <th class="fix-fa">
+                    <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                        {{ vm.filters.result_code.data[ vm.filters.result_code.selected || 'all'].text }}<i class="light fa fa-sort-down"></i>
+                        <ul class="unstyle-list vertical-group-list dropdown-menu short-menu" uib-dropdown-menu>
+                            <li ng-repeat="(key, value) in vm.filters.result_code.data"><a ng-click="vm.chooseFilter(key, 'result_code')">{{ value.text }}</a><li>
+                        </ul>
+                    </span>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="checkbox" id="checkAll" tb-select-all data-models="pagination.data" ng-model="pagination.data.allChecked"/>
+                    <label for="checkAll"></label>
+                </th>
+                <th class="text-center">ID</th>
+                <th orderBy="device.controller_short_name" class="test-sorting fix-fa">工控机</th>
+                <th>场景</th>
+                <th>用例名</th>
+                <th>参数列名</th>
+                <th orderBy="device.name" class="test-sorting fix-fa">机型</th>
+                <th>安装时间</th>
+                <th>启动时间</th>
+                <th orderBy="result" secondOrder="desc" class="test-sorting fix-fa">结果</th>
+                <th class="handle">操作</th>
+                <th>详情</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="execution in pagination.data | orderBy:order:direction " ng-style="{ 'background-color':(execution.result | executionResultBackgroundColor) }"
+            ng-class="{'has-click': vm.clickedId == execution.id}" ng-click="vm.recordClickId(execution.id)">
+                <td>
+                    <input type="checkbox" id="check[{{$index}}]" ng-model="execution.checked" />
+                    <label for="check[{{$index}}]"></label>
+                </td>
+                <td class="text-center">{{execution.id}}</td>
+                <td>{{execution.device.controller_short_name}}</td>
+                <td>{{ execution.scenario||'无'}}</td>
+                <td><div class="execution-name">{{execution.name}}</div></td>
+                <td>{{execution.param_header}}</td>
+                <td>{{execution.device.name}}</td>
+                <td>{{execution.device.installDelay/1000 | secondFilter:true:3}}</td>
+                <td>{{execution.device.startDelay/1000 | secondFilter:true:3}}</td>
+                <td>
+                    <a ng-style="{ 'color':(execution.result | executionResultTextColor) }" ng-if="execution.status>5">
+                        <span ng-if="execution.result_code!=1" class="result text-ellipsis" title="{{ execution.desc || execution.result }}">{{ execution.desc || execution.result }}</span>
+                        <span ng-if="execution.result_code==1">{{execution.result}}</span>
+                    </a>
+                    <span ng-if="execution.status<=5">
+                        <span ng-if="execution.desc" class="result text-ellipsis" title="{{ execution.desc }}">{{ execution.desc }}</span>
+                        <span ng-if="!execution.desc" ng-class="{true: 'link'}[!!execution.status_message.url]" ng-click="vm.fancybox(execution.status_message.url)">{{ execution.status_message.message }}<span ng-if="vm.isNumber(execution.status_message.step)">：第{{execution.status_message.step}}步</span></span>
+                    </span>
+                </td>
+                <td class="handle">
+                    <a class="link" ng-if="!execution.result" ng-click="vm.stopExecutions(execution)">停止执行<br></a>
+                    <a class="link" ng-if="!execution.result" ng-click="vm.cancelExecutions(execution)">取消执行<br></a>
+                    <a class="link" ng-if="execution.result" ng-click="vm.updateReplayResult(false, execution)">修改结果<br></a>
+                    <a class="link" ng-click="vm.showSnapshots(execution, isComptest)">查看截图<br></a>
+                    <a class="link" ng-click="vm.playVideo(execution)" ng-if="execution.status == 5 && vm.isTimedTask && vm.isIosNumBig(execution.device)">实时视频</a>
+                </td>
+                <td>
+                    <a ng-click="vm.goDialtestExecutionDetail(execution)" class="link" ng-if="execution.status>10 && execution.is_upload">详情</a>
+                    <span ng-if="execution.status==5||execution.status==1 || execution.status==10">{{ execution.status | executionResultStatus }}</span>
+                    <a class="link" ng-if="execution.status == 0 || execution.status == 3" ng-click="vm.waitAppQueue(execution.id)">{{ execution.status | executionResultStatus }}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

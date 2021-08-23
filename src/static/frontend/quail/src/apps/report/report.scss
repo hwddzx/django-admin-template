@@ -1,0 +1,276 @@
+.reports-container {
+    @include table-class;
+    padding-left: 20px;
+    width: 1130px;
+    @include auto-scroll;
+    .head {
+        overflow: hidden;
+        position: relative;
+        margin: 25px 0 20px;
+        h3 {
+            margin: 0;
+            font-size: 24px;
+            float: left;
+        }
+    }
+    table {
+        tr >:first-child {
+            padding-left: 50px !important;
+        }
+        tr >:last-child {
+            padding-right: 50px !important;
+        }
+    }
+}
+
+.reports-detail-link {
+    position: relative;
+    left: -15px;
+    display: inline-block;
+    width: 15px;
+    height: 25px;
+    background: url(img/report/report-link.png) no-repeat;
+    background-size: 100%;
+}
+
+.patched-snapshot-modal {
+    .modal-dialog {
+        width: 1120px;
+    }
+}
+
+.patched-snapshot {
+    .snapshot-left,
+    .snapshot-right {
+        position: relative;
+        width: 125px;
+        height: 372px;
+        float: left;
+        > div {
+            position: absolute;
+            top: 50%;
+            width: 26px;
+            height: 26px;
+            margin-top: -13px;
+            text-align: center;
+            line-height: 27px;
+            background: #000;
+            opacity: 0.2;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+    }
+    .snapshot-left {
+        > div {
+            left: 20px;
+            cursor: pointer;
+        }
+    }
+    .snapshot-right {
+        > div {
+            right: 20px;
+        }
+    }
+    .snapshot-container {
+        width: 820px;
+        height: 422px;
+        float: left;
+        overflow: hidden;
+        .single-snapshot {
+            width: 273px;
+            padding: 0 20px;
+            float: left;
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+        .snapshot-img {
+            display: block;
+            width: 233px;
+            max-height: 382px;
+            margin: 0 auto;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .snapshot-time {
+            margin-top: 20px;
+            text-align: center;
+        }
+    }
+}
+
+.content-container {
+    width: 1120px;
+    margin: 0 auto;
+}
+
+.tb-overflow-hidden {
+    overflow: hidden;
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tb-no-head-table-title {
+    td {
+        padding: 20px;
+        div:first-child {
+            color: $text-gray;
+        }
+    }
+}
+
+@mixin tb-nav-bottom-border {
+    border-bottom: 2px solid #0070f0 !important;
+}
+
+@mixin tb-background-color-transparent {
+    background-color: transparent !important;
+}
+
+.tb-nav-no-border {
+    border-bottom: 1px solid $gray-border;
+    li {
+        display: inline-block;
+        margin-bottom: -1px;
+        a {
+            color: #333;
+            border: 1px solid transparent !important;
+            padding: 20px 10px;
+        }
+        &:hover {
+            a {
+                color: #333;
+                @include tb-background-color-transparent;
+                @include tb-nav-bottom-border;
+            }
+        }
+    }
+    li.active {
+        a {
+            color: #0070f0;
+            @include tb-nav-bottom-border;
+            &:focus {
+                @include tb-background-color-transparent;
+            }
+        }
+        &:hover {
+            a {
+                cursor: default;
+                @include tb-background-color-transparent;
+            }
+        }
+    }
+}
+
+.table-align-first-left {
+    tr {
+        th,
+        td {
+            &:first-child {
+                text-align: left !important;
+            }
+        }
+    }
+}
+
+.tb-table-striped {
+    width: 100%;
+    border-left: 1px solid $gray-border;
+    border-right: 1px solid $gray-border;
+    thead {
+        tr {
+            border-top: 1px solid $gray-border;
+            border-bottom: 2px solid $gray-border;
+        }
+        th {
+            color: $text-gray;
+            font-weight: normal;
+            text-align: center !important;
+            padding: 10px !important;
+            min-width: 100px;
+            &.text-left {
+                text-align: left !important;
+            }
+        }
+    }
+    tbody {
+        tr {
+            border-bottom: 1px solid $gray-border;
+            height: 70px;
+            &:nth-of-type(even) {
+                background-color: $white;
+            }
+            &:nth-of-type(odd) {
+                background-color: $blue-bg;
+            }
+            &:hover {
+                background-color: darken($blue-bg, 5%);
+            }
+        }
+        td {
+            text-align: center;
+            padding: 10px;
+            &.text-left {
+                text-align: left !important;
+            }
+        }
+    }
+    .test-sorting {
+        cursor: pointer;
+    }
+}
+
+.tb-no-head-border-table {
+    width: 100%;
+    border-top: 1px solid $gray-border;
+    border-left: 1px solid $gray-border;
+    td {
+        border-bottom: 1px solid $gray-border;
+        border-right: 1px solid $gray-border;
+        line-height: 25px;
+    }
+}
+
+.tb-border-radius {
+    border: 5px solid $gray-border;
+}
+
+.margin-bottom-50 {
+    margin-bottom: 50px !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.param-result-table {
+    tbody tr:nth-of-type(even) {
+        background-color: #fff;
+    }
+    p {
+        margin-bottom: 0;
+    }
+    .placeholder-row {
+        height: auto!important;
+    }
+    .input-col {
+        border-right: 1px solid $gray-border;
+    }
+    .expect-label {
+        font-size: 12px;
+    }
+    .actual-label {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,139 @@
+<div class="charts">
+    <div class="charts-head">
+        <h3>报表系统</h3>
+        <form class="form-inline head-form">
+            <div class="form-group">
+                <select ng-model="vm.start_version" placeholder="选择版本号">
+                    <option value="">--</option>
+                    <option ng-repeat="version in vm.versions" value="{{version.id}}">{{version.version}}</option>
+                </select>
+            </div>
+            <label>至</label>
+            <div class="form-group">
+                <select ng-model="vm.end_version" placeholder="选择版本号">
+                    <option value="">--</option>
+                    <option ng-repeat="version in vm.versions" value="{{version.id}}">{{version.version}}</option>
+                </select>
+            </div>
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.startPopup.date" is-open="vm.startPopup.opened" ng-required="true"
+                       close-text="关闭"
+                       clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                       placeholder="开始时间"/>
+                <span class="form-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('startPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.endPopup.date" is-open="vm.endPopup.opened" ng-required="true"
+                       close-text="关闭"
+                       clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                       placeholder="结束时间"/>
+                <span class="form-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('endPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.getData()">查询</a>
+            </div>
+        </form>
+    </div>
+    <div class="charts-container clearfix">
+        <h4>报表</h4>
+        <div class="table-container">
+            <table class="tb-table-striped">
+                <thead>
+                    <tr>
+                        <th>版本</th>
+                        <th>创建日期</th>
+                        <th>脚本用例数</th>
+                        <th>测试通过率</th>
+                        <th>问题数</th>
+                        <th>运行统计</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in vm.tableData">
+                        <td>{{data.version}}</td>
+                        <td>{{data.created}}</td>
+                        <td>{{data.script_count}}</td>
+                        <td>{{data.passing_rate}}</td>
+                        <td>{{data.failed_count}}</td>
+                        <td>{{data.execution_count}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="head-container">
+            <h4>脚本建设走势图</h4>
+            <form class="form-inline search-form">
+                <div class="form-group">
+                    <label>场景</label>
+                    <select ng-model="vm.script_build_scenario" ng-change="vm.getChartDetail('script')">
+                        <option value="">全部</option>
+                        <option ng-repeat="scenario in vm.scenarios" value="{{scenario.id}}">{{scenario.name}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div chart-script class="chart-container"></div>
+        <div class="head-container">
+            <h4>用例通过率走势图</h4>
+            <form class="form-inline search-form">
+                <div class="form-group">
+                    <label>场景</label>
+                    <select ng-model="vm.testcase_passing_rate_scenario" ng-change="vm.getChartDetail('pass')">
+                        <option value="">全部</option>
+                        <option ng-repeat="scenario in vm.scenarios" value="{{scenario.id}}">{{scenario.name}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div chart-pass class="chart-container"></div>
+        <div class="head-container">
+            <h4>问题数量走势图</h4>
+            <form class="form-inline search-form">
+                <div class="form-group">
+                    <label>严重程度</label>
+                    <select ng-model="vm.exception_severity" ng-change="vm.getChartDetail('exceptions')">
+                        <option value="">全部</option>
+                        <option ng-repeat="severity in vm.severities" value="{{severity.id}}">{{severity.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>场景</label>
+                    <select ng-model="vm.exception_scenario" ng-change="vm.getChartDetail('exceptions')">
+                        <option value="">全部</option>
+                        <option ng-repeat="scenario in vm.scenarios" value="{{scenario.id}}">{{scenario.name}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div chart-exceptions class="chart-container"></div>
+        <!--<h4>性能数据趋势图</h3>-->
+        <!--<div class="chart-left-container">-->
+            <!--<div class="chart-title">文件大小（mb）</div>-->
+            <!--<div chart-file-size class="chart-float"></div>-->
+        <!--</div>-->
+        <!--<div class="chart-right-container">-->
+            <!--<div class="chart-title">安装时延（s）</div>-->
+            <!--<div chart-install-delay class="chart-float"></div>-->
+        <!--</div>-->
+        <!--<div class="chart-float-container">-->
+            <!--<div class="chart-title">启动时延（s）</div>-->
+            <!--<div chart-start-delay class="chart-float"></div>-->
+        <!--</div>-->
+        <!--<div class="chart-float-container">-->
+            <!--<div class="chart-title">流量（mb）</div>-->
+            <!--<div chart-data-traffic class="chart-float"></div>-->
+        <!--</div>-->
+        <!--<div class="chart-float-container">-->
+            <!--<div class="chart-title">cpu占用率（%）</div>-->
+            <!--<div chart-cpu class="chart-float"></div>-->
+        <!--</div>-->
+        <!--<div class="chart-float-container">-->
+            <!--<div class="chart-title">内存占用（mb）</div>-->
+            <!--<div chart-memory class="chart-float"></div>-->
+        <!--</div>-->
+    </div>
+</div>

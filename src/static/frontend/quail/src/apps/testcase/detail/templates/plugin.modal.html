@@ -1,0 +1,33 @@
+<div tb-modal class="tb-modal plugin-modal">
+    <h1 class="head">选择插件<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+    <form novalidate name="form">
+        <div class="modal-content">
+            <div class="form-group row execution-way">
+                <input type="radio" name="execution-way" id="plugin-dev" ng-model="executionWay" value="plugin-dev" />
+                <label for="plugin-dev"></label>
+                <label for="plugin-dev">手机端执行</label>
+                <input type="radio" name="execution-way" id="plugin-tc" ng-model="executionWay" value="plugin-tc" />
+                <label for="plugin-tc"></label>
+                <label for="plugin-tc">工控机端执行</label>
+            </div>
+            <ul class="clearfix">
+                <li ng-repeat="item in plugins | pluginsFilter:executionWay track by $index">
+                    <input type="radio" name="plugin" id="plugin[{{$index}}]" ng-model="$parent.plugin" ng-value="item" required>
+                    <label for="plugin[{{$index}}]"></label>
+                    <label for="plugin[{{$index}}]">{{item.name}}</label>
+                </li>
+            </ul>
+            <div class="form-group row">
+                <div for="plugin-value" class="col-sm-2 control-label">插件值</div>
+                <div class="col-sm-10">
+                    <input type="text" maxlength="128" class="form-control" id="plugin-value" ng-model="originTextValue" placeholder="">
+                </div>
+            </div>
+            <p class="help" ng-show="form.plugin.$invalid && form.$submitted">您还没有选择插件!</p>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default" ng-click="cancel()">取消</button>
+            <button class="btn btn-fix btn-primary" type="submit" ng-click="close()"ng-disabled="!plugins.length">确定</button>
+        </div>
+    </form>
+</div>

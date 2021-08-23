@@ -1,0 +1,75 @@
+<div class="testcase-component clearfix">
+    <div class="component-head">
+        <h3>模块管理</h3>
+        <div class="pull-right">
+            <a class="btn" ng-click="vm.exportExcel('params')"><i class="icon icon-export"></i>根据参数导出xPath</a>
+            <a class="btn" ng-click="vm.exportExcel('ids')"><i class="icon icon-export"></i>根据id导出xPath</a>
+        </div>
+    </div>
+    <div class="tb-spliter" tb-spliter data-border-width="10">
+        <div class="left spliter-left">
+            <div class="title-wrap">
+                <span class="title">模块列表</span>
+                <a class="btn btn-xs btn-default" ui-sref=".manageComponent({component: vm.model.component, isUpdate: false})"><i class="icon icon-create"></i>新增模块</a>
+                <a class="btn btn-xs btn-default" ui-sref=".directory({component: vm.model.component, isUpdate: false})"><i class="icon icon-create"></i>新增目录</a>
+            </div>
+            <div class="input-alarm">
+                <input type="checkbox" id="delete-confirm"  ng-model="vm.setting.noDeleteConfirm" />
+                <label for="delete-confirm">强制删除</label>
+            </div>
+            <ul id="componentTree" class="ztree" tb-z-tree data-nodes="vm.components" data-setting="vm.setting"></ul>
+        </div>
+        <div class="right spliter-right">
+            <div class="no-data" ng-if="vm.model.component.isRootNode">
+                <div class="text">
+                    请&nbsp;<a ui-sref=".directory({isUpdate: false})">新增目录</a>
+                    &nbsp;<a ui-sref=".manageComponent({isUpdate: false})">新增模块</a>
+                </div>
+            </div>
+            <div class="component-detail" ng-if="!vm.model.component.isRootNode">
+                <h3 class="component-title">{{vm.isDirectory?'目录':'模块'}}详情
+                    <span ng-if="!vm.isDirectory" class="component-title-btn" ui-sref=".manageComponent({component: vm.model.component, isUpdate: true})"><i class="icon icon-update"></i>更新模块</span>
+                    <span ng-if="!vm.isDirectory" class="component-title-btn" ng-click="vm.copyScript()"><i class="icon copy-script"></i>克隆模块</span>
+                    <span ng-if="vm.isDirectory" class="component-title-btn" ui-sref=".directory({component: vm.model.component, isUpdate: true})"><i class="icon icon-update"></i>更新目录</span>
+                    <span ng-if="vm.isDirectory && vm.actionIds.length>0" class="component-title-btn" ng-click="vm.createComponent(vm.model.component.id, vm.actionIds[0].action.Id)"><i class="icon icon-create-component"></i>创建模块</span>
+                </h3>
+                <div class="form-group">
+                    <label class="title">名称:</label>
+                    <pre ng-bind="vm.model.component.name"></pre>
+                </div>
+
+                <div ng-if="!vm.model.component.isRootNode">
+                    <div class="form-group">
+                        <label class="title">配置功能:</label>
+                        <div ng-if="vm.actionIds.length" class="snapshot-container" ng-click="vm.goSnapshot(vm.model.component.id, vm.actionIds[0].actionId)">
+                            <div class="snapshot-box" ng-repeat="actionId in vm.actionIds | limitTo : 6">
+                                <img img-error class="snapshot-img tb-center-image" ng-src="{{ actionId | actionIdConversionSnapshot: vm.model.component.url_prefix.image_host}}"/>
+                            </div>
+                            <div class="snapshot-box placeholder">
+                                <p><span class="count">{{ vm.actionIds.length }}</span>张截图 ></p>
+                            </div>
+                        </div>
+                        <div class="snapshot-container" ng-if="!vm.actionIds.length">
+                            <div class="snapshot-box placeholder">
+                                <p><span class="count">没有截图 </span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="!vm.isDirectory">
+                        <label class="title">引用模块用例:</label>
+                        <div class="pre" ng-if="vm.model.component.testcases.length>0">
+                            <div ng-repeat="testcase in vm.model.component.testcases">{{ $index+1+",&nbsp;&nbsp;"+testcase.code+":"+testcase.name }}</div>
+                        </div>
+                        <pre ng-if="vm.model.component.testcases.length==0">暂无用例引用!</pre>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="title">描述:</label>
+                    <pre ng-bind="vm.model.component.desc"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ui-view=""></div>
+</div>

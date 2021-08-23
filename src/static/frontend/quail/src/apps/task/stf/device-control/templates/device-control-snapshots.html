@@ -1,0 +1,19 @@
+<div tb-modal class="tb-modal execution-snapshot-modal">
+    <h1 class="head"><span ng-if="vm.handleType=='replay'">请选择需要回放的步骤</span><span ng-if="vm.handleType=='resume'">请选择从哪一步后面继续录制</span><i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <div class="testcase-container hasButton">
+        <div class="images-container adaptive-images-container">
+            <div class="snapshot-item" ng-repeat="snapshot in vm.snapshots" ng-click="vm.clickSnapshot(snapshot, $index)">
+                <div class="snapshot-box-item">
+                    <img change-img-width ng-src="{{ snapshot.body.image }}" class="image-box-item"/>
+                </div>
+                <div ng-if="snapshot.checked" class="overlay">
+                    <i class="icon icon-selected"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default btn-watchet" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-click="vm.close()">确定</button>
+    </div>
+</div>

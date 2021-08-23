@@ -1,0 +1,21 @@
+<div tb-modal class="tb-modal">
+    <h1 class="head">创建版本<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+    <form>
+        <div class="form-group">
+            <label >版本号</label>
+            <input type="text" maxlength="128" class="form-control" ng-model="model.version">
+        </div>
+        <div class="form-group">
+            <label >文件路径</label>
+            <input type="text" maxlength="128" class="form-control" ng-model="model.download_url">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFile">描述</label>
+            <textarea class="form-control" id="exampleInputFile" ng-model="model.desc"></textarea>
+        </div>
+    </form>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-click="close()">确定</button>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/report.head.html'"></ng-include>
+<!-- /头部 -->
+<div class="dialtest-detail-container content-container">
+    <div class="current-app-container">
+        <img ng-src="{{ vm.app.icon_url }}"/>
+        <div class="info">
+            <div class="app-name" ng-bind="vm.app.name"></div>
+        </div>
+        <form class="form-inline head-form">
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}"
+                       ng-model="vm.startPopup.date"
+                       is-open="vm.startPopup.opened" ng-required="true"
+                       close-text="关闭"
+                       clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                       placeholder="选择时间-开始"/>
+                <span class="form-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('startPopup')">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}"
+                       ng-model="vm.endPopup.date"
+                       is-open="vm.endPopup.opened" ng-required="true"
+                       close-text="关闭"
+                       clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                       placeholder="选择时间-结束"/>
+                <span class="form-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('endPopup')">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.getData()">搜索</a>
+            </div>
+        </form>
+    </div>
+    <div class="dialtest-report-head">
+        <h3>概况</h3>
+    </div>
+    <div class="table-container">
+        <table class="tb-table-striped">
+            <thead>
+            <tr>
+                <th>版本</th>
+                <th>测试用例数</th>
+                <th>用例运行统计</th>
+                <th>用例运行问题数</th>
+                <th>功能测试通过率</th>
+                <th>数据检查数量</th>
+                <th>数据检查运行数</th>
+                <th>数据检查问题数</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="data in vm.tableData">
+                <td>{{data.version}}</td>
+                <td>{{data.testcases}}</td>
+                <td>{{data.execution_result.total}}</td>
+                <td>{{data.execution_result.failed}}</td>
+                <td>{{(data.execution_result.pass_rate * 100).toFixed(2) + '%'}}</td>
+                <td>{{data.output_result.last}}</td>
+                <td>{{data.output_result.total}}</td>
+                <td>{{data.output_result.failed}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="head-container">
+        <h3>功能测试通过率走势图</h3>
+        <form class="form-inline head-form">
+            <div class="form-group">
+                <label>场景</label>
+                <select ng-model="vm.functest_pass_scenario" ng-change="vm.getFunctestPassLine('script')">
+                    <option ng-repeat="scenario in vm.scenarios" value="{{scenario[0]}}">{{scenario[1]}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-functest-pass-line></div>
+    </div>
+    <div class="head-container">
+        <h3>功能测试问题数走势图</h3>
+        <form class="form-inline head-form">
+            <div class="form-group">
+                <label>场景</label>
+                <select ng-model="vm.functest_exception_scenario" ng-change="vm.getFunctestExceptionLine('pass')">
+                    <option ng-repeat="scenario in vm.scenarios" value="{{scenario[0]}}">{{scenario[1]}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-functest-exception-line></div>
+    </div>
+    <div class="head-container">
+        <h3>数据检查问题数走势图</h3>
+        <form class="form-inline head-form">
+            <div class="form-group">
+                <label>场景</label>
+                <select ng-model="vm.datacheck_exception_scenario" ng-change="vm.getDatacheckExceptionLine('exceptions')">
+                    <option ng-repeat="scenario in vm.scenarios" value="{{scenario[0]}}">{{scenario[1]}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-datacheck-exception-line></div>
+    </div>
+</div>

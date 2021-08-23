@@ -1,0 +1,409 @@
+.remote-control {
+    position: relative;
+    background: #fff;
+}
+
+.as-row-cell {
+    display: table-cell;
+}
+
+.controls .group-wrap {
+    width: 100%;
+    height: 46px;
+    display: table-cell;
+}
+
+.controls .btn-group {
+    width: 100%;
+    height: 2px;
+    margin: 0 auto;
+    visibility: hidden!important;
+}
+
+device-screen {
+    background: #fff!important;
+}
+
+@mixin controls-wrap-styles {
+    height: 50px;
+    border: 1px solid #d1d9e0;
+    background-color: $blueLightBg;
+    border-radius: 5px;
+}
+
+@mixin controls-slide-btn {
+    position: absolute;
+    top: 0;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+        background-color: #fff;
+    }
+}
+
+.ios-controls-group {
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    margin-left: -75px;
+    .control-inner-btn {
+        float: left;
+        display: inline-block;
+        width: 50px;
+        margin-right: 20px;
+        line-height: 50px;
+        text-align: center;
+        border: 1px solid $gray-border;
+        border-radius: 50%;
+        &:hover {
+            background-color: $blue;
+        }
+        .icon {
+            display: inline-block;
+            background-image: url(img/ios-control.png);
+            background-size: 72px 64px;
+        }
+    }
+    .control-home-link {
+        .icon {
+            width: 20px;
+            height: 20px;
+            background-position: 46px 0;
+        }
+        &:hover {
+            .icon {
+                background-position: 46px 32px;
+            }
+        }
+    }
+    .control-refresh-link {
+        .icon {
+            width: 22px;
+            height: 23px;
+            background-position: 23px 0;
+        }
+        &:hover {
+            .icon {
+                background-position: 24px 32px;
+            }
+        }
+    }
+    .control-input-link {
+        .icon {
+            width: 20px;
+            height: 20px;
+            background-position: -2px 0;
+        }
+        &:hover {
+            .icon {
+                background-position: -2px 32px;
+            }
+        }
+    }
+    .photom-cam-wrap {
+        position: absolute;
+        right: -40px;
+        top: 10px;
+        height: 30px;
+        width: 46px;
+        border-radius: 5px;
+        background-color: $blue;
+        overflow: hidden;
+        transition: 100ms ease-in all;
+        input {
+            vertical-align: baseline;
+            box-shadow: none;
+            background: none;
+            border: 1px solid #fff;
+            background: #fff;
+            color: #333;
+            width: 61px;
+            height: 20px;
+            padding: 0;
+            line-height: 1;
+            border-radius: 5px;
+            font-size: 12px;
+            text-align: center;
+            margin: 0 5px;
+            &[readonly]{
+                background: #f0f0f0;
+                border-color: #f0f0f0;
+            }
+        }
+        .item-btn {
+            display: inline-block;
+            height: 100%;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+            &:hover {
+                background-color: darken($blue, 10%);
+            }
+            &.sparrow-btn {
+                width: 15px;
+                .icon-left-sparrow {
+                    @include transform(rotate(0deg));
+                }
+            }
+            &.photocam-btn {
+                width: 45px;
+                float: right;
+            }
+        }
+        .screentshot-label {
+            display: inline-block;
+            width: 165px;
+            height: 100%;
+            line-height: 30px;
+            text-align: center;
+            color: #fff;
+        }
+        &.active {
+            width: 230px;
+            .icon-left-sparrow {
+                -webkit-transform: rotate(180deg)!important;
+                transform: rotate(180deg)!important;
+            }
+            input {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.android-controls-group {
+    @include controls-wrap-styles;
+    width: 330px;
+    position: absolute;
+    left: 50%;
+    margin-left: -165px;
+    .control-lock-btn {
+        @include controls-wrap-styles;
+        @include controls-slide-btn;
+        left: -60px;
+        .icon-lock {
+            position: relative;
+            left: 1px;
+        }
+        &:hover .icon-unlock {
+            background-position: 0 24px;
+        }
+    }
+    .control-keyboard-btn {
+        @include controls-wrap-styles;
+        @include controls-slide-btn;
+        right: -120px;
+        &:hover .icon-keyboard {
+            background-position: 0 17px;
+        }
+    }
+    .control-hd-btn {
+        @include controls-wrap-styles;
+        @include controls-slide-btn;
+        right: -60px;
+        &:hover .icon-hd {
+            background-position: 0 19px;
+        }
+        .hd-slider-wrap {
+            @include controls-wrap-styles;
+            display: none;
+            position: absolute;
+            width: 50px;
+            height: 150px;
+            top: -150px;
+            left: -1px;
+            background-color: inherit;
+            .icon-hd-gray {
+                position: absolute;
+                top: 12px;
+                left: 18px;
+            }
+            .icon-rabbit {
+                position: absolute;
+                bottom: 6px;
+                left: 16px;
+            }
+        }
+        &.opened {
+            border-radius: 0 0 5px 5px;
+            background-color: #fff;
+            .hd-slider-wrap {
+                display: block;
+                border-radius: 5px 5px 0 0;
+            }
+        }
+    }
+    .control-inner-btn {
+        display: inline-block;
+        width: 80px;
+        line-height: 48px;
+        text-align: center;
+        &:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+        &:last-child {
+            border-radius: 0 5px 5px 0;
+        }
+        &:hover {
+            background-color: #fff;
+        }
+    }
+    .control-back-link:hover .icon {
+        background: url(img/icon-back-hover.png);
+        background-size: 100%;
+    }
+    .control-home-link:hover .icon {
+        background: url(img/icon-home-hover.png);
+        background-size: 100%;
+    }
+    .control-list-link:hover .icon {
+        background: url(img/icon-list-hover.png);
+        background-size: 100%;
+    }
+    .photom-cam-wrap {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        height: 30px;
+        width: 60px;
+        border-radius: 5px;
+        background-color: $blue;
+        overflow: hidden;
+        transition: 100ms ease-in all;
+        input {
+            vertical-align: baseline;
+            box-shadow: none;
+            background: none;
+            border: 1px solid #fff;
+            background: #fff;
+            color: #333;
+            width: 61px;
+            height: 20px;
+            padding: 0;
+            line-height: 1;
+            border-radius: 5px;
+            font-size: 12px;
+            text-align: center;
+            margin: 0 5px;
+            &[readonly]{
+                background: #f0f0f0;
+                border-color: #f0f0f0;
+            }
+        }
+        .item-btn {
+            display: inline-block;
+            height: 100%;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+            &:hover {
+                background-color: darken($blue, 10%);
+            }
+            &.sparrow-btn {
+                width: 15px;
+                .icon-left-sparrow {
+                    @include transform(rotate(0deg));
+                }
+            }
+            &.photocam-btn {
+                width: 45px;
+                float: right;
+            }
+        }
+        .screentshot-label {
+            display: inline-block;
+            width: 165px;
+            height: 100%;
+            line-height: 30px;
+            text-align: center;
+            color: #fff;
+        }
+        &.active {
+            width: 230px;
+            .icon-left-sparrow {
+                -webkit-transform: rotate(180deg)!important;
+                transform: rotate(180deg)!important;
+            }
+            input {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+$rangeSliderColor:#e0e6ec;
+.tb-rangeslider {
+    &.tb-rangeslider-vertical {
+        position: relative;
+        width: 4px;
+        height: 100px;
+        margin-top: 25px;
+        margin-left: 23px;
+        background-color: $rangeSliderColor;
+    }
+    .tb-rangeslider-fill {
+        background-color: $blue;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+    .tb-rangeslider-handle {
+        cursor: pointer;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        background-image: url(img/range-dot.png);
+        background-size: 100%;
+        left: -6px;
+    }
+    .slider-tip-wrap {
+        position: absolute;
+        top: -2px;
+        right: 41px;
+        width: 80px;
+        height: 20px;
+        .slider-tip {
+            display: block;
+            height: 100%;
+            color: #fff;
+            line-height: 20px;
+            font-size: 12px;
+            border-radius: 2px;
+            &:after {
+                content: "";
+                display: block;
+                position: absolute;
+                border-top: 4px solid transparent;
+                border-bottom: 4px solid transparent;
+                right: -4px;
+                top: 6px;
+                width: 0;
+                height: 0;
+            }
+            &.blue-tip {
+                display: none;
+                background-color: $blue;
+                &:after{
+                    border-left: 4px solid $blue;
+                }
+            }
+            &.green-tip {
+                display: none;
+                background-color: $green;
+                &:after{
+                    border-left: 4px solid $green;
+                }
+            }
+            &.gray-tip {
+                background-color: $gray;
+                &:after{
+                    border-left: 4px solid $gray;
+                }
+            }
+        }
+    }
+}

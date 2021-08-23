@@ -1,0 +1,51 @@
+<div tb-modal class="tb-modal snapshots-detail-modal">
+    <h1 class="head"><span ng-if="model.isIgnore">请选择需要忽略的图片</span><span ng-if="!model.isIgnore">截图详情({{ model.snapshots | snapshotsCount }}张)</span><i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+    <div class="testcase-container" ng-class="{true:'hasButton'}[model.handleType=='deleteJson']">
+        <div class="tc-snapshot-container adaptive-images-container">
+            <div class="snapshot-item" ng-repeat="snapshot in model.snapshots" ng-if="!snapshot.componentName&&model.handleType=='ignore'">
+                <div img-error>
+                    <div class="adaptive-image-wrap" ng-class="{true:'ignore-snapshot'}[snapshot.ignoreAction]" ng-click="(snapshot.ignoreAction=!snapshot.ignoreAction);model.ignoreAction(snapshot)">
+                        <img class="snapshot-image" tb-adaptive-image data-width="120" ng-src="{{ snapshot.url | qiniuThumbnail }}"/>
+                    </div>
+                    <div class="ignore">
+                        <input type="checkbox" id="check-ignore-{{ $index }}" ng-model="snapshot.ignoreAction"/>
+                        <label for="check-ignore-{{ $index }}" class="check-label" ng-click="model.ignoreAction(snapshot)">
+                            <span class="unchecked">忽略此步</span>
+                            <span class="checked">忽略此步</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="snapshot-item" ng-repeat="snapshot in model.snapshots" ng-if="model.handleType=='deleteJson'">
+                <div img-error>
+                    <div class="adaptive-image-wrap" ng-class="{true:'ignore-snapshot'}[snapshot.deleteAction]" ng-click="(snapshot.deleteAction=!snapshot.deleteAction);model.toggleDeleteSnapshot(snapshot)">
+                        <img class="snapshot-image" tb-adaptive-image data-width="120" ng-src="{{ snapshot.url | qiniuThumbnail }}"/>
+                    </div>
+                    <div class="ignore">
+                        <input type="checkbox" id="check-delete-{{ $index }}" ng-model="snapshot.deleteAction"/>
+                        <label for="check-delete-{{ $index }}" class="check-label" ng-click="model.toggleDeleteSnapshot(snapshot)">
+                            <span class="unchecked">删除脚本</span>
+                            <span class="checked">删除脚本</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="snapshot-item" ng-repeat="snapshot in model.snapshots" ng-if="!model.handleType">
+                <div img-error>
+                    <div class="adaptive-image-wrap" ng-click="model.getIndex($index);close()">
+                        <img class="snapshot-image" tb-adaptive-image data-width="120" ng-src="{{ snapshot.url | qiniuThumbnail }}"/>
+                    </div>
+                    <div class="meta">
+                        <i class="icon icon-edit" ng-if="model.isSnapshotEdited(snapshot)"></i>
+                        <i class="icon icon-overlap" ng-if="snapshot.rectCandidates.length>1"></i>
+                        <div class="number">{{ $index + 1 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="model.handleType=='deleteJson'" class="modal-foot">
+        <button class="btn btn-fix btn-default btn-watchet" ng-click="close()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-click="model.deleteJsonBlocks();close()">确定</button>
+    </div>
+</div>

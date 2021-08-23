@@ -1,0 +1,117 @@
+    #report-performance-v2 {
+        @include col-md-padding;
+        @include table-class;
+        @mixin column($backgroundColor,$textColor) {
+            .text {
+                margin: 10px 0;
+                color:$textColor;
+                font-size: 12px;
+            }
+        }
+
+        margin-top: 75px;
+
+        .performance-details {
+            h1 {
+                margin-bottom: 50px;
+            }
+            .column {
+                text-align: center;
+                width: 100px;
+                margin: auto;
+                cursor: pointer;
+                .performance-icons {
+                    width: 40px;
+                    height: 40px;
+                    margin-top: 18px;
+                    background-image: url(img/report/performance-icons.png);
+                    background-size: 500px 140px;
+                }
+                &.column-uncheck {
+                    @include column(#fff, #000);
+                    border:1px solid  #fff;
+                    .performance-0 {
+                        background-position: -20px -20px;
+                    }
+                    .performance-1 {
+                        background-position: -80px -20px;
+                    }
+                    .performance-2 {
+                        background-position: -140px -20px;
+                    }
+                    .performance-3 {
+                        background-position: -200px -20px;
+                    }
+                    .performance-4 {
+                        background-position: -260px -20px;
+                    }
+                    .performance-5 {
+                        background-position: -320px -20px;
+                    }
+                    .performance-6 {
+                        background-position: -380px -20px;
+                    }
+                    .performance-7 {
+                        background-position: -440px -20px;
+                    }
+                }
+                &.column-check {
+                    @include column(#fafcff, $tb-blue-light);
+                    border:1px solid  #edf2f7;
+                    .performance-0 {
+                        background-position: -20px -80px;
+                    }
+                    .performance-1 {
+                        background-position: -80px -80px;
+                    }
+                    .performance-2 {
+                        background-position: -140px -80px;
+                    }
+                    .performance-3 {
+                        background-position: -200px -80px;
+                    }
+                    .performance-4 {
+                        background-position: -260px -80px;
+                    }
+                    .performance-5 {
+                        background-position: -320px -80px;
+                    }
+                    .performance-6 {
+                        background-position: -380px -80px;
+                    }
+                    .performance-7 {
+                        background-position: -440px -80px;
+                    }
+                }
+            }
+            margin-bottom: 50px;
+            .optimize-subtype {
+                  display: block;
+                  width: 20%;
+                  float: left;
+            }
+            .more-optimize-subtype {
+                display: block;
+                width: 12.5% !important;
+                float: left;
+            }
+        }
+        .information {
+            padding-left: 10px;
+            margin-bottom: 50px;
+        }
+
+        #pie-con {
+            margin-bottom: 75px;
+            .highcharts-legend-item {
+                display: none;
+            }
+        }
+        table tbody tr {
+            .align-left {
+                cursor:pointer;
+                color:$tb-blue-light;
+                text-decoration: underline;
+            }
+        }
+    }

@@ -1,0 +1,191 @@
+.execution-model {
+    padding: 25px 40px !important;
+    h1 {
+        color: $black !important;
+        margin-bottom: 25px !important;
+    }
+
+    .form-group {
+        overflow: hidden;
+        margin-bottom: 5px !important;
+        line-height: 34px;
+        .tag {
+            color: $gray;
+            float: left;
+            width: 115px;
+            line-height: 34px;
+            margin-bottom: 20px;
+            span {
+                color: red;
+                margin-left: 5px;
+            }
+        }
+        .form-control {
+            border-color: $border-gray;
+        }
+
+        input[type="text"], input[type="url"], textarea {
+            float: left;
+            width: 405px;
+        }
+
+        textarea {
+            height: 130px;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        span {
+            label {  
+                border: 1px solid  $border-gray;
+                color: $black;
+                width: 24.5%;
+                height: 40px;
+                border-radius: 4px;
+                text-align: center;
+                line-height: 36px;
+                cursor: pointer;
+                position: relative;
+                .icon {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    visibility: hidden;
+                }
+            }
+
+            input[type="radio"]:checked + label {
+                border: 1px solid $blue;
+                color: $blue;
+                .icon {
+                    visibility: visible;
+                }
+            }
+        }
+
+        span + span {
+            margin-left: 0.5%;
+        }
+    }
+
+    .severity {
+        border: 1px solid $blue;
+        float: left;
+        width: 405px;
+        height: auto;
+        line-height: 36px;
+        padding: 0 0 0 5px;
+        color: $gray;
+        label {
+            cursor: pointer;
+        }
+        input {
+            width: 0;
+        }
+        label + input {
+            width: 40px;
+        }
+        input[type="radio"] {
+            visibility: hidden;
+            display: inline-block;
+            & +label {
+                .fa-dot-circle-o {
+                    color: $blue;
+                    display: none;
+                }
+
+                .fa-circle-o {
+                    display: inline-block;
+                }
+            }
+        }
+
+        input[type="radio"]:checked {
+            & +label {
+                .fa-dot-circle-o {
+                    display: inline-block;
+                }
+
+                .fa-circle-o {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    button {
+        width: 120px;
+        height: 30px;
+    }
+}
+.input-text-dialog {
+    display: none;
+    position: absolute;
+    bottom: -10px;
+    width: 96%;
+    margin: 2%;
+    height: 75px;
+    z-index: 99;
+    .input-text-container {
+        position: absolute;
+        bottom: 0;
+        border: 1px solid $border-gray;
+        padding: 10px 80px 10px 10px;
+        width: 100%;
+        background: $grayDarkBg;
+        textarea {
+            position: relative;
+            top: 3px;
+            border-color: $grayDarkBorder;
+            resize: none;
+            width: 100%;
+            height: 45px;
+            margin-right: 80px;
+        }
+        .btn {
+            position: absolute;
+            top: 21px;
+            width: 60px;
+            right: 0;
+        }
+    }
+    .close-dialog {
+        position: absolute;
+        right: -1px;
+        top: -25px;
+        cursor: pointer;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background: url(img/icon-input-dialog-close.png);
+        background-size: 100%;
+        &:hover{
+            background: url(img/icon-input-dialog-close-hover.png);
+            background-size: 100%;
+        }
+    }
+}
+
+.wait-trusted {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1;
+    font-size: 16px;
+    color: $white;
+    text-align: center;
+    .desc {
+        width: 370px;
+        margin: 60px auto 35px;
+        text-align: left;
+        p {
+            margin: 0;
+            line-height: 40px;
+        }
+    }
+}

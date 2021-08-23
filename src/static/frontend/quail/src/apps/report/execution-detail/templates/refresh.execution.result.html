@@ -1,0 +1,64 @@
+<div tb-modal class="tb-modal execution-model">
+    <h1 class="head">更新用例执行结果<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+    <form tb-form-validator data-bv-excluded="">
+        <div class="form-group clearfix" ng-show="!model.is_multiple">
+            <label class="tag" for="executionName">用例执行名称<span>*</span></label>
+            <input type="text" maxlength="128" class="form-control" id="executionName" name="name" ng-model="model.name" data-bv-notempty data-bv-notempty-message="用例名称不能为空！" />
+        </div>
+        <div class="form-group">
+            <label class="tag">测试结果<span>*</span></label>
+            <span>
+                <input type="radio" id="block" name="result" ng-model="model.result" value="0" />
+                <label name="result" for="block">阻塞<i class="icon icon-check"></i></label>
+            </span>
+            <span>
+                <input type="radio" id="pass" name="result" ng-model="model.result" value="1"/>
+                <label name="result" for="pass">通过<i class="icon icon-check"></i></label>
+            </span>
+            <span>
+                <input type="radio"  id="fail" name="result" ng-model="model.result" value="-1"/>
+                <label name="result" for="fail">失败<i class="icon icon-check"></i></label>
+            </span>
+        </div>
+        <div class="form-group" ng-if="model.result==1&&model.isReplayTask && !model.isParametric">
+            <label for="exampleInputFile" class="tag"></label>
+            <div class="form-control severity update-baseline">
+                <input type="checkbox" id="update" name="is_update" ng-model="model.updateBaseline" />
+                <label for="update"><i class="icon icon-checkbox"></i> 更新基准图片</label>
+            </div>
+        </div>
+        <div class="form-group" ng-if="model.result==-1">
+            <label for="exampleInputFile" class="tag"></label>
+            <div class="form-control severity">
+                <input type="radio" id="deadly" name="severity" ng-model="model.severity" value="0" />
+                <label name="severity" for="deadly">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-dot-circle-o"></i> 致命
+                </label>
+                <input type="radio" id="severe" name="severity" ng-model="model.severity" value="10" />
+                <label name="severity" for="severe">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-dot-circle-o"></i> 严重
+                </label>
+                <input type="radio" id="common" name="severity" ng-model="model.severity" value="20" />
+                <label name="severity" for="common">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-dot-circle-o"></i> 一般
+                </label>
+                <input type="radio" id="prompt" name="severity" ng-model="model.severity" value="30" />
+                <label name="severity" for="prompt">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-dot-circle-o"></i> 提示
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFile" class="tag">备注</label>
+            <textarea class="form-control" id="exampleInputFile" name="desc" ng-model="model.desc"></textarea>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default" ng-click="close()">取消</button>
+            <button class="btn btn-fix btn-primary" type="submit" data-form-submit="model.over=true;close()">保存</button>
+        </div>
+    </form>
+</div>

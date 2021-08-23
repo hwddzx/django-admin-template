@@ -1,0 +1,591 @@
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    &.icon-plus {
+        width: 20px;
+        height: 20px;
+        background: url('img/plus.png');
+        margin-left: 5px;
+        background-size: 100%;
+    }
+    &.icon-using {
+        width: 64px;
+        height: 24px;
+        background: url('img/icon-using.png');
+        background-size: 100%;
+    }
+    &.icon-ellipse {
+        width: 6px;
+        height: 6px;
+        background: url('img/icon-ellipse.png');
+        background-size: 100%;
+    }
+    &.icon-search {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-search.png');
+        background-size: 100%;
+    }
+    &.icon-unlock {
+        width: 18px;
+        height: 18px;
+        background: url('img/unlock-icon.png');
+        background-size: 100%;
+    }
+    &.icon-close {
+        width: 8px;
+        height: 8px;
+        background: url('img/icon-close.png');
+        background-size: 100%;
+    }
+    &.icon-ok {
+        width: 11px;
+        height: 8px;
+        background: url('img/icon-ok.png');
+        background-size: 100%;
+    }
+    &.icon-ok-selected {
+        width: 11px;
+        height: 8px;
+        background: url('img/icon-ok-selected.png');
+        background-size: 100%;
+    }
+    &.icon-check {
+        width: 16px;
+        height: 16px;
+        background: url('img/icon-check.png');
+        background-size: 100%;
+    }
+    &.icon-check-orange {
+        width: 16px;
+        height: 16px;
+        background: url('img/icon-check-orange.png');
+        background-size: 100%;
+    }
+    &.icon-done {
+        width: 60px;
+        height: 60px;
+        background: url('img/icon-done.png');
+        background-size: 100%;
+    }
+    &.icon-done-large {
+        width: 120px;
+        height: 120px;
+        background: url('img/icon-done-large.png');
+        background-size: 100%;
+    }
+    &.icon-package {
+        width: 20px;
+        height: 23px;
+        background: url('img/icon-package.png');
+        background-size: 100%;
+    }
+    &.icon-alipay {
+        width: 90px;
+        height: 26px;
+        background: url('img/icon-alipay.png');
+        background-size: 100%;
+    }
+    &.icon-modal-close {
+        width: 12px;
+        height: 12px;
+        background: url('img/icon-modal-close.png');
+        background-size: 100%;
+    }
+    &.icon-list {
+        width: 24px;
+        height: 16px;
+        background: url('img/icon-list.png');
+        background-size: 100%;
+    }
+    &.icon-back {
+        width: 24px;
+        height: 19.5px;
+        background: url('img/icon-back.png');
+        background-size: 100%;
+    }
+    &.icon-home {
+        width: 24px;
+        height: 23px;
+        background: url('img/icon-home.png');
+        background-size: 100%;
+    }
+    &.icon-upload {
+        width: 60px;
+        height: 60px;
+        background: url('img/icon-upload.png');
+        background-size: 100%;
+    }
+    &.icon-photocam {
+        width: 24px;
+        height: 21px;
+        background: url('img/icon-photocam.png');
+        background-size: 100%;
+    }
+    &.icon-left-sparrow {
+        width: 6px;
+        height: 11px;
+        background: url('img/icon-left-sparrow.png');
+        background-size: 100%;
+    }
+    &.icon-info-sim {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-sim.png');
+        background-size: 100%;
+    }
+    &.icon-info-battery {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-battery.png');
+        background-size: 100%;
+    }
+    &.icon-info-display {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-display.png');
+        background-size: 100%;
+    }
+    &.icon-info-hardware {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-hardware.png');
+        background-size: 100%;
+    }
+    &.icon-info-platform {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-platform.png');
+        background-size: 100%;
+    }
+    &.icon-info-network {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-network.png');
+        background-size: 100%;
+    }
+    &.icon-unlock {
+        width: 22px;
+        height: 24px;
+        background: url('img/icon-unlock.png');
+        background-size: 100%;
+    }
+    &.icon-lock {
+        width: 20px;
+        height: 24px;
+        background: url('img/icon-lock.png');
+        background-size: 100%;
+    }
+    &.icon-hd {
+        width: 24px;
+        height: 19px;
+        background: url('img/icon-hd.png');
+        background-size: 100%;
+    }
+    &.icon-hd-gray {
+        width: 14.5px;
+        height: 6px;
+        background: url('img/icon-hd-gray.png');
+        background-size: 100%;
+    }
+    &.icon-rabbit {
+        width: 17px;
+        height: 12px;
+        background: url('img/icon-rabbit.png');
+        background-size: 100%;
+    }
+    &.icon-free-manufacturer {
+        width: 200px;
+        height: 70px;
+        background: url('img/icon-free-manufacturer.png');
+        background-size: 100%;
+    }
+    &.icon-package-gray {
+        width: 20px;
+        height: 23px;
+        background: url('img/icon-package-gray.png');
+        background-size: 100%;
+    }
+    &.icon-upload-tip {
+        width: 40px;
+        height: 40px;
+        background: url('img/icon-upload-tip.png');
+        background-position-y: 40px;
+        background-size: 100%;
+    }
+    &.icon-sidebar-close {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-sidebar-close.png');
+        background-size: 100%;
+        &:hover {
+            background-position: 0 20px;
+        }
+    }
+    &.icon-tips-done {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-tips-done.png');
+        background-size: 100%;
+    }
+    &.icon-tips-error {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-tips-error.png');
+        background-size: 100%;
+    }
+    &.icon-avatar-default {
+        width: 40px;
+        height: 40px;
+        background: url('img/icon-avatar-default.png');
+        background-size: 100%;
+    }
+    &.icon-popup-close {
+        width: 32px;
+        height: 32px;
+        background: url('img/icon-popup-close.png');
+        background-size: 100%;
+    }
+    &.icon-log-download {
+        width: 24px;
+        height: 24px;
+        background: url('img/icon-log-download.png');
+        background-size: 100%;
+    }
+    &.icon-debug {
+        width: 18px;
+        height: 20px;
+        background: url('img/icon-debug.png');
+        background-size: 100%;
+    }
+    &.icon-safe {
+        width: 90px;
+        height: 90px;
+        background: url('img/icon-safe.png');
+        background-size: 100%;
+    }
+    &.icon-new-build {
+        width: 26px;
+        height: 26px;
+        background: url('img/icon-new-build.png') no-repeat center;
+        background-size: 100%;
+    }
+    .uploadContainer:hover &.icon-new-build {
+        width: 26px;
+        height: 26px;
+        background: url('img/icon-new-build-hover.png') no-repeat center;
+        background-size: 100%;
+    }
+    &.icon-upload-new {
+        width: 20px;
+        height: 13px;
+        background: url('img/icon-upload-new.png');
+        background-size: 100%;
+    }
+    &.icon-test-added {
+        width: 25px;
+        height: 25px;
+        background: url('img/icon-test-added.png');
+        background-size: 100%;
+    }
+    &.icon-pics {
+        width: 25px;
+        height: 25px;
+        background: url('img/icon-pics.png');
+        background-size: 100%;
+    }
+    &.icon-play {
+        width: 75px;
+        height: 75px;
+        background: url('img/icon-play.png');
+        background-size: 100%;
+    }
+    &.icon-rectangle {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-rectangle.png');
+        background-size: 100%;
+    }
+    &.icon-circle {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-circle.png');
+        background-size: 100%;
+    }
+    &.icon-arrow {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-arrow.png');
+        background-size: 100%;
+    }
+    &.icon-brush {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-brush.png');
+        background-size: 100%;
+    }
+    &.icon-text {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-text.png');
+        background-size: 100%;
+    }
+    &.icon-editor-cancel {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-editor-cancel.png');
+        background-size: 100%;
+    }
+    &.icon-editor-ok {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-editor-ok.png');
+        background-size: 100%;
+    }
+    &.icon-checkbox-disable {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-checkbox-disable.png');
+        background-size: 100%;
+    }
+    &.icon-minus {
+        width: 16px;
+        height: 16px;
+        background: url('img/icon-minus.png');
+        background-size: 100%;
+    }
+    &.icon-plus {
+        width: 16px;
+        height: 16px;
+        background: url('img/icon-plus.png');
+        background-size: 100%;
+    }
+    &.icon-trash {
+        width: 12px;
+        height: 18px;
+        background: url('img/icon-trash.png');
+        background-size: 100%;
+    }
+    &.icon-lock-tip {
+        width: 170px;
+        height: 239px;
+        background: url('img/icon-lock-tip.png');
+        background-size: 100%;
+    }
+    &.icon-broom {
+        width: 18px;
+        height: 18px;
+        background-image: url('img/icon-broom.png');
+        background-size: 100%;
+    }
+    &.icon-replay-back {
+        width: 14px;
+        height: 14px;
+        background: url('img/icon-replay-back.png');
+        background-size: 100%;
+    }
+    &.icon-clear {
+        width: 15px;
+        height: 15px;
+        background: url('img/icon-clear.png');
+        background-size: 100%;
+    }
+    &.icon-record {
+        width: 32px;
+        height: 32px;
+        background: url('img/testcase/icon-record.png');
+        background-size: 100%;
+    }
+    &.icon-trash-red {
+        width: 24px;
+        height: 24px;
+        background: url('img/testcase/icon-trash-red.png');
+        background-size: 100%;
+    }
+    &.icon-clear-bg {
+        width: 24px;
+        height: 24px;
+        background: url('img/testcase/icon-clear-bg.png');
+        background-size: 100%;
+        &:hover {
+            background: url('img/testcase/icon-clear-bg-hover.png');
+            background-size: 100%;
+        }
+    }
+    &.icon-trash-blue {
+        width: 24px;
+        height: 24px;
+        background-image: url(img/testcase/icon-trash-blue.png);
+        background-size: 100% 100%;
+    }
+    &.icon-insert-script {
+        width: 24px;
+        height: 24px;
+        background-image: url(img/testcase/icon-insert-script.png);
+        background-size: 100% 100%;
+    }
+    &.icon-script {
+        width: 24px;
+        height: 24px;
+        background-image: url(img/testcase/icon-script.png);
+        background-size: 100% 100%;
+    }
+    &.icon-insert-next {
+        width: 24px;
+        height: 24px;
+        background-image: url(img/testcase/icon-insert-next.png);
+        background-size: 100% 100%;
+    }
+    &.icon-insert-prev {
+        width: 24px;
+        height: 24px;
+        background-image: url(img/testcase/icon-insert-prev.png);
+        background-size: 100% 100%;
+    }
+    &.icon-close-gray {
+        width: 24px;
+        height: 24px;
+        background-image: url(img/testcase/icon-close-gray.png);
+        background-size: 100% 100%;
+    }
+    &.icon-delete-script {
+        width: 24px;
+        height: 24px;
+        background-image: url(img/testcase/icon-delete-script.png);
+        background-size: 100% 100%;
+    }
+    &.icon-warning-red {
+        width: 20px;
+        height: 20px;
+        background-image: url(img/icon-warning-red.png);
+        background-size: 100% 100%;
+    }
+    &.icon-prompt {
+        width: 18px;
+        height: 18px;
+        background-image: url(img/icon-prompt.png);
+        background-size: 100% 100%;
+    }
+    &.icon-testcase-failed {
+        width: 51px;
+        height: 51px;
+        background-image: url(img/testcase/icon-testcase-failed.png);
+        background-size: 100% 100%;
+    }
+    &.icon-delete {
+        width: 15px;
+        height: 15px;
+        background-image: url(img/icon-delete.png);
+        background-size: 100% 100%;
+        cursor: pointer;
+        &:hover {
+            background-image: url(img/icon-delete-active.png);
+        }
+    }
+    &.icon-selected {
+        width: 16px;
+        height: 16px;
+        background-image: url(img/testcase/icon-selected.png);
+        background-size: 100% 100%;
+    }
+    &.icon-testcase-back {
+        width: 12px;
+        height: 12px;
+        background-image: url(img/testcase/icon-back.png);
+        background-size: 100% 100%;
+    }
+    &.icon-clean {
+        width: 29px;
+        height: 29px;
+        background-image: url(img/testcase/icon-clean.png);
+        background-size: 100% 100%;
+        &:hover {
+            background-image: url(img/testcase/icon-clean-hover.png);
+        }
+    }
+    &.icon-edit {
+        width: 12px;
+        height: 12px;
+        background-image: url(img/testcase/icon-edit.png);
+        background-size: 100% 100%;
+    }
+    &.icon-plugin-plus {
+        width: 15px;
+        height: 15px;
+        background-image: url(img/testcase/icon-plus.png);
+        background-size: 100% 100%;
+        &:hover {
+            background-image: url(img/testcase/icon-plus-hover.png);
+        }
+    }
+    &.icon-anchor-none {
+        width: 77px;
+        height: 45px;
+        background-image: url(img/testcase/icon-anchor-none.png);
+        background-size: 100% 100%;
+    }
+    &.icon-arrow-up {
+        width: 10px;
+        height: 10px;
+        background-image: url(img/testcase/icon-arrow-up.png);
+        background-size: 100% 100%;
+    }
+    &.icon-arrow-down {
+        width: 10px;
+        height: 10px;
+        background-image: url(img/testcase/icon-arrow-down.png);
+        background-size: 100% 100%;
+    }
+    &.icon-bell {
+        width: 24px;
+        height: 24px;
+        background-image: url(img/icon-bell.png);
+        background-size: 100% 100%;
+    }
+    &.icon-completed {
+        width: 12px;
+        height: 12px;
+        background-image: url(img/icon-finished.png);
+        background-size: 100% 100%;
+    }
+    &.icon-uncompleted {
+        width: 12px;
+        height: 12px;
+        background-image: url(img/icon-unfinished.png);
+        background-size: 100% 100%;
+    }
+    &.icon-update {
+        width: 12px;
+        height: 12px;
+        background-image: url(img/update.png);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+}
+
+$icons: logs,
+shell,
+photo,
+video,
+upload,
+info;
+@each $icon in $icons {
+    .#{$icon}-icon {
+        display: inline-block;
+        width: 24px;
+        height: 100%;
+        background:url('img/#{$icon}-icon.png') no-repeat;
+        background-size: 100%;
+        background-position: center;
+    }
+    .#{$icon}-icon:hover {
+        background:url('img/#{$icon}-icon-hover.png') no-repeat;
+        background-size: 100%;
+        background-position: center;
+    }
+    .active .#{$icon}-icon {
+        background:url('img/#{$icon}-icon-active.png') no-repeat;
+        background-size: 100%;
+        background-position: center;
+    }
+}

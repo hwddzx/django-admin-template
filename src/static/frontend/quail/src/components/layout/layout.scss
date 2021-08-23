@@ -1,0 +1,67 @@
+.tb-layout {
+    position: fixed;
+    right: 0;
+    top: 50px;
+    height: calc(100% - 110px);
+    z-index: 2;
+    .btns {
+        float: left;
+        position: relative;
+        top: 50%;
+        margin-top: -50px;
+        height: 100px;
+    }
+    .btn {
+        display: block;
+        width: 23px;
+        font-size: 12px;
+        padding: 5px;
+        margin-bottom: 10px;
+        white-space: initial;
+    }
+    .tree-container {
+        width: 500px;
+        height: 100%;
+        overflow: auto;
+        background: $white;
+        padding: 10px;
+        border: 1px solid $gray-border;
+        @include transition(width .3s linear);
+        .refresh-btn {
+            display: block;
+            width: 100%;
+        }
+        .refresh-btn-small {
+            display: inline-block;
+            width: 30%;
+        }
+        .dump-checkbox {
+            margin-left: 20px;
+        }
+    }
+    .hide-layout {
+        width: 0;
+        padding: 0;
+    }
+}
+
+.layout-container,
+.layout-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    margin: auto;
+    .layout-area {
+        position: absolute;
+        border: 2px solid $blue;
+    }
+    .layout-areas {
+        position: absolute;
+        &:hover {
+            border: 2px solid $blue;
+        }
+    }
+}

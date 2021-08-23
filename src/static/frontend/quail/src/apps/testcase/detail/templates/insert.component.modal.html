@@ -1,0 +1,27 @@
+<div tb-modal class="tb-modal insert-component-modal">
+    <h1 class="head">插入模块
+        <i class="icon icon-popup-close" ng-click="vm.cancel()"></i>
+    </h1>
+    <small>拖动模块排序(模块插入按照此顺序)</small>
+    <div class="component-select-block">
+        <div class="head ztree">模块</div>
+        <div class="head selected">组合模块</div>
+        <ul id="insert-component-tree" class="content ztree" tb-z-tree data-nodes="vm.components" data-setting="vm.setting"></ul>
+        <ul class="content selected" data-as-sortable="vm.dragControlListeners" data-ng-model="vm.selectedComponents">
+            <li class="selected-component" ng-class="{true: 'active'}[component == vm.choose]" ng-repeat="component in vm.selectedComponents" data-as-sortable-item>
+                <i class="icon component-small-icon"></i>
+                <div data-as-sortable-item-handle class="component-name text-ellipsis" ng-click="vm.chooseSelectedComponent(component)">{{$index + 1 + "." + component.name + '#' + component.alias}}</div>
+                <i class="icon icon-component-delete" ng-click="vm.removeSelected(component)"></i>
+            </li>
+        </ul>
+    </div>
+    <label class="choose-label">模块名：</label>
+    <div class="choose-information">{{vm.choose.name}}</div>
+    <label class="choose-label">模块别名：</label>
+    <input ng-model="vm.choose.alias" ng-disabled="vm.selectedComponents.length==0" class="form-control choose-information" ng-change="vm.checkAliasValidated()" />
+    <div class="error-msg">{{ vm.errorMsg }}</div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" type="submit" ng-click="vm.close()" ng-disabled="vm.errorMsg">确定</button>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="performance">
+    <h1 class="title">性能警告</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>指标</th>
+            <th>均值</th>
+            <th>最大值</th>
+            <th>最小值</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="warning in vm.warnings">
+            <td ng-bind="warning.name"></td>
+            <td ng-bind="warning.avg + warning.unit" ng-class="{true:'isAlarmed'}[warning.isAlarm(warning.avg)]"></td>
+            <td ng-bind="warning.max + warning.unit" ng-class="{true:'isAlarmed'}[warning.isAlarm(warning.max)]"></td>
+            <td ng-bind="warning.min + warning.unit" ng-class="{true:'isAlarmed'}[warning.isAlarm(warning.min)]"></td>
+            <td><a ng-click="warning.handle(warning.target)">查看详情</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="tips">注:表格中若出现红色字体,则表示该值超出最大或最小阈值。</div>
+    <h1 class="title">相关截图</h1>
+    <div class="title"  ng-if="!vm.subtaskDetail.images.length">无相关截图</div>
+    <div class="snapshots-wrap tb-snapshot-slider"  ng-if="vm.subtaskDetail.images.length">
+        <div class="tb-overflow-hidden">
+            <div class="snapshot-left">
+                <div ng-click="vm.prevSnapshot()"></div>
+            </div>
+            <div class="snapshot-container">
+                <div class="single-snapshot " ng-class="{true: 'patched'}[vm.subtaskDetail.exception_image_url==image.filePath]"
+                     ng-repeat="image in vm.subtaskDetail.images | limitTo : 4 : vm.currentNumber-1">
+                    <img class="snapshot-img" ng-src="{{ image.filePath  + '?imageView2/2/w/200/' }}" ng-click="vm.showFancybox($index)"/>
+                    <div class="snapshot-time">{{ image.time }}</div>
+                </div>
+            </div>
+            <div class="snapshot-right">
+                <div ng-click="vm.nextSnapshot()"></div>
+            </div>
+        </div>
+    </div>
+    <h1 id="performance">性能图</h1>
+    <div class="performance-table">
+        <div class="issues-group">
+            <div class="checkbox-item checkbox-item-cpu" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.warningObject.CPU]" ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-1"></label>
+                <input id="issues-box-1" type="checkbox" class="hide" ng-model="vm.warningObject.CPU"/>
+                <label for="issues-box-1">CPU占用率(%)</label>
+            </div>
+            <div class="checkbox-item checkbox-item-memory" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.warningObject.Memory]" ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-2"></label>
+                <input id="issues-box-2" type="checkbox" class="hide" ng-model="vm.warningObject.Memory"/>
+                <label for="issues-box-2">内存占用(kb)</label>
+            </div>
+            <div ng-if="vm.hasSystemRamAvailable" class="checkbox-item checkbox-item-available-memory"
+                 ng-class="{true:'checked-item',false:'unchecked-item'}[vm.warningObject.AvailableMemory]"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-3" ng-click="vm.redrawChart()"></label>
+                <input id="issues-box-3" type="checkbox" class="hide" ng-model="vm.warningObject.AvailableMemory"/>
+                <label for="issues-box-3">可用内存占用(kb)</label>
+            </div>
+            <div class="checkbox-item checkbox-item-fps" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.warningObject.Frame]"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-4"></label>
+                <input id="issues-box-4" type="checkbox" class="hide" ng-model="vm.warningObject.Frame"/>
+                <label for="issues-box-4" ng-click="vm.redrawChart()">帧速率(fps)</label>
+            </div>
+            <div class="checkbox-item checkbox-item-temperature" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.warningObject.Temperature]"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-5"></label>
+                <input id="issues-box-5" type="checkbox" class="hide" ng-model="vm.warningObject.Temperature"/>
+                <label for="issues-box-5">温度(°C)</label>
+            </div>
+            <div class="checkbox-item checkbox-item-datatraffic" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.warningObject.DataTraffic]"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-6"></label>
+                <input id="issues-box-6" type="checkbox" class="hide" ng-model="vm.warningObject.DataTraffic"/>
+                <label for="issues-box-6">流量(kb)</label>
+            </div>
+            <div class="checkbox-item checkbox-item-gpu" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.warningObject.gpuUsage]"
+                 ng-if="vm.gpuEnabled"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-7"></label>
+                <input id="issues-box-7" type="checkbox" class="hide" ng-model="vm.warningObject.gpuUsage"/>
+                <label for="issues-box-7">GPU(%)</label>
+            </div>
+            <div class="checkbox-item checkbox-item-electric" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.warningObject.batteryUsage]"
+                 ng-if="vm.batteryEnabled"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-8"></label>
+                <input id="issues-box-8" type="checkbox" class="hide" ng-model="vm.warningObject.batteryUsage"/>
+                <label for="issues-box-8">电量(mAh)</label>
+            </div>
+        </div>
+        <div subtask-performance-chart></div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div tb-modal class="tb-modal install-modal">
+    <h1 class="head">
+        <span ng-if="!installtion.error && installtion.state!=='installed'">安装应用中</span>
+        <span ng-if="installtion.error">安装出错</span>
+        <span ng-if="installtion.state==='installed'">安装成功</span>
+    </h1>
+    <div class="upload-container">
+        <div class="widget-content">
+            <div ng-if="installtion" class="installtion-status selectable">
+                <!-- <progressbar max="100" value="installtion.progress" ng-if="!installtion.settled" ng-class="{'active': !installtion.settled}" class="progress-striped">
+                </progressbar> -->
+                <div class="loading" ng-if="!installtion.settled" tb-loading data-auto-start="true" data-disable-overlay="true"></div>
+                <div ng-if="installtion.state==='installed'" class="icon icon-done"></div>
+                <div class="install-error container-fluid" ng-if="installtion.error">
+                    <div class="row">
+                        <div class="col-md-3">分辨率:</div>
+                        <div class="col-md-9">{{ device.screen_length+'x'+device.screen_width }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">机&nbsp;&nbsp;&nbsp;&nbsp;型:</div>
+                        <div class="col-md-9">{{ device.name }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">系&nbsp;&nbsp;&nbsp;&nbsp;统:</div>
+                        <div class="col-md-9">{{ device.os }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">原&nbsp;&nbsp;&nbsp;&nbsp;因:</div>
+                        <div class="col-md-9">{{ installtion.error | installError }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-foot text-center">
+        <button class="btn btn-fix btn-primary" ng-click="cancel()">退出任务</button>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="plugin-container">
+    <h2>插件列表</h2>
+    <div class="btn btn-primary upload-btn import-files uploadContainer" tb-upload data-file-select="vm.fileSelected(uploader)"><span>上传插件</span></div>
+    <div class="table-wrap">
+        <table class="table tb-table">
+            <thead>
+                <tr>
+                    <th>插件名</th>
+                    <th>创建时间</th>
+                    <th>更新时间</th>
+                    <th>插件类别</th>
+                    <th>下载</th>
+                    <th>更新</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="plugin in vm.plugins">
+                    <td ng-bind="plugin.name"></td>
+                    <td ng-bind="plugin.created | dateFilter"></td>
+                    <td ng-bind="plugin.updated | dateFilter"></td>
+                    <td>{{ vm.pluginTypeText[plugin.type] }}</td>
+                    <td><a class="icon download" ng-href="{{ plugin.path }}"></a></td>
+                    <td><div class="input-file-wrap" ng-click="vm.setCurrentPlugin(plugin)"><a href="" class="icon update uploadContainer" tb-upload data-file-select="vm.updatePlugin(uploader, plugin)"></a></div></td>
+                    <td><a class="icon delete" href="" ng-click="vm.deletePlugin(plugin.id)"></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

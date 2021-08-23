@@ -1,0 +1,11 @@
+<ul class="dropdown-menu tags-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url">
+    <li role="menuitem" ng-repeat="tag in vm.tags" ng-click="vm.stop($event)">
+        <label for="tag-{{ $index }}">
+            <input type="checkbox" id="tag-{{ $index }}" ng-model="tag.checked"/>
+            <span>{{ tag.name }}</span>
+        </label>
+    </li>
+    <li>
+        <button type="button" class="btn-add btn btn-xs btn-primary" ng-click="vm.save()">确定</button>
+    </li>
+</ul>

@@ -1,0 +1,240 @@
+.tasks-container,
+.task-container,
+.report-container  {
+    @include table-class;
+    @include checkbox-table;
+    @include input-search-class;
+    @include header-btn-position;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 75px);
+    width: 1130px;
+    margin-top: 75px;
+    padding-left: 20px;
+    h2 {
+        margin-top: 25px;
+    }
+    .head {
+        position: fixed;
+        top: 100px;
+        width: 1110px;
+        padding: 20px 0;
+        background-color: $white;
+        z-index: 1;
+        h3 {
+            float: left;
+            display: inline-block;
+            margin: 0;
+            font-size: 24px;
+        }
+        .btn {
+            height: 30px;
+            margin-left: 5px !important;
+            display: inline-block;
+        }
+        .input-alarm {
+            padding-left: 15px;
+            @include input-alarm-class;
+        }
+        .text-right {
+            position: relative;
+            input.search {
+                margin-left: 10px;
+            }
+            .explain {
+                float: left;
+                margin: 0 0 0 10px;
+                line-height: 30px;
+                font-size: 12px;
+            }
+        }
+        .btn-filter {
+            float: left;
+            margin-left: 10px;
+            line-height: 30px;
+        }
+        .search-click {
+            margin-left: 10px;
+        }
+    }
+    img {
+        width: 50px;
+        height: 50px;
+    }
+    .link {
+        color: $blue;
+        text-decoration: none;
+        &:hover{
+            border-bottom: 1px solid $blue;
+        }
+    }
+    .green {
+        color: $green;
+    }
+    .red {
+        color: $red;
+    }
+    .result {
+        width: 100px;
+        display: inline-block;
+    }
+    .filter th {
+        height: 20px;
+        padding: 5px !important;
+        input {
+            width: 100%;
+        }
+    }
+    .dropdown-toggle {
+        cursor: pointer;
+        .fa-sort-down {
+            margin-left: 5px;
+            color: $black;
+        }
+        a {
+            margin: 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+    }
+    .short-menu {
+        min-width: 0;
+    }
+    table {
+        @include input-checkbox-class;
+        /* 去掉table-class样式引入的margin-top: 20px */
+        margin-top: 0;
+        width: 100%;
+        thead tr th {
+            /* 去掉tb-table-striped样式引入的min-width */
+            min-width: 0;
+        }
+        .date {
+            white-space: nowrap;
+        }
+        .fix-fa {
+            position: relative;
+            .fa {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+        .select {
+            min-width: 30px;
+            max-width: 65px;
+        }
+        .is-todo {
+            min-width: 50px;
+            max-width: 65px;
+        }
+        .scenario {
+            min-width: 55px;
+            max-width: 65px;
+        }
+        .id {
+            min-width: 50px;
+            max-width: 65px;
+        }
+        .param {
+            min-width: 48px;
+            max-width: 65px;
+        }
+        .tags {
+            min-width: 50px;
+            max-width: 65px;
+        }
+        .times {
+            min-width: 50px;
+            max-width: 65px;
+        }
+        .results {
+            min-width: 50px;
+        }
+        .handle {
+            min-width: 68px;
+        }
+        .device-status {
+            min-width: 50px;
+            max-width: 65px;
+        }
+        tbody {
+            tr {
+                td{
+                    min-width: 65px;
+                    max-width: 300px;
+                    padding: 0 10px;
+                }
+            }
+        }
+    }
+    .comptest-table {
+        tbody {
+            tr {
+                td{
+                    padding: 0 4px;
+                }
+            }
+        }
+    }
+}
+
+.task-model {
+    p {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    .modal-foot {
+        margin-top: 30px !important;
+        .cancel {
+            cursor: pointer;
+            color: $gray;
+            font-size: 12px;
+            margin: 0 40px;
+        }
+        .btn {
+            width: 100px;
+        }
+    }
+}
+
+.icon-trash-gray{
+    width: 24px;
+    height: 24px;
+    background-image: url("img/testcase/icon-trash-gray.png");
+    background-size: 100%;
+}
+
+.icon-rerun{
+    width: 24px;
+    height: 20px;
+    background-image: url("img/icon-rerun.png");
+    background-size: 100%;
+}
+
+.retest-wrap {
+    .version-dropdown {
+        margin-left: 30px;
+        cursor: pointer;
+        .fa {
+            position: relative;
+            top: -2px;
+            margin-left: 5px;
+            color: $gray;
+        }
+    }
+    .form-group {
+        line-height: 30px;
+        input[type=radio] {
+            margin: 0 5px 0 30px;
+        }
+    }
+    .msg {
+        text-align: center;
+    }
+    .choose-file-btn {
+        border: 0;
+        text-decoration: underline;
+        color: $blue;
+    }
+}

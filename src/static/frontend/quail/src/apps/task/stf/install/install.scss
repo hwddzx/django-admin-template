@@ -1,0 +1,134 @@
+$dropAreaBorderColor: #c1c9d6;
+.rio-upload {
+    height: 200px;
+}
+
+.tb-modal.install-modal {
+    h1{
+        margin-bottom: 20px;
+    }
+    .modal-foot {
+        margin: 30px 0 10px;
+        .btn {
+            width: 130px;
+            height: 40px;
+        }
+    }
+}
+
+.upload-container {
+    position: relative;
+    text-align: center;
+    &.widget-container {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: transparent;
+        @include box-shadow(none);
+    }
+    .drop-area.btn-file {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        text-align: center;
+        border: 0px $dropAreaBorderColor dashed;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: transparent;
+        @include vertical-column-center;
+    }
+    .installing {
+        font-weight: normal;
+    }
+    .loading {
+        position: relative;
+        height: 60px;
+        width: 100%;
+    }
+    .point-loading {
+        display: inline-block;
+        width: 30px;
+        text-align: left;
+    }
+    .progress-text {
+        font-weight: normal;
+    }
+    .install-error {
+        color: $gray;
+        text-align: left;
+        line-height: 25px;
+        margin: 0;
+        width: 100%;
+        word-wrap: break-word;
+        word-break: break-all;
+        .col-md-3 {
+            text-align: right;
+        }
+        .col-md-3,
+        .col-md-9 {
+            margin-bottom: 0;
+        }
+        p {
+            margin: 0;
+            span {
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                margin-right: 20px;
+            }
+        }
+    }
+    .alert {
+        width: 50%;
+    }
+    .install-done {
+        position: relative;
+        top: -10px;
+    }
+    .progress {
+        width: 500px;
+    }
+    .package-info {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #8e9194;
+    }
+    .icon-package {
+        margin-right: 10px;
+        vertical-align: text-top;
+        position: relative;
+        top: -2px;
+    }
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 999px;
+        text-align: right;
+        opacity: 0;
+        outline: none;
+        cursor: inherit;
+        display: block;
+    }
+    .dragover {
+        border-color: #157afb !important;
+    }
+    .upload-status {
+        margin-top: 0;
+    }
+    .manifest-text {
+        font-size: 10px;
+    }
+    .drop-area-text {
+        font-size: 14px;
+        font-weight: 300;
+        color: $gray;
+    }
+}

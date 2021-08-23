@@ -1,0 +1,103 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/report.head.html'"></ng-include>
+<!-- /头部 -->
+<div class="dialtest-detail-container content-container">
+    <div class="current-app-container">
+        <img ng-src="{{ vm.app.icon_url }}"/>
+        <div class="info">
+            <div class="app-name" ng-bind="vm.app.name"></div>
+        </div>
+        <form class="form-inline head-form">
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}"
+                       ng-model="vm.startPopup.date"
+                       is-open="vm.startPopup.opened" ng-required="true"
+                       close-text="关闭"
+                       clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                       placeholder="选择时间-开始"/>
+                <span class="form-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('startPopup')">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.getData()">搜索</a>
+            </div>
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.sentEmail()">邮件发送</a>
+            </div>
+        </form>
+    </div>
+    <div class="dialtest-report-head">
+        <h3>测试概况</h3>
+    </div>
+    <table class="tb-no-head-border-table tb-no-head-table-title margin-bottom-30 detail-table overview-table">
+        <tr>
+            <td class="td-releases">
+                <div>测试版本</div>
+                <div ng-bind="vm.overview.releases.join(',')"></div>
+            </td>
+            <td class="td-date">
+                <div>测试开始时间</div>
+                <div ng-bind="vm.overview.start_time | dateFilter"></div>
+            </td>
+            <td class="td-statistics">
+                <div>功能测试</div>
+                <div>用例总数{{vm.testcaseAll}}条，成功{{vm.overview.testcase_result.success}}条，阻塞{{vm.overview.testcase_result.blocked}}条，<span class="red">失败{{vm.overview.testcase_result.failed}}条</span></div>
+                <div>共运行{{vm.testcaseRunAll}}条，成功{{vm.testcaseRunSuccess}}条，阻塞{{vm.testcaseRunBlocked}}条，<span class="red">失败{{vm.testcaseRunFailed}}条</span></div>
+            </td>
+            <td class="td-statistics">
+                <div>数据检查</div>
+                <div>检查点总数{{vm.datacheckAll}}个，成功{{vm.datacheckPassAll}}个，<span class="red">失败{{vm.datacheckFailAll}}个</span></div>
+                <div>共运行{{vm.datacheckRunAll}}个，成功{{vm.datacheckRunSuccess}}个，<span class="red">失败{{vm.datacheckRunFailed}}个</span></div>
+            </td>
+        </tr>
+    </table>
+    <h3>功能测试</h3>
+    <div class="chart-half-width-left">
+        <div class="dialtest-title-bg">功能测试</div>
+        <div class="dialtest-chart" dialtest-functest-pass></div>
+    </div>
+    <div class="chart-half-width-right">
+        <div class="dialtest-title-bg">用例统计运行</div>
+        <div class="dialtest-chart" dialtest-functest-run></div>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-functest-time></div>
+    </div>
+    <h3>数据检查</h3>
+    <div class="chart-half-width-left">
+        <div class="dialtest-title-bg">数据检查</div>
+        <div class="dialtest-chart" dialtest-datacheck-pass></div>
+    </div>
+    <div class="chart-half-width-right">
+        <div class="dialtest-title-bg">数据检查运行</div>
+        <div class="dialtest-chart" dialtest-datacheck-run></div>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-datacheck-time></div>
+    </div>
+    <div class="head-container">
+        <h3>功能测试场景概况</h3>
+        <form class="form-inline head-form">
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.goFunctest()">查看详情</a>
+            </div>
+        </form>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-functest-scenario></div>
+    </div>
+    <div class="head-container">
+        <h3>数据检查场景概况</h3>
+        <form class="form-inline head-form">
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.goDatacheck()">查看详情</a>
+            </div>
+        </form>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-datacheck-scenario></div>
+    </div>
+</div>

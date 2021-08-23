@@ -1,0 +1,18 @@
+<div class="tab-modal stf-screenshots" ng-controller="VideoCtrl">
+    <div class="modal-head">
+        图片<i class="icon icon-sidebar-close" />
+    </div>
+    <div class="modal-content">
+        <ul class="screenshots-icon-view clear-fix selectable">
+            <li ng-repeat="shot in data.screenshots" class="screenshots-icon-item cursor-select">
+                <a ng-href="{{ getSnapshot(shot,device) }}" target="_blank"><img ng-src="{{  getSnapshot(shot,device) + shotSizeParameter(480, 1) }}" ng-srcset="{{  getSnapshot(shot,device) + shotSizeParameter(480, 2) }} 2x" class="screenshot-image" /></a>
+                <h6>{{ shot.body.date | date:'HH:mm:ss' }}</h6>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-foot">
+        <a href="" ng-click="clear()" class="btn btn-gray" >清空</a>
+    </div>
+</div>
+</div>
+</div>

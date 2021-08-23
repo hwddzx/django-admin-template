@@ -1,0 +1,37 @@
+<div class="tb-modal">
+    <h1 class="head">定位<i class="icon icon-popup-close" ng-click="vm.cancel()"></i></h1>
+    <div class="model-content">
+        <div class="form-group">
+            <label for="xPathDefault">
+                <input type="radio" name="xpath" id="xPathDefault" ng-model="vm.model.checkedXPath" ng-value="vm.model.xPaths.xPathDefault">
+                基本定位
+                 <i class="fa fa-question-circle icon-explain" title= "定义：根据控件属性定位，可以检查一类相同属性列表参数。&#10;使用场景：用户需要检查一组结构相似的值是否满足某个条件，有多项时需要配置正则表达式。"></i>
+            </label>
+        </div>
+        <div class="tips" ng-if="vm.model.xPaths.xPathIndex">
+            <p>使用index属性辅助定位 <i class="fa fa-question-circle icon-explain" title= "定义：根据控件index属性进行定位。&#10;使用场景：适合控件在页面结构中的路径固定，但文本内容会变化。"></i></p>
+        </div>
+        <div class="form-group" ng-if="vm.model.xPaths.xPathIndex">
+            <label for="xPathIndex">
+                <input type="radio" name="xpath" id="xPathIndex" ng-model="vm.model.checkedXPath" ng-value="vm.model.xPaths.xPathIndex">
+                位置定位
+            </label>
+        </div>
+        <div class="tips" ng-if="vm.model.xPaths.xPathText.length">
+            <p>
+                <span  title="使用基准点辅助定位">使用基准点辅助定位</span>
+                <i class="fa fa-question-circle icon-explain" title= "定义：根据相对路径查找文本控件，通过控件文本值查找。&#10;使用场景：适合检查文本控件内容固定的情况。"></i>
+            </p>
+        </div>
+        <div class="form-group" ng-if="vm.model.xPaths.xPathText" ng-repeat="path in vm.model.xPaths.xPathText">
+            <label for="xPathText-{{ $index }}">
+                <input type="radio" name="xpath" id="xPathText-{{ $index }}" ng-model="vm.model.checkedXPath" ng-value="path">
+                {{ path.content }}
+            </label>
+        </div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default btn-watchet" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" type="submit" ng-click="vm.close()">确定</button>
+    </div>
+</div>

@@ -1,0 +1,558 @@
+@import "compass";
+$blue:#0070f0;
+$blueLight:#f1f7fe;
+$blueBg:#fafcff;
+$blueLightBg:#fafcff;
+$skyBlue:#add1fa;
+$gray:#8792a3;
+$grayLight:#f4f7fb;
+$grayBtnBorder:#edf2f7;
+$grayLightBorder:#ebeff5;
+$grayDarkBorder:#c1c9d6;
+$skyBlueLight:#c9d7e4;
+$green:#27a907;
+$greenBorder:#95d585;
+$greenBg:#e7f5e3;
+$black:#191e25;
+$headBgColor:#191e25;
+$greenColor:#27a822;
+$orange:#ff7e00;
+$red:#f6444d;
+$redBorder:#fdadb1;
+$redBg:#feeced;
+$popoverBg:#fff3e7;
+$popoverBorder:#ffaa57;
+$popoverTextColor:#ff7e00;
+body {
+    font-family: 'Lantinghei SC', 'Helvetica Neue', 'Microsoft Yahei', Arial, sans-serif;
+    color: $black;
+}
+
+a {
+    color: $blue;
+    &:hover {
+        color: $gray;
+    }
+}
+
+@mixin vertical-center {
+    @include flexbox(( display: flex, flex-direction: row, align-items: center, justify-content: flex-start));
+}
+
+@mixin vertical-column-center {
+    @include flexbox(( display: flex, flex-direction: column, align-items: center, justify-content: center));
+}
+
+@mixin default-transition {
+    transition: 100ms ease-in all;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $gray;
+    border-radius: 5px;
+}
+
+.modal-dialog {
+    margin: 80px auto!important;
+}
+
+@media (min-width: 768px) {
+    .modal-md {
+        width: 400px;
+    }
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
+        width: 600px;
+    }
+    .modal-hg {
+        width: 900px;
+    }
+}
+
+body{
+    height: 100%;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.modal-content {
+    border-radius: 4px;
+}
+
+.red-text {
+    color: $red!important;
+}
+
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-center {
+    text-align: center!important;
+}
+
+.text-left {
+    text-align: left!important;
+}
+
+.text-right {
+    text-align: right!important;
+}
+
+.text-unselect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.gray {
+    color: $gray!important;
+}
+
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    &.icon-plus {
+        width: 20px;
+        height: 20px;
+        background: url('img/plus.png');
+        margin-left: 5px;
+        background-size: 100%;
+    }
+    &.icon-using {
+        width: 64px;
+        height: 24px;
+        background: url('img/icon-using.png');
+        background-size: 100%;
+    }
+    &.icon-ellipse {
+        width: 6px;
+        height: 6px;
+        background: url('img/icon-ellipse.png');
+        background-size: 100%;
+    }
+    &.icon-search {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-search.png');
+        background-size: 100%;
+    }
+    &.icon-unlock {
+        width: 18px;
+        height: 18px;
+        background: url('img/unlock-icon.png');
+        background-size: 100%;
+    }
+    &.icon-close {
+        width: 8px;
+        height: 8px;
+        background: url('img/icon-close.png');
+        background-size: 100%;
+    }
+    &.icon-ok {
+        width: 11px;
+        height: 8px;
+        background: url('img/icon-ok.png');
+        background-size: 100%;
+    }
+    &.icon-ok-selected {
+        width: 11px;
+        height: 8px;
+        background: url('img/icon-ok-selected.png');
+        background-size: 100%;
+    }
+    &.icon-check {
+        width: 16px;
+        height: 16px;
+        background: url('img/icon-check.png');
+        background-size: 100%;
+    }
+    &.icon-check-orange {
+        width: 16px;
+        height: 16px;
+        background: url('img/icon-check-orange.png');
+        background-size: 100%;
+    }
+    &.icon-done {
+        width: 90px;
+        height: 90px;
+        background: url('img/icon-done.png');
+        background-size: 100%;
+    }
+    &.icon-done-large {
+        width: 120px;
+        height: 120px;
+        background: url('img/icon-done-large.png');
+        background-size: 100%;
+    }
+    &.icon-package {
+        width: 20px;
+        height: 23px;
+        background: url('img/icon-package.png');
+        background-size: 100%;
+    }
+    &.icon-alipay {
+        width: 90px;
+        height: 26px;
+        background: url('img/icon-alipay.png');
+        background-size: 100%;
+    }
+    &.icon-modal-close {
+        width: 12px;
+        height: 12px;
+        background: url('img/icon-modal-close.png');
+        background-size: 100%;
+    }
+    &.icon-list {
+        width: 24px;
+        height: 16px;
+        background: url('img/icon-list.png');
+        background-size: 100%;
+    }
+    &.icon-back {
+        width: 24px;
+        height: 19.5px;
+        background: url('img/icon-back.png');
+        background-size: 100%;
+    }
+    &.icon-home {
+        width: 24px;
+        height: 23px;
+        background: url('img/icon-home.png');
+        background-size: 100%;
+    }
+    &.icon-upload {
+        width: 60px;
+        height: 60px;
+        background: url('img/icon-upload.png');
+        background-size: 100%;
+    }
+    &.icon-photocam {
+        width: 24px;
+        height: 18px;
+        background: url('img/icon-photocam.png');
+        background-size: 100%;
+    }
+    &.icon-left-sparrow {
+        width: 6px;
+        height: 11px;
+        background: url('img/icon-left-sparrow.png');
+        background-size: 100%;
+    }
+    &.icon-info-sim {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-sim.png');
+        background-size: 100%;
+    }
+    &.icon-info-battery {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-battery.png');
+        background-size: 100%;
+    }
+    &.icon-info-display {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-display.png');
+        background-size: 100%;
+    }
+    &.icon-info-hardware {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-hardware.png');
+        background-size: 100%;
+    }
+    &.icon-info-platform {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-platform.png');
+        background-size: 100%;
+    }
+    &.icon-info-network {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-info-network.png');
+        background-size: 100%;
+    }
+    &.icon-unlock {
+        width: 22px;
+        height: 24px;
+        background: url('img/icon-unlock.png');
+        background-size: 100%;
+    }
+    &.icon-lock {
+        width: 20px;
+        height: 24px;
+        background: url('img/icon-lock.png');
+        background-size: 100%;
+    }
+    &.icon-hd {
+        width: 24px;
+        height: 19px;
+        background: url('img/icon-hd.png');
+        background-size: 100%;
+    }
+    &.icon-keyboard {
+        width: 24px;
+        height: 17px;
+        background: url('img/icon-keyboard.png');
+        background-size: 100%;
+    }
+    &.icon-hd-gray {
+        width: 14.5px;
+        height: 6px;
+        background: url('img/icon-hd-gray.png');
+        background-size: 100%;
+    }
+    &.icon-rabbit {
+        width: 17px;
+        height: 12px;
+        background: url('img/icon-rabbit.png');
+        background-size: 100%;
+    }
+    &.icon-free-manufacturer {
+        width: 200px;
+        height: 70px;
+        background: url('img/icon-free-manufacturer.png');
+        background-size: 100%;
+    }
+    &.icon-package-gray {
+        width: 20px;
+        height: 23px;
+        background: url('img/icon-package-gray.png');
+        background-size: 100%;
+    }
+    &.icon-package-green {
+        width: 20px;
+        height: 23px;
+        background: url('img/icon-package-green.png');
+        background-size: 100%;
+    }
+    &.icon-upload-tip {
+        width: 40px;
+        height: 40px;
+        background: url('img/icon-upload-tip.png');
+        background-position-y: 40px;
+        background-size: 100%;
+    }
+    &.icon-sidebar-close {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-sidebar-close.png');
+        background-size: 100%;
+        &:hover {
+            background-position: 0 20px;
+        }
+    }
+    &.icon-tips-done {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-tips-done.png');
+        background-size: 100%;
+    }
+    &.icon-tips-error {
+        width: 20px;
+        height: 20px;
+        background: url('img/icon-tips-error.png');
+        background-size: 100%;
+    }
+    &.icon-avatar-default {
+        width: 40px;
+        height: 40px;
+        background: url('img/icon-avatar-default.png');
+        background-size: 100%;
+    }
+    &.icon-popup-close {
+        width: 32px;
+        height: 32px;
+        background: url('img/icon-popup-close.png');
+        background-size: 100%;
+    }
+    &.icon-log-download {
+        width: 24px;
+        height: 24px;
+        background: url('img/icon-log-download.png');
+        background-size: 100%;
+    }
+    &.icon-debug {
+        width: 18px;
+        height: 20px;
+        background: url('img/icon-debug.png');
+        background-size: 100%;
+    }
+    &.icon-safe {
+        width: 90px;
+        height: 90px;
+        background: url('img/icon-safe.png');
+        background-size: 100%;
+    }
+    &.icon-checkbox-disable {
+        width: 15px;
+        height: 15px;
+        background: url("img/icon-checkbox-disable.png");
+        background-size: 100%;
+    }
+}
+
+.btn {
+    border-radius: 0!important;
+    font-weight: 300;
+    &.green-btn {
+        background-color: $greenColor;
+        padding: 4px 12px;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 0;
+        &:hover {
+            background-color: #239806;
+            color: #fff;
+        }
+    }
+    &.btn-green {
+        background-color: $greenColor;
+        color: #fff;
+        &:hover {
+            background-color: #239806;
+            color: #fff;
+        }
+    }
+    &.btn-red {
+        background-color: $red;
+        color: #fff;
+        &:hover {
+            background-color: #dd3d45;
+            color: #fff;
+        }
+    }
+    &.btn-orange {
+        background-color: $orange;
+        color: #fff;
+        &:hover {
+            background-color: #e57100;
+            color: #fff;
+        }
+    }
+    &.btn-blue {
+        background-color: $blue;
+        color: #fff;
+        &:hover {
+            background-color: darken($blue, 10%);
+            color: #fff;
+        }
+    }
+    &.btn-gray {
+        background-color: #fff;
+        color: $grayDarkBorder;
+        border: 1px solid $grayDarkBorder;
+        &:hover {
+            background-color: $grayDarkBorder;
+            color: #fff;
+            border: 1px solid $grayDarkBorder;
+        }
+    }
+    &.btn-long {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+    &.btn-disable {
+        color: #fff;
+        background-color: #f0f0f0;
+    }
+    &.btn-primary {
+        background-color: #167FFC;
+        border: 0;
+        color: #fff;
+        &:hover {
+            background-color: darken(#167FFC, 20%);
+        }
+    }
+    &.btn-white {
+        color: #fff;
+        background-color: transparent;
+        border-color: #fff;
+        border-radius: 2px!important;
+    }
+    &.btn-default {
+        background-color: #d1d9e0;
+        border-color: #d1d9e0;
+        color: #8792a3;
+        &:hover {
+            background-color: #d0d7dc;
+            border-color: #d0d7dc;
+        }
+    }
+    &.btn-light {
+        background: none;
+        color: $gray;
+        border: 0;
+        &:hover {
+            background: none;
+            color: $gray;
+            border: 0;
+        }
+    }
+}
+
+@include keyframes(roll) {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@include keyframes(roll-back) {
+    0% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@include keyframes(fadeIn) {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(fadeOut) {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

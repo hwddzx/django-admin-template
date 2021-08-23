@@ -1,0 +1,57 @@
+<div class="component-manage">
+    <div class="tb-spliter" tb-spliter data-border-width="10">
+        <div class="left spliter-left">
+            <h3 class="component-title">用例列表</h3>
+            <ul id="manageTree" class="ztree" tb-z-tree data-nodes="vm.testcases" data-setting="vm.setting"></ul>
+        </div>
+        <div class="right spliter-right">
+            <div class="component-manage-head">
+                <span class="title">{{vm.isUpdate?"更新":"创建"}}{{vm.isDirectory?'目录':'模块'}}</span>
+                <button class="btn btn-default btn-sm" ng-click="vm.cancel()">取消</button>
+                <button class="btn btn-primary btn-sm" ng-disabled="vm.cannotSave()" ng-click="vm.saveComponent()">{{vm.model.isUpdate?'更新':'保存'}}</button>
+                <button class="btn btn-primary btn-sm" ng-if="!vm.isUpdate&&!vm.isDirectory" ng-click="vm.createNewComponent()">创建模块</button>
+            </div>
+            <div class="component-manage-content">
+                <div class="form-group" ng-if="vm.componentArr.length">
+                    <label class="title">已创建:</label>
+                    <ul class="component-list">
+                        <li ng-repeat="item in vm.componentArr">
+                            <i class="icon icon-remove" ng-click="vm.removeComponent(item)"></i>
+                            <a><i class="icon component-icon"></i><span class="text" title="{{item.name}}">{{item.name}}</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <form class="form-horizontal" tb-form-validator data-bv-excluded="">
+                    <div class="form-group" ng-if="vm.parent">
+                        <label class="title">目录名称:</label>
+                        <div class="text">{{vm.isUpdate ? "desc": vm.parent.name }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="title">名称:</label>
+                        <input type="text" name="title" class="form-control auto-change title-input" maxlength="30" set-focus
+                               focus-on="true" ng-model="vm.model.component.name"
+                               data-bv-notempty data-bv-notempty-message="名称不能为空！"
+                               placeholder="请输入名称！(必填)"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="title">描述:</label>
+                        <textarea ng-model="vm.model.component.desc" name="desc" class="form-control" maxlength="500" placeholder="请输入描述！(可选)"></textarea>
+                    </div>
+                    <label ng-if="!vm.isDirectory">提示:点击要作为模块的第一张图和最后一张图(不选择则创建空模块)</label>
+                    <label ng-if="vm.isDirectory">提示:可以选择一张图作为目录参考</label>
+                </form>
+                <div class="adaptive-images-container">
+                    <div class="snapshot-item" ng-repeat="snapshot in vm.model.testcase.snapshots">
+                        <div class="adaptive-image-wrap" ng-click="vm.selectSnapshot($index)">
+                            <img class="snapshot-image" tb-adaptive-image data-width="120" ng-src="{{ snapshot.url | qiniuThumbnail }}"/>
+                            <div class="overlay" ng-show="snapshot.isSelected"></div>
+                        </div>
+                        <div class="meta">
+                            <div class="number">{{ $index + 1 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

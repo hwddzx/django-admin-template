@@ -1,0 +1,65 @@
+.tb-header {
+    .help-icon {
+        position: absolute;
+        top: 22px;
+        right: 150px;
+        height: 20px;
+        width: 20px;
+        background: url("img/head/help-icon.png") no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        .dropdown-menu {
+            top: 30px;
+        }
+        .fa-sort-desc {
+            margin-left: 30px;
+        }
+    }
+    .btn-app-upload {
+        border-radius: 2px !important;
+        right: -85px;
+    }
+    .nickName {
+        display: block;
+        float: left;
+        width: 55px;
+        padding: 0 2px;
+        font-style: normal;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .text-unselect i {
+        display: block;
+        float: left;
+    }
+
+    .nickNameAvatar {
+        margin-top: 10px;
+    }
+
+    .nickNamefa {
+        margin-top: 23px;
+    }
+}
+
+.tb-nav {
+    .icon_product {
+        margin-right: 5px;
+    }
+    .fa-sort-desc {
+        vertical-align: text-top;
+        color: $blue;
+        margin-left: 5px;
+    }
+    .dropdown-btn {
+        &:hover {
+            color: $blue;
+            text-decoration: underline;
+        }
+    }
+    .dropdown .dropdown-menu li a {
+        line-height: 40px;
+    }
+}

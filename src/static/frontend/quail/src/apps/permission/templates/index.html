@@ -1,0 +1,52 @@
+<div ui-view></div>
+<div class="permission-container clearfix">
+    <div class="test-case-head">
+        <h3>用例管理</h3>
+    </div>
+    <div class="tb-spliter" tb-spliter data-border-width="10">
+        <div class="left spliter-left">
+            <div class="title-wrap">
+                <span class="title">成员</span>
+            </div>
+            <div class="group">
+                <input type="text" placeholder="输入邮箱查询或者添加" ng-model="vm.searchEmail" ng-change="vm.searchEmailChange()"/>
+                <button class="btn btn-default" ng-click="vm.addUser()">添加</button>
+                <ul class="unstyled list-unstyled search-panel" ng-show="vm.isShowSearchPannel">
+                    <li ng-repeat="user in vm.allUser | filter: {email: vm.searchEmail}" ng-bind="user.email" ng-click="vm.chooseSearchEmail(user.email)"></li>
+                </ul>
+            </div>
+            <ul class="user-list unstyled list-unstyled">
+                <li ng-repeat="user in vm.userList | filter: {email: vm.searchEmail}" ng-class="{'active':user==vm.currentUser}">
+                    <i class="icon icon-user"></i>
+                    <span class="name" ng-bind="user.email" ng-click="vm.chooseUser(user)"></span>
+                    <i class="icon icon-delete" ng-hide="$first" ng-click="vm.deleteUser(user.id)"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="right spliter-right" ng-show="vm.permission.scenarios">
+            <div class="title-wrap">
+                <span>个人设置</span>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-1">应用权限</div>
+                    <div class="col-md-11 checkbox-wrap">
+                        <input type="checkbox" id="supervisor" ng-checked="vm.permission.is_supervisor" ng-click="vm.settingPermission('supervisor')"/>
+                        <label for="supervisor">设置为管理员</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">场景权限</div>
+                    <div class="col-md-11">
+                        <div class="scenarios-permission">
+                            <span class="title-left">场景</span>
+                            <span class="title-right">权限</span>
+                        </div>
+                        <ul class="ztree" id="testcase-tree1" tree-table></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

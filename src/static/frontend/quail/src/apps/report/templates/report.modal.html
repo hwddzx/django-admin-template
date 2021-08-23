@@ -1,0 +1,13 @@
+<div tb-modal class="tb-modal">
+    <h1 class="head">是否确认生成报告?<i class="icon icon-popup-close" ng-click="cancel()"></i></h1>
+    <form>
+        <div class="form-group">
+            <label>名称</label>
+            <input type="text" maxlength="128" class="form-control" ng-model="model.name">
+        </div>
+    </form>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-click="close()">确定</button>
+    </div>
+</div>

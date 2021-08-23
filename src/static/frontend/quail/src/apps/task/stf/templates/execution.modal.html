@@ -1,0 +1,74 @@
+<div tb-modal class="tb-modal execution-model">
+    <h1 class="head">测试结果<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+    <form tb-form-validator data-bv-excluded="">
+        <div class="form-group clearfix">
+            <label class="tag">用例名<span>*</span></label>
+            <input type="text" maxlength="128" class="form-control" name="modelName" ng-disabled="model.hasTestcase" ng-model="model.name" data-bv-notempty data-bv-notempty-message="用例名不能为空！">
+        </div>
+        <div class="form-group" ng-if="model.hasTestcase">
+            <label class="tag">用例ID</label>
+            <input type="text" maxlength="128" class="form-control" name="refer_key" ng-disabled="model.hasTestcase" ng-model="model.refer_key">
+        </div>
+        <div class="form-group" ng-if="!model.hasTestcase">
+            <label class="tag">用例参考ID</label>
+            <input type="text" maxlength="128" class="form-control" name="refer_key" ng-model="model.refer_key">
+        </div>
+        <div class="form-group" ng-if="!model.hasTestcase">
+            <label class="tag">用例参考链接</label>
+            <input type="url" class="form-control" name="url" ng-model="model.refer_url" data-bv-uri-message="请输入合法网址">
+        </div>
+        <div class="form-group">
+            <label class="tag">场景</label>
+            <input type="text" maxlength="128" class="form-control" name="scenario" ng-model="model.scenario">
+        </div>
+        <div class="form-group">
+            <label class="tag">测试结果<span>*</span></label>
+            <span>
+                <input type="radio" id="blocked" name="result" ng-model="model.result" value="0" />
+                <label name="result" for="blocked">阻塞<i class="icon icon-check"></i></label>
+            </span>
+            <span>
+                <input type="radio" id="pass" name="result" ng-model="model.result" value="1"/>
+                <label name="result" for="pass">通过<i class="icon icon-check"></i></label>
+            </span>
+            <span>
+                <input type="radio"  id="fail" name="result" ng-model="model.result" value="-1"/>
+                <label name="result" for="fail">失败<i class="icon icon-check"></i></label>
+            </span>
+        </div>
+        <div class="form-group" ng-if="model.result==-1">
+            <label for="exampleInputFile" class="tag"></label>
+            <div class="form-control severity">
+                <input type="radio" id="deadly" name="severity" ng-model="model.severity" value="0" />
+                <label name="severity" for="deadly">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-dot-circle-o"></i> 致命
+                </label>
+                <input type="radio" id="severe" name="severity" ng-model="model.severity" value="10" />
+                <label name="severity" for="severe">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-dot-circle-o"></i> 严重
+                </label>
+                <input type="radio" id="common" name="severity" ng-model="model.severity" value="20" />
+                <label name="severity" for="common">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-dot-circle-o"></i> 一般
+                </label>
+                <input type="radio" id="prompt" name="severity" ng-model="model.severity" value="30" />
+                <label name="severity" for="prompt">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-dot-circle-o"></i> 提示
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFile" class="tag">备注</label>
+            <textarea class="form-control" id="exampleInputFile" name="desc" ng-model="model.desc"></textarea>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default" ng-click="cancel()">取消</button>
+            <button class="btn btn-fix btn-primary" type="submit" data-form-submit="model.over=true;close()">结束测试任务</button>
+            <button class="btn btn-fix btn-primary" type="submit" data-form-submit="close()" ng-show="!model.isLast">下一个用例</button>
+        </div>
+    </form>
+</div>

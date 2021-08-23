@@ -1,0 +1,91 @@
+$logcatTableRowDividerColor: #edf2f7;
+$modalContentBgColor:#212730;
+.stf-logcat-table {
+    background: transparent;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    border-top: 1px solid $grayBtnBorder;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.stf-logcat-table table {
+    table-layout: fixed !important;
+}
+
+.stf-logcat-table tbody tr {
+    border-bottom: 1px solid $logcatTableRowDividerColor;
+}
+
+.stf-logcat-table tbody td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.stf-logcat-table .console-message-text {
+    font-size: 11px !important;
+    font-family: Menlo, monospace;
+    white-space: pre-wrap;
+    width: 100%;
+}
+
+.stf-logcat-table .console-message-text td {
+    vertical-align: baseline;
+}
+
+.stf-logcat-table tr td:nth-child(1) {
+    width: 50px;
+}
+
+.stf-logcat-table tr td:nth-child(2) {
+    width: 100px;
+}
+
+.stf-logcat-table tr td:nth-child(3) {
+    word-wrap: break-word;
+}
+
+.ios-message-text .stf-logcat-table tr td:nth-child(1) {
+    width: 100%;
+}
+
+
+/**
+  Logging colors
+*/
+
+.stf-logcat-table .log-unknown {
+    color: bisque;
+}
+
+.stf-logcat-table .log-default,
+.stf-logcat-table .log-silent {
+    color: darkolivegreen;
+}
+
+.stf-logcat-table .log-verbose {
+    color: blueviolet;
+}
+
+.stf-logcat-table .log-debug {
+    color: gray;
+}
+
+.stf-logcat-table .log-info {
+    color: #177d1c;
+}
+
+.stf-logcat-table .log-warn {
+    color: coral;
+}
+
+.stf-logcat-table .log-error {
+    color: red;
+}
+
+.stf-logcat-table .log-fatal {
+    color: darkcyan;
+}

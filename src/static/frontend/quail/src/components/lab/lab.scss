@@ -1,0 +1,70 @@
+.lab-dropdown {
+    overflow: hidden;
+    .apps-menu {
+        width: 540px;
+        max-width: 540px;
+        overflow-y: auto;
+    }
+    .menu {
+        width: 260px;
+        padding: 20px;
+        float: left;
+        .title {
+            padding: 0 10px;
+            color: $black;
+            font-size: 20px;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        .horizontal-divider {
+            height: 0;
+            width: 200px;
+            margin: 10px;
+        }
+        .search-app {
+            height: 40px;
+            padding: 0;
+            .icon-search {
+                top: 10px;
+            }
+        }
+        li {
+            width: 220px;
+            height: 60px;
+            margin: 5px 0;
+            padding: 10px;
+            a {
+                width: 160px;
+                color: $black;
+            }
+            .os-icon {
+                top: 7px;
+                left: 7px;
+            }
+            .progress-icon {
+                position: absolute;
+                top: 24px;
+                right: 10px;
+            }
+            .icon-bell {
+                position: absolute;
+                top: -2px;
+                left: 38px;
+            }
+            &:hover, &.active {
+                background-color: $gray-hover;
+                a {
+                    color: $black;
+                }
+            }
+        }
+    }
+    .spliter-bar {
+        float: left;
+        width: 0;
+        margin: 20px 0;
+        border-right: 1px dotted $gray-border;
+    }
+}

@@ -1,0 +1,25 @@
+<div class="snapshots-wrap tb-snapshot-slider" tb-slider options="sliderOptions" slider-api="slider">
+    <div class="tb-overflow-hidden">
+        <div class="snapshot-left">
+            <div ng-click="prevSnapshot()"></div>
+        </div>
+        <div class="snapshot-container tb-slider-wrap">
+            <div class="single-snapshot " ng-class="{true:'patched'}[snapshot.is_patched]" ng-repeat="snapshot in snapshots">
+                <div class="snashot-img-box">
+                    <img class="snapshot-img tb-res-adaptive-image" data-ver-width="150" data-lazy="{{ snapshot.url }}" />
+                </div>
+                <div class="snapshot-time">{{ snapshot.time / 1000 | dateFilter}}</div>
+                <div ng-if="editable">
+                    <input type="checkbox" id="snapshot-img-checkbox-{{ $index }}" ng-model="snapshot.checked" />
+                    <label for="snapshot-img-checkbox-{{ $index }}"></label>
+                </div>
+            </div>
+        </div>
+        <div class="snapshot-right">
+            <div ng-click="nextSnapshot()"></div>
+        </div>
+    </div>
+    <div class="text-center" ng-if="editable">
+        <button class="btn btn-primary" ng-click="deleteSnapshots()" ng-disabled="!snapshots.length">删除</button>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class='image-popup image-area-popup'>
+    <div class='popup-backdrop'></div>
+    <div class='image-wrap' image-layout-area close="close()" save="updateSnapshot(model)" snapshot="snapshot">
+        <i class="icon icon-popup-close image-box-close" ng-click="close()" />
+        <div class='image-wrap-inner'>
+            <div class="area-container">
+            </div>
+            <div class="area-dashboard">
+            </div>
+        </div>
+        <div class="popup-control-box">
+            <div class="control-tip text-center">按住鼠标选择区域</div>
+            <div class="control-select text-center" ng-if="!isOcr">
+                <input type="radio" name="area-type" ng-model="model.areasType" id="ig-option" value="I" />
+                <label for="ig-option" />
+                <label for="ig-option">忽略选定区域</label>
+                <input type="radio" name="area-type" ng-model="model.areasType" id="cp-option" value="C" />
+                <label for="cp-option" />
+                <label for="cp-option">仅对比选定区域</label>
+            </div>
+            <div class="control-bottom">
+                <button class="btn btn-sm btn-default btn-clear pull-left" ng-click="clear()"><i class="icon icon-clear" /></button>
+                <button class="btn btn-sm btn-primary pull-right" ng-click="save()">保存</button>
+                <button class="btn btn-sm btn-default pull-right" ng-click="cancel()">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

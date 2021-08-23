@@ -1,0 +1,9 @@
+<div class="snapshots images-container adaptive-images-container" scroll-to-bottom-lazy-load load-size="10">
+    <div class="snapshot" ng-repeat="image in vm.subtaskDetail.images | limitTo:vm.snapshotsLoadTotal" ng-class="{true: 'patched'}[vm.subtaskDetail.exception_image_url==image.filePath]">
+        <div class="adaptive-image-wrap">
+            <img class="lazy snapshot-img" tb-adaptive-image auto-calc-size="true" data-direction="{{vm.isApp?'vertical':'horiz'}}" data-width="{{vm.isApp?120:200}}" ng-src="{{ image.filePath + '?imageView2/2/w/200'}}"
+                 data-origin-url="{{ image.filePath + '?imageView2/2/w/200/h/200'}}" ng-click="vm.showFancybox($index)" />
+        </div>
+        <div class="snapshot-time" ng-bind="image.time"></div>
+    </div>
+</div>

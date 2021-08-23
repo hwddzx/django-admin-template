@@ -1,0 +1,129 @@
+<div class="modal-content-inner testcase-parameters-modal">
+    <div class="btns">
+        <button class="btn btn-fix btn-default" ng-if="vm.dataSetInstance.data.length || vm.formulaInstance.data.length || vm.customParams.length" ng-click="vm.dataSetInstance.addData()">添加数据</button>
+        <button class="btn btn-fix btn-default" ng-if="vm.dataSetInstance.data.length || vm.formulaInstance.data.length || vm.customParams.length" ng-click="vm.formulaInstance.addFormula()">添加表达式</button>
+        <button class="btn btn-fix btn-default" ng-click="vm.addCustomParam()">添加自定义参数</button>
+        <span class="import-label">定义参数后,可<a href="javascript:void(0);" ng-click="vm.exportData()">下载模板&nbsp;<i class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;</a>,再<a href="javascript:void(0);" ng-disabled="!vm.parametersLength" class="btn btn-sm btn-default btn-import">批量导入<input type="file" ng-show="vm.parametersLength" ng-file-select="vm.importData($files)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"></a></span>
+    </div>
+    <div class="choose-replay-param">
+        <div>指定回放参数列:</div>
+        <div class="item" ng-class="{true:'active'}[vm.isSelectedReplayParam($index)]" ng-repeat="header in vm.dataSetInstance.headers" ng-bind="header" ng-click="vm.chooseReplayParam($index)"></div>
+    </div>
+    <div class="parameters-table-wrap">
+        <table class="table parameters-table">
+            <thead>
+                <tr>
+                    <th>参数名</th>
+                    <th>参数类型</th>
+                    <th>参数来源</th>
+                    <th>显示名</th>
+                    <th ng-repeat="header in vm.dataSetInstance.headers track by $index" class="parameter-container" ng-class="{true: 'error'}[vm.dataSetInstance.hasSameHeaderName(header)]">
+                        <div class="td-cell tb-parameter-cell ">
+                            <input type="text" maxlength="128" ng-model="vm.dataSetInstance.headers[$index]" />
+                            <label><span>{{vm.dataSetInstance.headers[$index]}}</span></label>
+                        </div>
+                        <i class="icon icon-delete" ng-if="vm.dataSetInstance.isCanDeleteParam()" ng-click="vm.dataSetInstance.removeData($index)"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in  vm.dataSetInstance.data | filter: vm.filterData track by $index" ng-if="!vm.hideGlobalVariable(item)">
+                    <td>
+                        <div class="td-cell">{{item.name}}<span ng-if="item.ignore" class="gray">(参数已忽略)</span></div>
+                    </td>
+                    <td>{{ item.action | actionTybe}}</td>
+                    <td class="td-cell">
+                        <a ui-sref="^.snapshot({snapshotKey: item.actionId})" ng-if="!item.component">用例</a>
+                        <div ng-if="item.component">模块({{item.component}})</div>
+                    </td>
+                    <td>
+                        <div class="td-cell tb-parameter-cell ">
+                            <input type="text" maxlength="128" ng-model="item.alias" />
+                            <label><span>{{item.alias}}</span></label>
+                        </div>
+                    </td>
+                    <td ng-repeat="header in vm.dataSetInstance.headers track by $index">
+                        <!--模块参数.第一列参数并且参数值为空-->
+                        <input type="text" maxlength="128" ng-model="item.values[$index]" placeholder="{{ vm.dataSetInstance.getOriginValueByName(item.name) }}"/>
+                    </td>
+                </tr>
+                <tr ng-repeat="item in  vm.customParams track by $index">
+                    <td class="parameter-container">
+                            <div class="td-cell">{{ item.name }}<i class="icon icon-delete" ng-click="vm.dataSetInstance.removeCustomParam(item.name)"></i></div>
+                        </td>
+                    <td>自定义</td>
+                    <td class="td-cell">自定义</td>
+                    <td>
+                        <div class="td-cell tb-parameter-cell ">
+                            <input type="text" maxlength="128" ng-model="item.alias" />
+                            <label><span>{{item.alias}}</span></label>
+                        </div>
+                    </td>
+                    <td ng-repeat="header in vm.dataSetInstance.headers track by $index">
+                        <div class="td-cell tb-parameter-cell ">
+                            <input type="text" maxlength="128" ng-model="item.values[$index]" />
+                            <label><span>{{item.values[$index]}}</span></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat="formula in vm.formulaInstance.data track by $index">
+                    <td class="parameter-container" ng-class="{false: 'error'}[formula.isNameValidated]">
+                        <div class="td-cell tb-parameter-cell" ng-if="!formula.ignore">
+                            <input type="text" maxlength="128" ng-model="formula.name" ng-change="vm.formulaInstance.hasSameName(formula)">
+                            <label><span>{{formula.name}}</span></label>
+                        </div>
+                        <span ng-if="formula.ignore" class="gray">{{formula.name}}(表达式已忽略)</span>
+                        <i class="icon icon-delete" ng-click="vm.formulaInstance.deleteFormula(formula.name, $index)"></i>
+                    </td>
+                    <td class="tb-parameter-cell" ng-class="{false: 'error'}[formula.isValidated]" colspan="{{ vm.dataSetInstance.headers.length + 3 }}">
+                        <input type="text" maxlength="128" ng-model="formula.formula" ng-change="vm.formulaInstance.checkValidated(formula, vm.dataSetInstance.data)"/>
+                        <label><span>{{formula.formula}}</span></label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-if="vm.globalVariables.length>0">用例包含的全局参数</div>
+        <table class="table parameters-table" ng-if="vm.globalVariables.length>0">
+            <thead>
+            <tr>
+                <th>全局参数名</th>
+                <th>当前值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="variable in vm.globalVariables" ng-if="variable.value">
+                <td ng-bind="variable.name"></td>
+                <td ng-bind="variable.value"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div>参数检查脚本</div>
+        <div class="btns">
+            <div class="btn btn-default upload-btn">
+                上传参数检查脚本
+                <input type="file" ng-file-select="vm.scriptJsonInstance.addFormulaScript($files)">
+            </div>
+            <table class="table python-script-table">
+                <thead>
+                <tr>
+                    <th ng-repeat="formulaScript in vm.scriptJsonInstance.formulaScripts track by $index">
+                        <div class="td-cell tb-parameter-cell ">
+                            <input type="text" maxlength="128" ng-model="vm.scriptJsonInstance.formulaScripts[$index].name"/>
+                            <label><span>{{ vm.scriptJsonInstance.formulaScripts[$index].name}}</span></label>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td ng-repeat="formulaScript in vm.scriptJsonInstance.formulaScripts track by $index">
+                       <a href="" ng-click="vm.scriptJsonInstance.updateFormulaScript(formulaScript)">编辑</a>
+                        <!--a ng-href="{{ formulaScript.url }}" ng-if="formulaScript.url">下载</a-->
+                        <a href="" ng-click="vm.scriptJsonInstance.deleteFormulaScript(formulaScript)">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

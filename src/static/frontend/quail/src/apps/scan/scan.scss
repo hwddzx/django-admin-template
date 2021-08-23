@@ -1,0 +1,386 @@
+.scan-tasks-container {
+    @include input-search-class;
+    @include header-btn-position;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 75px);
+    width: 1130px;
+    margin-top: 75px;
+    padding-left: 20px;
+    h2 {
+        margin-top: 25px;
+    }
+    .head {
+        position: absolute;
+        top: 100px;
+        width: 1110px;
+        padding: 20px 0;
+        background-color: $white;
+        z-index: 1;
+        h3 {
+            float: left;
+            display: inline-block;
+            margin: 0;
+            font-size: 24px;
+        }
+        .btn {
+            height: 30px;
+            margin-left: 0px !important;
+            display: inline-block;
+        }
+    }
+    .scantype-select {
+        .ul-dropdown {
+            display: block;
+            width: 100%;
+            border: 1px solid $gray-border;
+            color: $gray;
+            height: 34px;
+            line-height: 34px;
+            padding: 0 10px;
+            &:hover {
+                color: $gray;
+            }
+            .fa-sort-desc {
+                position: absolute;
+                top: 8px;
+                left: 560px;
+                color: $gray;
+            }
+        }
+        .dropdown-menu {
+            width: 100%;
+            min-width: 300px;
+            max-width: 100%;
+            max-height: 300px;
+            min-height: 100px;
+            overflow: auto;
+            li {
+                position: relative;
+                margin: 0;
+                a {
+                    margin: 0;
+                    padding: 5px 20px;
+                }
+            }
+        }
+        .icon-chosen {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url("img/icon-chosen.png");
+            background-size: 100% 100%;
+        }
+    }
+    .search-form {
+        float: right;
+        .form-group {
+            margin-right: 20px;
+        }
+        .date-pick {
+            position: relative;
+            width: 180px;
+            input {
+                width: 140px;
+            }
+            .form-group-btn {
+                position: absolute;
+                top: 2px;
+                right: 0;
+            }
+        }
+    }
+    .scan-table {
+        @include table-class;
+        @include checkbox-table;
+        @include input-checkbox-class;
+        /* 去掉table-class样式引入的margin-top: 20px */
+        margin-top: 0;
+        width: 100%;
+        thead tr th {
+            /* 去掉tb-table-striped样式引入的min-width */
+            min-width: 0;
+        }
+        .date {
+            white-space: nowrap;
+        }
+        tbody {
+            tr {
+                td{
+                    min-width: 65px;
+                    max-width: 300px;
+                    padding: 0 10px;
+                    .gray {
+                        color: $gray;
+                    }
+                    .link {
+                        color: $blue;
+                        text-decoration: none;
+                        &:hover{
+                            border-bottom: 1px solid $blue;
+                        }
+                    }
+                    p {
+                        margin: 0px;
+                    }
+                }
+                .break-all {
+                    word-break: break-all;
+                }
+            }
+        }
+    }
+}
+
+.icon-look-gray{
+    width: 24px;
+    height: 24px;
+    background-image: url("img/icon-scan-look.png");
+    background-size: 240%;
+    background-position: 0px 0px;
+}
+
+.window-scan-modal {
+    .modal-dialog {
+        width: 700px;
+    }
+}
+
+.scan-modal {
+    position: relative;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 3px;
+    h1 {
+        line-height: 50px;
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+    }
+    h4 {
+        text-align: center;
+        margin-top: 25px;
+    }
+    .icon-popup-close {
+        position: absolute;
+        right: -30px;
+        top: -30px;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        &:hover {
+            background-position-y: 32px;
+        }
+    }
+    .font-red {
+        color: $red;
+    }
+    .border-red {
+        border-color: $red-light;
+    }
+    .font-form-valid {
+        color: $red;
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+    .form-group {
+        padding: 0 30px;
+        select {
+            width: 100%;
+            height: 35px;
+        }
+    }
+    .icon-checkbox-disable {
+        margin-right: 8px;
+    }
+    .release-item {
+        padding-left: 0;
+        .control-label, .release-dropdown {
+            float: left;
+            margin-right: 20px;
+        }
+    }
+    .expect-duration-item {
+        margin-top: 20px;
+        label {
+            line-height: 35px;
+            vertical-align: middle;
+        }
+    }
+    .ul-dropdown {
+        display: block;
+        width: 100%;
+        border: 1px solid $gray-border;
+        height: 34px;
+        line-height: 34px;
+        padding: 0 10px;
+        color: black;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        .fa-sort-desc {
+            position: absolute;
+            top: 8px;
+            color: $gray;
+        }
+    }
+    .dropdown-menu {
+        width: 100%;
+        min-width: 300px;
+        max-width: 100%;
+        max-height: 300px;
+        min-height: 100px;
+        overflow: auto;
+        li {
+            position: relative;
+            margin: 0;
+            a {
+                margin: 0;
+                padding: 5px 20px;
+            }
+        }
+    }
+    .icon-chosen {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("img/icon-chosen.png");
+        background-size: 100% 100%;
+    }
+    .search-item-container {
+        width: 100%;
+        min-height: 42px;
+        max-height: 82px;
+        line-height: 40px;
+        padding: 0 5px;
+        overflow: auto;
+    }
+    .modal-foot {
+        text-align: right;
+        margin-top: 50px;
+    }
+    .radio-content {
+        line-height: 34px;
+        input {
+            cursor: pointer;
+        }
+        label {
+            padding: 0 10px 0 5px;
+            cursor: pointer;
+        }
+    }
+}
+
+.btn-export-pdf {
+    position: absolute;
+    top: 80px;
+    right: calc(50% - 560px);
+}
+
+.scan-detail-container {
+    .link {
+        color: $blue-link;
+        text-decoration: none;
+        cursor: pointer;
+        &:hover
+        &:focus {
+            color: $blue-hover;
+            text-decoration: underline;
+        }
+    }
+    table {
+        position: relative;
+        word-wrap: break-word;
+        word-break: break-all;
+        &.detail-table{
+            table-layout: fixed;
+            td{
+                width:20%;
+                pre{
+                    overflow: hidden;
+                    width: auto;
+                    max-width: 130px;
+                    text-overflow: ellipsis;
+                    display: inline-block;
+                    vertical-align: middle;
+                    white-space: nowrap;
+                    &.show-all{
+                        max-width:100%;
+                        white-space: pre-wrap;
+                    }
+                    &.overflowed+.show-desc{
+                        display: inline-block;
+                    }
+                }
+                .show-desc{
+                    color:$blue;
+                    cursor: pointer;
+                    display: none;
+                }
+                .log {
+                    line-height: 15px;
+                }
+            }
+            .break-all {
+                word-break: break-all;
+            }
+        }
+        .margin-bottom-30 {
+            margin-bottom: 30px;
+        }
+    }
+    .scan-underline {
+        text-decoration: underline;
+    }
+    .scan-load-more {
+        text-align: center;
+        margin: 20px 0;
+    }
+    .exceptions-list {
+        width: 100%;
+        tr {
+            td {
+                list-style: none;
+                position: relative;
+                min-height: 70px;
+                height: auto;
+                line-height: 35px;
+                border: 1px solid $gray-border;
+                p {
+                    line-height: 15px;
+                    margin: 10px 0;
+                }
+                pre {
+                    line-height: 15px;
+                    background-color: white;
+                    padding: 0;
+                    margin: 0;
+                    white-space: pre-wrap;
+                    border: 0;
+                }
+                .ignore {
+                    position: absolute;
+                    top: 2px;
+                    right: 5px;
+                }
+                .line-code {
+                    pre {
+                        float: left;
+                    }
+                }
+                .afterLine {
+                    clear: both;
+                }
+            }
+            .exception-num {
+                text-align: center;
+                min-width: 50px;
+            }
+            .exception-ignore {
+                text-align: center;
+                min-width: 80px;
+            }
+        }
+
+    }
+}

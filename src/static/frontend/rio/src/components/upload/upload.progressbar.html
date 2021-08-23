@@ -1,0 +1,7 @@
+<div class="progress rio-upload-progress">
+    <div class="progress-bar" ng-if="upload" ng-class="{'progress-error':upload.error}" style="width:{{upload.progress}}%">
+        <span>{{upload.progress}}%</span>
+    </div>
+    <div class="upload-tips upload-tips-done"><i class="icon icon-tips-done" />已成功上传APP</div>
+    <div class="upload-tips upload-tips-error"><i class="icon icon-tips-error" />上传APP出错</div>
+</div>

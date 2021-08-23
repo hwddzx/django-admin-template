@@ -1,0 +1,110 @@
+<div class="tasks-container replay">
+    <div class="head" tb-fix-button>
+        <h3>任务列表</h3>
+        <div class="btn-group">
+            <a href="" class="btn btn-sm btn-default input-alarm" ng-click="autoRefreshTable()">
+                <input type="checkbox" id="open-timer" name="open-timer" ng-model="isAutoRefresh">
+                <label for="open-timer">自动刷新</label>
+            </a>
+            <a href="" class="btn btn-gray btn-fix" ng-click="createComptestTask()">开始测试</a>
+            <div class="btn btn-gray btn-fix btn-import import-files">
+                <span>带参测试</span>
+                <input type="file" title="带参测试" ng-file-select="createTaskWithParams(REPLAY_MODE.comptest, $files)">
+            </div>
+        </div>
+    </div>
+    <table tb-paging-table data-table-ctrl="pagination" class="tb-table-striped">
+        <thead>
+            <tr class="filter">
+                <th></th>
+                <th>
+                    <input type="text" ng-model="name" ng-change="inputFilter(name, 'name')" ng-enter="getFilterTable()" />
+                </th>
+                <th></th>
+                <th ng-show="!isTimedTask">
+                    <input type="text" name="schedule-time" ng-model="created" placeholder="例如:2018-06-29" ng-change="inputFilter(created, 'created')" ng-enter="getFilterTable()">
+                </th>
+                <th ng-show="!isTimedTask">
+                    <input type="text" name="schedule-time" ng-model="completed_time" placeholder="例如:2018-06-29" ng-change="inputFilter(completed_time, 'completed_time')" ng-enter="getFilterTable()">
+                </th>
+                <th ng-show="isTimedTask">
+                    <input type="text" name="schedule-time" ng-model="schedule_time" placeholder="例如:2018-06-29" ng-change="inputFilter(schedule_time, 'schedule_time')" ng-enter="getFilterTable()">
+                </th>
+                <th ng-show="isTimedTask">
+                    <input type="text" name="schedule-time" ng-model="end_time" placeholder="例如:2018-06-29" ng-change="inputFilter(end_time, 'end_time')" ng-enter="getFilterTable()">
+                </th>
+                <th ng-show="isTimedTask"></th>
+                <th ng-show="isTimedTask"></th>
+                <th ng-show="isTimedTask"></th>
+                <th></th>
+                <th></th>
+                <th class="fix-fa">
+                    <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                        {{ filters.status.data[ filters.status.selected || 'all'].text }}<i class="light fa fa-sort-down"></i>
+                        <ul class="unstyle-list vertical-group-list dropdown-menu short-menu" uib-dropdown-menu>
+                            <li ng-repeat="(key, value) in filters.status.data"><a ng-click="chooseFilter(key, 'status')">{{ value.text }}</a><li>
+                        </ul>
+                    </span>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="checkbox" id="checkAll" tb-select-all models="pagination.data" ng-model="pagination.data.allChecked" />
+                    <label for="checkAll"></label>
+                </th>
+                <th>名称</th>
+                <th>APP版本(Build号)</th>
+                <th ng-show="!isTimedTask">开始时间</th>
+                <th ng-show="!isTimedTask">结束时间</th>
+                <th ng-show="isTimedTask">发起时间</th>
+                <th ng-show="isTimedTask">截止时间</th>
+                <th ng-show="isTimedTask">周期</th>
+                <th ng-show="isTimedTask">回放次数</th>
+                <th ng-show="isTimedTask">重测次数</th>
+                <th>执行时间</th>
+                <th>通过率(通过/总数)</th>
+                <th>结果</th>
+                <th>操作</th>
+                <th>报告</th>
+                <th>删除</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="task in pagination.data" ng-class="{'has-click': clickedId == task.id}" ng-click="recordClickId(task.id)">
+                <td>
+                    <input type="checkbox" id="check[{{$index}}]" ng-model="task.checked" />
+                    <label for="check[{{$index}}]"></label>
+                </td>
+                <td>{{task.name}}</td>
+                <td>{{task.release_version}}({{task.release_build}})</td>
+                <td ng-show="!isTimedTask" class="date">{{task.launch_time | dateFilter}}</td>
+                <td ng-show="!isTimedTask" class="date">{{task.completed_time | dateFilter }}</td>
+                <td ng-show="isTimedTask" class="date">{{task.schedule_time | dateFilter }}</td>
+                <td ng-show="isTimedTask" class="date">{{task.end_time | dateFilter }}</td>
+                <td ng-show="isTimedTask">{{task.period }}</td>
+                <td ng-show="isTimedTask">{{task.repeat_times }}</td>
+                <td ng-show="isTimedTask">{{task.retest_times }}</td>
+                <td>{{ task.duration | secondFilter }}</td>
+                <td>({{task.execution_success_count}}/{{task.execution_count}})</td>
+                <td>
+                    <div class="task-result">{{ task.progress<1?"执行中":"完成" }}</div>
+                    <div class="progress-wrap" tb-show-progress data-progress="task.progress" ng-if="task.progress<1"></div>
+                </td>
+                <td>
+                    <a ng-if="!isTimedTask" href="" class="link" ui-sref="app.comptesttask({taskId:task.id})">查看<br></a>
+                    <a ng-if="isTimedTask" href="" class="link" ui-sref="app.timedComptesttask({taskId:task.id})">查看<br></a>
+                    <a href="" class="link" ng-show="isTimedTask&&!task.launch_time" ng-click="updateTimedTasks(task)">更新</a>
+                    <a ng-if="!isTimedTask && isShowDownload()" href="" class="link" ng-click="downloadResult(task)">下载</a>
+                </td>
+                <td>
+                    <a ng-if="task.status" ui-sref="report_v2({key:task.key})" class="reports-detail-link comptest-report-link" target="_blank"></a>
+                    <a ng-if="task.report_excel_url" href="{{task.report_excel_url}}" class="comptest-report-excel-link" target="_blank"><i class="fa fa-file-excel-o" ></i></a>
+                </td>
+                <td><a href="" ng-click="deleteTask(task)"><i class="icon icon-trash-gray"></i></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

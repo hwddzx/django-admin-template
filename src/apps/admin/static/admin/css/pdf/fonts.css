@@ -1,0 +1,55 @@
+/*FIXME: for now we use the same fonts for all, should find specific ones*/
+@font-face {
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    src: url("../../fonts/STHeiti.TTF");
+}
+
+@font-face {
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    src: url("../../fonts/STHeiti.TTF");
+}
+
+@font-face {
+    font-family: sans-serif;
+    font-style: italic;
+    font-weight: normal;
+    src: url("../../fonts/STHeiti.TTF");
+}
+
+@font-face {
+    font-family: sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    src: url("../../fonts/STHeiti.TTF");
+}
+@font-face {
+    font-family: serif;
+    font-style: normal;
+    font-weight: normal;
+    src: url("../../fonts/STHeiti.TTF");
+}
+
+@font-face {
+    font-family: serif;
+    font-style: normal;
+    font-weight: bold;
+    src: url("../../fonts/STHeiti.TTF");
+}
+
+@font-face {
+    font-family: serif;
+    font-style: italic;
+    font-weight: normal;
+    src: url("../../fonts/STHeiti.TTF");
+}
+
+@font-face {
+    font-family: serif;
+    font-style: italic;
+    font-weight: bold;
+    src: url("../../fonts/STHeiti.TTF");
+}

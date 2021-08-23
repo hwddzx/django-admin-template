@@ -1,0 +1,14 @@
+<div class="tb-modal param-model">
+    <h1 class="head">新增模块名称<i class="icon icon-popup-close" ng-click="cancel()"></i></h1>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">模块名:</label>
+        <div class="col-sm-9">
+            <input type="text" ng-model="model.componentName" ng-change="model.validateComponentNameChange(model)" class="form-control" name="name">
+            <p class="error-msg">{{ model.errorMsg }}</p>
+        </div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" type="button" ng-click="cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" type="button" ng-disabled="!model.componentName || model.errorMsg" ng-click="close(model)">确定</button>
+    </div>
+</div>

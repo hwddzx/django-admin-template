@@ -1,0 +1,21 @@
+<div tb-modal class="tb-modal plugin-uplad-modal">
+    <form tb-form-validator class="form-horizontal">
+        <i class="icon icon-popup-close" ng-click="vm.cancel()"></i>
+        <h1>上传参数检查脚本</h1>
+        <div class="modal-content">
+            <i class="icon icon-plugin"></i>
+            <div class="file-name" ng-bind="vm.model.fileName"></div>
+            <div class="form-group">
+                <input type="text" maxlength="50" class="form-control file-alias" ng-change="vm.checkSameAlias()" name="file-alias"
+                       data-bv-notempty data-bv-notempty-message="脚本名称不能为空"
+                       id="fileAlias" ng-model="vm.model.fileAlias">
+                <input type="text" class="form-control auto-change hide-input" name="captcha" data-bv-trigger="change" ng-model="vm.nameExist"
+                       ng-value="vm.nameExist" data-bv-notempty data-bv-notempty-message="脚本名称重复"/>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-primary" ng-disabled="!vm.model.fileAlias" type="submit" data-form-submit="vm.close()">确定</button>
+            <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,133 @@
+$imageBgColor:#383d45;
+.screenshots .split-line {
+    width: 100%;
+    height: 0;
+    float: left;
+}
+
+.screenshots-icon-item {
+    position: relative;
+    margin: 20px 30px 0 0;
+    float: left;
+    .screenshot-image {
+        height: 324px;
+        cursor: pointer;
+    }
+    .time {
+        float: left;
+        margin: 10px 0 0 0;
+        color: $gray;
+        font-size: 12px;
+    }
+    .number {
+        float: right;
+        margin: 10px 0 0 0;
+        color: $gray;
+        font-size: 12px;
+    }
+    .image-wrap {
+        position: relative;
+        overflow: hidden;
+    }
+    .delete-patch {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+        .icon {
+            margin-top: 6px;
+        }
+    }
+    input[type=checkbox] {
+        display: none;
+    }
+    input[type=checkbox] + label {
+        padding: 5px;
+        border: 2px solid #fff;
+        margin: 0;
+        &:hover {
+            border-color: $gray-border;
+        }
+        .delete-cover {
+            width: calc(100% - 12px);
+            height: calc(100% - 12px);
+            cursor: pointer;
+            position: absolute;
+            left: 6px;
+            top: 6px;
+        }
+        .delete-check {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            background-image: url('img/icon-img-checkbox.png');
+            background-size: 100%;
+        }
+    }
+    input[type=checkbox]:checked + label {
+        .delete-cover {
+            background-color: rgba(246, 68, 77, 0.3);
+        }
+        .delete-check {
+            background-color: #f6444d;
+            background-image: url('img/icon-img-check.png');
+            z-index: 2;
+        }
+        &:hover .delete-check {
+            background-color: #f55d65;
+        }
+    }
+}
+
+.stf-screenshots .screenshot-image {
+    display: block !important;
+}
+
+.stf-screenshots .screenshot-image {
+    -webkit-transition: 1000ms;
+    transition: 1000ms;
+    max-height: 150px;
+}
+
+.stf-screenshots .screenshot-image.ng-image-not-loaded {
+    opacity: 0;
+}
+
+.stf-screenshots .screenshot-image {
+    opacity: 1;
+}
+
+.stf-screenshots .zoom-range {
+    width: 180px;
+    margin-right: 5px;
+}
+
+.snapshot-fancy-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+.dead-area-hint{
+    position: fixed;
+    top:calc(50% - 23px);
+    left:calc(50% - 186px);
+    height: 46px;
+    padding: 12px;
+    border: 1px solid #fdadb1;
+    color: #fa575f;
+    background-color: $red-light;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 4px;
+    z-index: 10;
+    display: none;
+}

@@ -1,0 +1,107 @@
+.statistics-container {
+    width: 1150px;
+    padding: 30px;
+    .app-info {
+        overflow: hidden;
+        .app-icon {
+            float: left;
+            width: 70px;
+            height: 70px;
+            margin: 15px 0 10px;
+            border-radius: 10px;
+        }
+        .info {
+            float: left;
+            padding: 15px;
+            line-height: 25px;
+        }
+    }
+    .patched-execution-chart {
+        overflow: hidden;
+        height: 20px;
+        margin: 15px 0;
+        border: 1px dotted $gray;
+        &.progress-no-data {
+            border: 1px dotted $border-gray;
+        }
+        .progress-item {
+            float: left;
+            height: 20px;
+        }
+        .patched {
+            background: $orange;
+        }
+    }
+    .replay-statistics {
+        margin: 40px 0;
+        line-height: 25px;
+        h3 {
+            label {
+                position: relative;
+                bottom: 4px;
+                margin-left: 30px;
+                font-size: 14px;
+                font-weight: normal;
+            }
+            select {
+                position: relative;
+                bottom: 4px;
+                width: 200px;
+                height: 30px;
+                font-size: 14px;
+                font-weight: normal;
+            }
+        }
+        .legend-container {
+            overflow: hidden;
+            margin: 20px 0;
+            .legend {
+                float: left;
+                margin-right: 25px;
+                .icon {
+                    position: relative;
+                    top: -1px;
+                    width: 15px;
+                    height: 15px;
+                    margin-right: 5px;
+                }
+                .success {
+                    background: $green;
+                }
+                .blocked {
+                    background: $orange-lighter;
+                }
+                .failed {
+                    background: $red;
+                }
+                .patched {
+                    background: $orange;
+                }
+            }
+        }
+    }
+    .replay-count {
+        margin: 20px 0;
+        .count {
+            font-size: 20px;
+        }
+    }
+    .date-wrap {
+        position: relative;
+        margin: 20px 0;
+        .date-dropdown {
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+        .time-group {
+            left: 120px;
+        }
+    }
+    .keyword {
+        width: 100%;
+        margin: 10px 0;
+        height: 35px;
+        line-height: 35px;
+    }
+}

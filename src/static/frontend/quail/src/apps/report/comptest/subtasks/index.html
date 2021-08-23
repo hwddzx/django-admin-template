@@ -1,0 +1,142 @@
+<div id="report-devices-v2" class="report-devices-v2">
+    <div class="overflow-hidden">
+        <div class="group">
+            <div class="group-head">已选条件:</div>
+            <div class="group-body overflow-auto">
+                <label class="search-wrap" ng-if="!vm.hasItemSelected()">
+                    <a class="search-item">全部条件</a>
+                </label>
+                <label class="search-wrap" ng-repeat="filter in vm.filters">
+                    <a class="search-item" ng-repeat="selectedItem in filter.selectedItems track by $index">
+                        <span ng-bind="selectedItem.value"></span>
+                        <i class='fa fa-remove' ng-click="vm.removeSelectedItem(selectedItem, filter, $event)"></i>
+                    </a>
+                </label>
+            </div>
+        </div>
+        <div class="group" ng-repeat="filter in vm.filters">
+            <div class="group-head" ng-bind="filter.name + ':'"></div>
+            <div ng-if="filter.key != 'exceptionDesc'" class="group-body" ng-class="{ true:'overflow-auto' }[!!filter.isCollapse]">
+                <ul class="horizontal-group-list">
+                    <li ng-class="{true:'selected'}[!!item.selected]" ng-repeat="item in filter.items" ng-bind="item.value" ng-click="vm.toggleFilterItem(item, filter)"></li>
+                </ul>
+            </div>
+            <div class="group-body overflow-visible" ng-if="filter.key == 'exceptionDesc'">
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    <span>{{ filter.selectedItems.length>0 ? filter.selectedItems[0].value : '全部问题摘要' }}</span><i class="fa fa-sort-desc"></i>
+                    <ul class="unstyle-list vertical-group-list dropdown-menu" uib-dropdown-menu>
+                        <li ng-click="vm.chooseExceptionDesc({value:'全部问题摘要',selected: true}, filter)"><span>全部问题摘要</span></li>
+                        <li ng-repeat="item in filter.items" ng-click="vm.chooseExceptionDesc(item, filter)"><span ng-bind="item.value"></span></li>
+                    </ul>
+                </span>
+            </div>
+            <div class="group-foot hide" ng-if="filter.key != 'exceptionDesc'" show-collapse-btn-if-need>
+                <span class="more" ng-click="vm.collapse(filter)">{{ filter.isCollapse ? "收起" : "展开" }}<i class="fa" ng-class="{ true:'fa-angle-up', false:'fa-angle-down' }[!!filter.isCollapse]"></i></span>
+            </div>
+        </div>
+    </div>
+    <table class="col-md-12 table table-hover" tb-sort-table sort-field="vm.sortField">
+        <thead tb-fix-table-head>
+            <tr>
+                <th width="8%" id="header-first">
+                    <span class="btn-group" uib-dropdown>
+                        <a href id="simple-dropdown" uib-dropdown-toggle>
+                            终端品牌<i class="light fa fa-sort-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
+                            <li>
+                                <a href="" ng-click="vm.filterByVendor()">全部</a>
+                            </li>
+                            <li ng-repeat="vendor in vm.vendors">
+                                <a ng-click="vm.filterByVendor(vendor.value)">{{ vendor.value}}</a>
+                            </li>
+                        </ul>
+                    </span>
+                </th>
+                <th width="10%">
+                    <span class="sorting" sort-field="device_model.name">终端型号</span>
+                </th>
+                <th width="8%">
+                    <span class="sorting" sort-field="result_subtype.name">测试结果</span>
+                </th>
+                <th width="8%">
+                    <span class="sorting" sort-field="device_model.coverage">覆盖人群(万)</span>
+                </th>
+                <th width="6%">
+                    <span class="sorting" sort-field="device_model.ram">内存</span>
+                </th>
+                <th width="14%">CPU</th>
+                <th width="8%">
+                    <span class="sorting" sort-field="device_model.resolution">分辨率</span>
+                </th>
+                <th width="10%">
+                    <span class="sorting" sort-field="device_model.os">安卓版本</span>
+                </th>
+                <th width="7%">
+                    <span class="sorting" sort-field="device_model.level">终端类型</span>
+                </th>
+                <th width="8%">
+                    <span class="sorting" sort-field="device_model.sdcard">存储空间</span>
+                </th>
+                <th width="7%" ng-if="vm.isCNLocale && !vm.isOffline" pgyer-hide>
+                    <span class="sorting" sort-field="device_model.rio">远程调试</span>
+                </th>
+                <th width="6%">
+                    <span>报告详情</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="subtask in vm.subtasks | filter: vm.fieldFilters | filter: vm.keywords | orderBy: vm.sortField.key:vm.sortField.reverse | limitTo: vm.pageSize">
+                <td width="8%">
+                    {{ subtask.device_model.vendor }}
+                </td>
+                <td width="10%">
+                    <a ng-if="vm.btnOne == 'uncheck'" ng-class="{ true:'gotoIssues' }[vm.btnOne === 'uncheck']" href="report_v2.subtaskDeatil" ui-sref="report_v2.issues.subtaskDeatil({'subtaskKey': subtask.key,'currentScene': subtask.exception_scene})">
+                        {{ subtask.device_model.name }}
+                    </a>
+                    <a ng-if="vm.btnOne != 'uncheck'">
+                        {{ subtask.device_model.name }}
+                    </a>
+                </td>
+                <td width="8%">
+                    {{ subtask.result_subtype.name }}
+                </td>
+                <td width="8%">
+                    {{ subtask.device_model.coverage }}
+                </td>
+                <td width="6%">
+                    {{ subtask.device_model.ram }}
+                </td>
+                <td width="14%">
+                    {{ subtask.device_model.cpu }}
+                </td>
+                <td width="8%">
+                    {{ subtask.device_model.resolution }}
+                </td>
+                <td width="10%">
+                    {{ subtask.device_model.os }}
+                </td>
+                <td width="7%">
+                    {{ subtask.device_model.level }}
+                </td>
+                <td width="8%">
+                    {{ subtask.device_model.sdcard }}
+                </td>
+                <td width="7%" ng-if="vm.isCNLocale && !vm.isOffline" pgyer-hide>
+                    <a href="" class="rent" ng-disabled="!vm.rioEnabled" tb-rent-sure subtask-id="subtask.id" ng-if="subtask.device_model.rio.status == 0">租用</a>
+                    <p ng-if="subtask.device_model.rio.status > 0">{{ subtask.device_model.rio.status | tbDeviceStatusText }}</p>
+                </td>
+                <td width="6%">
+                    <a class="link" target="_blank" ui-sref="subtaskDetail.performance({'taskKey': vm.taskKey, 'subtaskKey':subtask.key})">查看</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="col-md-12 load" ng-if="(vm.subtasks | filter: vm.fieldFilters | filter: vm.keywords).length > vm.pageSize">
+        <button class="btn" ng-click="vm.loadMore()">加载更多</button>
+    </div>
+    <div class="col-md-12 load" ng-if="(vm.subtasks | filter: vm.fieldFilters | filter: vm.keywords).length <= vm.pageSize && (vm.subtasks | filter: vm.fieldFilters| filter: vm.keywords).length > vm.loadCount">
+        <button class="btn" ng-click="vm.loadMore(true)">收起</button>
+    </div>
+</div>

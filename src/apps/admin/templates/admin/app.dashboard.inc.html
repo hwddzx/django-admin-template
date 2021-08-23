@@ -1,0 +1,55 @@
+{% extends 'admin/task.base.inc.html' %}
+
+{% block topnav %}
+  <ul class="breadcrumb">
+    <li>
+      <i class="icon-home"></i> <a href="{% url 'admin:admin_home' %}">主页</a>
+    </li>
+  </ul>
+{% endblock topnav %}
+
+{% block pagenav %}
+{% endblock pagenav %}
+
+{% block pagecontent %}
+  <br>
+  <div row>
+    <div class="col-xs-2"></div>
+    <div class="col-xs-3">
+      <a href="#" class="btn btn-app btn-primary no-radius" data-url="{% url 'admin:catalog:servicecategory_list' %}">
+        <i class="ace-icon fa fa-cogs bigger-230"></i>服务分类
+      </a>
+    </div>
+    <div class="col-xs-3">
+      <a href="#" class="btn btn-app btn-primary no-radius" data-url="{% url 'admin:catalog:service_list' %}">
+        <i class="ace-icon fa fa-cog bigger-230"></i>服务项
+      </a>
+    </div>
+    <div class="col-xs-3">
+      <a href="#" class="btn btn-app btn-primary no-radius" data-url="{% url 'admin:catalog:jobposition_list' %}">
+        <i class="ace-icon fa fa-graduation-cap bigger-230"></i>职位
+      </a>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+  <hr>
+
+  <div row>
+    <div class="col-xs-2"></div>
+    <div class="col-xs-3">
+      <a href="#" class="btn btn-app btn-primary no-radius" data-url="{% url 'admin:employee:employee_list' %}">
+        <i class="ace-icon fa fa-users bigger-230"></i>员工
+      </a>
+    </div>
+    <div class="col-xs-3">
+      <a href="#" class="btn btn-app btn-primary no-radius" data-url="{% url 'admin:employee:employee_award_summary_month' %}">
+        <i class="ace-icon fa fa-bar-chart-o bigger-230"></i>员工月提成
+      </a>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+  <hr>
+
+{% endblock %}

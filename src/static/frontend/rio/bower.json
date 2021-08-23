@@ -1,0 +1,29 @@
+{
+  "name": "rio",
+  "version": "0.1.0",
+  "dependencies": {
+    "front-tb-ui": "git@gitlab.testbird.io:frontend/front-tb-ui.git#081ac8a",
+    "angular-sanitize": "1.4.4",
+    "angular-touch": "1.4.4",
+    "angular-gettext": "~2.1.0",
+    "ng-file-upload": "~2.0.5",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.5.0",
+    "eventEmitter": "~4.2.11",
+    "socket.io": "~1.3.7",
+    "socket.io-client": "~1.3.7",
+    "bluebird": "~2.10.2",
+    "rangeslider.js": "~2.0.4",
+    "node-uuid": "~1.4.3",
+    "app-bundle-parser": "git@gitlab.testbird.com:frontend/app-bundle-parser.git",
+    "frontend-component-qiniu": "git@gitlab.testbird.io:forxushijie/frontend-component-qiniu.git#fixed-localstorge-error",
+    "front-stf-core": "git@gitlab.testbird.io:frontend/front-stf-core.git#ce7f722a"
+  },
+  "private": true,
+  "devDependencies": {
+    "angular-mocks": "1.4.4"
+  },
+  "resolutions": {
+    "angular": "1.5.1",
+    "angular-animate": "1.5.1"
+  }
+}

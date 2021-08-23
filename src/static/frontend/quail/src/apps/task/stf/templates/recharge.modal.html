@@ -1,0 +1,8 @@
+<div class="rent-modal rio-modal">
+    <h1 class="head">提示<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+    <p>您的余额不足,请充值（至少充值10分钟机时）</p>
+    <p>请在5分钟内完成充值，充值成功后，请点击继续测试.</p>
+    <div class="modal-foot">
+        <a ng-href="{{rechargeUrl}}" target="_blank" class="btn btn-fix btn-primary" ng-click="submit($event)">{{ recharged ? '继续测试':'充值' }}</a>
+    </div>
+</div>

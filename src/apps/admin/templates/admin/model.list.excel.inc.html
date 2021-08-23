@@ -1,0 +1,95 @@
+{% extends 'common/admin/generic.list.inc.html' %}
+{% load static %}
+
+{% block pagenav %}
+  {% if page_title %}
+    {{ page_title }}
+  {% else %}
+    {{ model_verbose_name }}列表
+  {% endif %}
+
+  <div class="pull-right">
+    <div class="content-toolbar btn-toolbar pull-right clearfix">
+      <div class="btn-group">
+        <a class="btn btn-yellow" href="#" id="id_btn_excel_export" title="只会导出激活列值为是的条目">
+          <i class="fa fa-file-excel-o"></i> 批量导出
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock pagenav %}
+
+{% block pagecontent %}
+
+  <div class="row">
+  <div class="clearfix"></div>
+  <div class="content-toolbar btn-toolbar well clearfix table-overflow-scroll">
+    <div class="space-2"></div>
+    <table id="id-{{ datatables_id_prefix }}-table" class="table table-striped table-bordered table-hover">
+      {% include "common/admin/datatables.header.inc.html" with builder=datatables_builder %}
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}
+
+{% block pagecontent_js %}
+
+  <script>
+    $(document).ready(function () {
+      var $main_table = $('#id-{{ datatables_id_prefix }}-table');
+      var $btnExcelExport = $('#id_btn_excel_export');
+
+      var aoColumnDefs = $.parseJSON('{{ datatables_builder.build_aoColumnDefs|escapejs }}');
+      dataTableInitWithServerProcessing($main_table, aoColumnDefs,
+          {
+            "url": "{{ datatables_list_url }}",
+            "type": "POST",
+            "data": function (params) {
+              params.csrfmiddlewaretoken = "{{ csrf_token }}";
+              shortDatableSearchParams(params);
+
+              if ($btnExcelExport.data('is_running') == true) {
+                var downloadurl = "{{ export_excel_url }}" + "?" + $.param(params);
+                window.location = downloadurl;
+              }
+            }
+          },
+          false);
+
+      $('thead select', $main_table).enableChosen({width: '100%'});
+
+      var refreshDatatable = function () {
+        $main_table.api().ajax.reload(null, false);
+      };
+
+      $('.input-range').on('change', function () {
+        refreshDatatable();
+      });
+
+      $btnExcelExport.click(function () {
+        if ($btnExcelExport.data('is_running') == true) {
+          return;
+        }
+
+        $btnExcelExport.data('is_running', true);
+        $main_table.api().ajax.reload(function (data) {
+              $btnExcelExport.data('is_running', false);
+            }, false);
+      });
+
+      //XXX: should remove the listener first to avoid more than one listeners.
+      $(document).off('onPageDirty').on("onPageDirty", function () {
+        refreshDatatable();
+      });
+
+      $main_table.on('click', 'a[href="#action"][data-handlertype="system"]', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleDatatableRowAction($main_table, $(this));
+      });
+
+    });
+  </script>
+{% endblock pagecontent_js %}

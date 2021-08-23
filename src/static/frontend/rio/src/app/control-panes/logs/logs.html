@@ -1,0 +1,38 @@
+<div class="tab-modal" ng-controller="LogsCtrl" class="stf-logs">
+    <div class="modal-head border-transparent">
+        日志
+        <a href="" class="btn btn-primary control-btn" ng-click="logToggle()" ><i class="fa fa-play log-switch" ng-class="{'fa-play':!started,'fa-pause':started}" ></i></a>
+        <i class="icon icon-sidebar-close" />
+    </div>
+    <div class="modal-content">
+        <table ng-show="deviceType!='ios'" class="logcat-filters-table">
+            <tr>
+                <td width="6%">
+                    <select ng-model="filters.priority" ng-change="restartLogcat()" ng-options="l.name for l in filters.levelNumbers">
+                        <option value="" disabled="disabled" selected="selected">{{"Level"|translate}}</option>
+                    </select>
+                </td>
+                <td width="10%">
+                    <input ng-model="filters.date" type="text" placeholder="{{&quot;Time&quot;|translate}}" class="input-sm form-control" />
+                </td>
+                <td width="10%">
+                    <input ng-model="filters.pid" type="text" placeholder="{{&quot;PID&quot;|translate}}" class="input-sm form-control" />
+                </td>
+                <td width="10%">
+                    <input ng-model="filters.tid" type="text" placeholder="{{&quot;TID&quot;|translate}}" class="input-sm form-control" />
+                </td>
+                <td width="14%">
+                    <input ng-model="filters.tag" ng-change="restartLogcat()" type="text" placeholder="{{&quot;Tag&quot;|translate}}" class="input-sm form-control" />
+                </td>
+                <td width="40%">
+                    <input ng-model="filters.message" type="text" placeholder="{{&quot;Text&quot;|translate}}" class="input-sm form-control" />
+                </td>
+            </tr>
+        </table>
+        <logcat-table add-row="lastEntry" data-type="{{ deviceType }}"></logcat-table>
+    </div>
+    <div class="modal-foot">
+        <a href="" ng-click="downloadlogRep()" class="btn btn-gray" >下载</a>
+        <a href="" ng-click="clearTable()" class="btn btn-gray" >清空</a>
+    </div>
+</div>

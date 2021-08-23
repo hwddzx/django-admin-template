@@ -1,0 +1,91 @@
+<div class="scan-tasks-container">
+    <div class="head">
+        <h3>项目列表</h3>
+        <form class="form-inline search-form">
+            <div class="form-group">
+                <input type="text" name="repertory" class="form-control" ng-model="vm.searches.name" placeholder="项目名称">
+            </div>
+            <div class="form-group scantype-select">
+                <span uib-dropdown auto-close="outsideClick">
+                    <a href class="ul-dropdown" uib-dropdown-toggle>{{ vm.searches.type_text }}<i
+                            class="fa fa-sort-desc"></i></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                        <li ng-repeat="item in vm.scanTypes">
+                            <i ng-if="item.selected" class="icon icon-chosen"></i>
+                            <a class="filter-item" ng-click="vm.toggleScantypeItem(item,$event)">{{ item.name }}</a>
+                        </li>
+                    </ul>
+                </span>
+            </div>
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.startPopup.date" is-open="vm.startPopup.opened" ng-required="true"
+                   close-text="关闭"
+                   clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                   placeholder="扫描时间-开始"/>
+                 <span class="form-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('startPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+            </div>
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.endPopup.date" is-open="vm.endPopup.opened" ng-required="true"
+                   close-text="关闭"
+                   clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                   placeholder="扫描时间-结束"/>
+                 <span class="form-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('endPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+            </div>
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.searchScantask()">查询</a>
+            </div>
+        </form>
+    </div>
+    <div class="scan-table">
+        <table scantask-lazy-load data-vm="vm" class="tb-table-striped">
+            <thead>
+                <tr>
+                    <th>项目名称</th>
+                    <th>路径</th>
+                    <th>扫描种类</th>
+                    <th>敏感词</th>
+                    <th>添加时间</th>
+                    <th>最近一次扫描时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                    <th>查看详情</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in vm.scantasks" ng-class="{'has-click': clickedId == task.id}" ng-click="vm.recordClickId(task.id)">
+                    <td>{{task.name}}</td>
+                    <td class="break-all">{{task.repertory}}</td>
+                    <td class="text-center">
+                        <div ng-repeat="type in task.selectedScantypes">
+                            <span>{{type.name}}</span><br>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div ng-if="vm.isSelectedSensitive(task)">
+                            <div ng-repeat="sensitive in task.selectedSensitives">
+                                <span>{{sensitive.name}}</span><br>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">{{task.created | dateFilter}}</td>
+                    <td class="text-center">{{task.latest_scan_time | dateFilter}}</td>
+                    <td class="text-center">
+                        <span ng-if="task.running_count > 0">扫描中</span>
+                    </td>
+                    <td class="text-center">
+                        <a href="" class="link" ng-click="vm.scan(task)">扫描<br></a>
+                        <a href="" class="link" ng-click="vm.updateScantask(task, 'create')">配置<br></a>
+                        <a href="" class="link" ng-if="task.running_count > 0" ng-click="vm.stopScantask(task)">终止</a>
+                    </td>
+                    <td>
+                        <a href="" ui-sref="app.scanExecutions({scantaskKey:task.key, scantaskName:task.name})"><i class="icon icon-look-gray"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

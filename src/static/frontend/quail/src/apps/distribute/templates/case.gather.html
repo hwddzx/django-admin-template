@@ -1,0 +1,31 @@
+<div class="gather-modal">
+    <h1 class="head"><span ng-bind="vm.isCreate?'创建用例集':'分配任务'"></span><i class="icon icon-popup-close" ng-click="vm.cancel()"></i></h1>
+    <div class="form-group release-item row" ng-if="!vm.isFilter">
+        <div class="check-count">已选择 {{ vm.checkedCount }} 个用例</div>
+        <div class="checkbox-wrap text-unselect" ng-if="!vm.isCreate">
+            <input type="checkbox" id="check-hide-testcase" ng-change="vm.toggleDistributedTestcase()" ng-model="vm.hideDistributeTestcase"/>
+            <label for="check-hide-testcase">隐藏已分配过的测试用例</label>
+        </div>
+    </div>
+    <div class="testcase-tree-wrap">
+        <ul class="testcase-tree ztree" id="testcase-tree" tb-tree setting="vm.setting" nodes="vm.nodes"></ul>
+    </div>
+    <div class="search-panel">
+        <input class="case-gather-name" type="text" maxlength="128" ng-model="vm.inputValue" ng-change="vm.change()" placeholder="{{ vm.isCreate?'请输入用例集名称':'请输入分配人邮箱' }}"/>
+        <ul class="list-unstyled" ng-hide="!vm.inputValue||vm.isHidePanel || result.length==0">
+            <li ng-repeat="member in (vm.app.members|filter:vm.inputValue) as result" ng-bind="member" ng-click="vm.selectedMember(member)"></li>
+        </ul>
+    </div>
+    <!--div class="task-type" ng-hide="vm.isCreate">
+        <label for="task-type1">
+            <input type="radio" name="task-type" id="task-type1" ng-model="vm.schedule_mode" value="1"/>脚本录制任务
+        </label>
+        <label for="task-type0">
+            <input type="radio" name="task-type" id="task-type0" ng-model="vm.schedule_mode" value="0"/>自助功能测试任务
+        </label>
+    </div-->
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-disabled="!vm.checkedCount|| !vm.inputValue" ng-click="vm.save()" ng-bind="vm.isCreate?'创建':'分配'"></button>
+    </div>
+</div>

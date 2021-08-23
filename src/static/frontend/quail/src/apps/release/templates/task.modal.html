@@ -1,0 +1,11 @@
+<div tb-modal class="tb-modal new-test-model">
+    <form tb-form-validator data-bv-excluded="">
+        <h1 class="head">请为本次测试命名<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+        <div class="form-group">
+            <input type="text" maxlength="128" name="taskName" class="form-control" ng-model="model.name" data-bv-notempty data-bv-notempty-message="任务名称不能为空！">
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-primary" type="submit" data-form-submit="close()">确定</button>
+        </div>
+    </form>
+</div>

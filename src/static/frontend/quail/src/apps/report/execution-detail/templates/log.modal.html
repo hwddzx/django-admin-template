@@ -1,0 +1,14 @@
+<div class="log-modal" ng-init="vm.setLogIndex()">
+    <span class="icon icon-popup-close" ng-click="vm.cancel()"></span>
+    <div>
+        <div class="log-title">
+            <span class="fa fa-exclamation-circle"></span><span class="title">#{{ vm.exception.index.line }}</span>
+        </div>
+        <div id="prev-button" class="log-btn-pre" ng-click=" vm.showLogs(0)"><span class="fa fa-angle-up angle"></span>
+        </div>
+        <div id="id_logs_scroll"
+             class="log-content">{{ vm.exception.content.title }}&nbsp;&nbsp;{{ vm.exception.content.info }}</div>
+        <div id="next-button" class="log-btn-more" ng-click=" vm.showLogs(1)"><span
+                class="fa fa-angle-down angle"></span></div>
+    </div>
+</div>

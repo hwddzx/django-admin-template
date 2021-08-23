@@ -1,0 +1,12 @@
+<div class="tab-modal" ng-controller="ShellCtrl">
+    <div class="modal-head border-transparent">
+        命令行
+        <i class="icon icon-sidebar-close" />
+    </div>
+    <div class="modal-content modal-content-shell">
+        <form class="tab-form" method="post" enable-autofill="enable-autofill" ng-submit="run()">
+            <input type="text" ng-model="command" ng-click="$event.stopPropagation();" Xtext-focus-select="Xtext-focus-select" autocapitalize="off" spellcheck="false" tabindex="30" accesskey="S" autocomplete="on" class="shell-ipt" />
+        </form>
+        <pre>{{result}}</pre>
+    </div>
+</div>

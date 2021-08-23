@@ -1,0 +1,10 @@
+<div tb-modal class="tb-modal task-model">
+    <i class="icon icon-popup-close" ng-click="cancel()"></i>
+
+    <p class="text-center">{{ model.prompt }}</p>
+
+    <div class="modal-foot text-center">
+        <a ng-click="cancel()" class="cancel">取消</a>
+        <a href="" class="btn btn-sm btn-primary" ng-click="model.close=true;close()">确认</a>
+    </div>
+</div>

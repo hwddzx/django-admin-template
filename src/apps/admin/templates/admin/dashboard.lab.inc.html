@@ -1,0 +1,11 @@
+{% extends 'admin/task.base.inc.html' %}
+
+
+{% block pagenav %}
+  系统概况
+{% endblock pagenav %}
+
+{% block pagecontent %}
+  <h3>版本: <code>{{ git_tag }}</code></h3>
+
+{% endblock %}

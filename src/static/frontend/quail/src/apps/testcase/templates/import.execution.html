@@ -1,0 +1,74 @@
+<div tb-modal class="tb-modal testcase-import-modal">
+    <div class="tasks-step " ng-if="!taskSelected">
+        <h1 class="head">任务列表<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+        <div class="table-container tasks-container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="checkAll" tb-select-all models="tasks" ng-model="tasks.allChecked" />
+                            <label for="checkAll"></label>
+                        </th>
+                        <th>任务名</th>
+                        <th>通过/失败/阻塞</th>
+                        <th>起始时间</th>
+                        <th>结束时间</th>
+                        <th>总时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="task in tasks">
+                        <td>
+                            <input type="checkbox" id="check[{{$index}}]" ng-model="task.checked" />
+                            <label for="check[{{$index}}]"></label>
+                        </td>
+                        <td>{{task.name}}</td>
+                        <td>{{task.execution_success_count}}/{{task.execution_failed_count}}/{{task.execution_blocked_count}}</td>
+                        <td>{{task.launch_time | dateFilter}}</td>
+                        <td>{{task.completed_time | dateFilter }}</td>
+                        <td>{{ task.duration | secondFilter }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-long btn-default" ng-click="cancel()">取消</button>
+            <button class="btn btn-long btn-primary is-disabled" ng-click="nextStep()">继续</button>
+        </div>
+    </div>
+    <div class="executions-step" ng-if="taskSelected">
+        <h1 class="head">测试执行列表<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+        <div class="table-container">
+            <table class="table" tb-sorting>
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="checkAll" tb-select-all data-models="executions" data-checked="true" ng-model="executions.allChecked" />
+                            <label for="checkAll"></label>
+                        </th>
+                        <th orderBy="name" class="test-sorting">测试执行名称</th>
+                        <th orderBy="desc" class="test-sorting">测试执行描述</th>
+                        <th orderBy="scenario" class="test-sorting">场景</th>
+                        <th orderBy="launch_time" class="test-sorting">开始时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="execution in executions | orderBy:order:direction">
+                        <td>
+                            <input type="checkbox" id="check[{{$index}}]" ng-model="execution.checked" />
+                            <label for="check[{{$index}}]"></label>
+                        </td>
+                        <td>{{ execution.name }}</td>
+                        <td>{{ execution.desc }}</td>
+                        <td>{{ execution.scenario }}</td>
+                        <td>{{ execution.launch_time | dateFilter }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default" ng-click="cancel()">取消</button>
+            <button class="btn btn-fix btn-primary is-disabled" ng-click="submit()">确定</button>
+        </div>
+    </div>
+</div>

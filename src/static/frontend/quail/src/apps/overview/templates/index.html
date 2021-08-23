@@ -1,0 +1,113 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/head.html'"></ng-include>
+<!-- /头部 -->
+<div class="overview-container clearfix">
+    <div class="app-info">
+        <img class="app-icon" ng-src="{{ vm.overview.icon_url }}"/>
+        <div class="info">
+            <div class="app-name">
+                <span class="text" ng-bind="vm.overview.name"></span>
+            </div>
+            <div>
+                <span>负责人: {{ vm.overview.owner }}</span>
+            </div>
+            <div>
+                <span>版本: {{ vm.overview.version }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="replay-statistics">
+        <h3>运行统计
+            <label for="version">按版本号过滤：</label>
+            <select id="version" ng-model="vm.selectVersionKey" ng-change="vm.getAppsProgress(vm.selectVersionKey)">
+                <option value="">所有版本</option>
+                <option ng-repeat="version in vm.versions" value="{{version.version}}">{{version.version}}</option>
+            </select>
+        </h3>
+        <div class="replay-count">
+            <span class="gray">运行次数总计: </span><span class="count" ng-bind="vm.overview.total_executions"></span>
+        </div>
+        <div class="date-wrap">
+            <div class="time-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.startPopup.date" is-open="vm.startPopup.opened"
+                           ng-required="true"
+                           close-text="关闭"
+                           clear-text="清空" current-text="今天" alt-input-formats="vm.altInputFormats"/>
+                 <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('startPopup')"><i
+                         class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+                </div>
+                <div>-</div>
+                <div class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.endPopup.date" is-open="vm.endPopup.opened"
+                           ng-required="true"
+                           close-text="关闭"
+                           clear-text="清空" current-text="今天" alt-input-formats="vm.altInputFormats"/>
+                 <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('endPopup')"><i class="glyphicon glyphicon-calendar"></i>
+                     </button>
+                 </span>
+                </div>
+                <div>
+                    <button class="btn btn-default" ng-click="vm.getAppsProgress()">查询</button>
+                </div>
+            </div>
+            <span class="dropdown dropdown-toggle date-dropdown" uib-dropdown uib-dropdown-toggle>
+                <span class="gray">时间区段: </span>{{ vm.date.name }}<i class="fa fa-sort-desc"></i>
+                <ul class="unstyled list-unstyle dropdown-menu" uib-dropdown-menu>
+                    <li ng-repeat="date in vm.dates" ng-click="vm.chooseDate(date)"><span ng-bind="date.name"></span></li>
+                </ul>
+            </span>
+        </div>
+        <span class="gray">发起任务:</span>
+        <div class="execution-progress-chart" execution-progress-chart data-app="vm.overview"></div>
+        <div class="legend-container">
+            <div class="legend">
+                <span class="icon success"></span><span>成功: </span><span ng-bind="vm.overview.success_executions"></span>
+            </div>
+            <div class="legend">
+                <span class="icon blocked"></span><span>阻塞: </span><span ng-bind="vm.overview.blocked_executions"></span>
+            </div>
+            <div class="legend">
+                <span class="icon failed"></span><span>失败: </span><span ng-bind="vm.overview.failed_executions"></span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>用例运行情况统计</h3>
+        <div>
+            <input type="text" class="keyword" ng-model="vm.keyword" placeholder="输入关键字过滤" />
+        </div>
+        <table  class="table tb-table-striped">
+            <thead>
+                <tr>
+                    <th>任务名</th>
+                    <th>运行次数</th>
+                    <th>成功</th>
+                    <th>阻塞</th>
+                    <th>失败</th>
+                    <th>标记问题</th>
+                    <th>开始时间</th>
+                    <th>详情</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="task in vm.overview.tasks | filter:vm.keyword">
+                <td>{{ task.name }}</td>
+                <td>{{ task.total }}</td>
+                <td>{{ task.success_count }}</td>
+                <td>{{ task.blocked_count }}</td>
+                <td>{{ task.failed_count }}</td>
+                <td>{{ task.patched_count }}</td>
+                <td>{{ task.created }}</td>
+                <td>
+                    <a ng-if="task.report_excel_url && vm.hasUrl(task.report_excel_url)" href="{{task.report_excel_url}}" target="_blank">详情</a>
+                    <a ng-if="task.report_excel_url && !vm.hasUrl(task.report_excel_url)" href="" ui-sref="reportDetail({hashkey:task.report_excel_url})" target="_blank">详情</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

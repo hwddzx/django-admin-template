@@ -1,0 +1,70 @@
+<div class="scan-tasks-container">
+    <div class="head">
+        <h3>{{vm.scantask_name}}项目扫描记录</h3>
+        <form class="form-inline search-form">
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.startPopup.date" is-open="vm.startPopup.opened" ng-required="true"
+                   close-text="关闭"
+                   clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                   placeholder="扫描时间-开始"/>
+                <span class="form-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('startPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+            <div class="form-group date-pick">
+                <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.endPopup.date" is-open="vm.endPopup.opened" ng-required="true"
+                   close-text="关闭"
+                   clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                    placeholder="扫描时间-结束"/>
+                 <span class="form-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('endPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+            </div>
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.searchScanExecutions()">查询</a>
+            </div>
+        </form>
+    </div>
+    <div class="scan-table">
+        <table class="tb-table-striped">
+            <thead>
+                <tr>
+                    <th>开始扫描时间</th>
+                    <th>结束扫描时间</th>
+                    <th>代码行数</th>
+                    <th>扫描种类</th>
+                    <th>扫描规则</th>
+                    <th>备注</th>
+                    <th>查看详情</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="execution in vm.scanExecutions" ng-class="{'has-click': clickedId == execution.key}" ng-click="vm.recordClickId(execution.id)">
+                    <td class="date">{{execution.created | dateFilter}}</td>
+                    <td class="date">
+                        <span ng-if="vm.isComplete(execution)||vm.isStoped(execution)">{{execution.updated | dateFilter}}</span>
+                    </td>
+                    <td class="text-center">
+                        <span ng-if="execution.measures.totalLineCount">{{execution.measures.totalLineCount/1000 + 'k'}}</span>
+                    </td>
+                    <td class="text-center">
+                        <p ng-if="vm.isSelectedSensitive(execution)">敏感词{{execution.sensitive_status | scanStatusFilter}}</p>
+                        <p ng-if="vm.isSelectedSafe(execution)">三方库{{execution.safe_status | scanStatusFilter}}</p>
+                    </td>
+                    <td class="text-center">
+                        <p ng-repeat="sensitive in execution.sensitives">{{sensitive}}</p>
+                    </td>
+                    <td class="break-all">
+                        <span ng-show="!vm.isComplete(execution)">{{execution.desc}}</span>
+                        <span ng-show="vm.isComplete(execution)">扫描已完成，可查看报告</span>
+                    </td>
+                    <td>
+                        <a ng-if="vm.isComplete(execution)" href="" class="link" ng-click="vm.goScanDetail(execution)">查看结果</a>
+                        <!--<span class="gray" ng-if="!vm.isComplete(execution)">查看结果</span>-->
+                        <span class="gray" ng-if="vm.isStoped(execution)">已终止</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

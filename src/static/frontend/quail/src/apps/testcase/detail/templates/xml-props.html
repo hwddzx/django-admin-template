@@ -1,0 +1,11 @@
+<div>
+    <ul class="list-unstyled props-list">
+        <li ng-repeat="prop in vm.layoutProps" class="props-list-li">
+            <div ng-repeat="(key, value) in prop">
+                <span class="gray">{{ key }}</span>
+                <span> : </span>
+                <span>{{ value }}</span>
+            </div>
+        </li>
+    </ul>
+</div>

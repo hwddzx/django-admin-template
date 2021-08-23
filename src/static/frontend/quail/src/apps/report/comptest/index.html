@@ -1,0 +1,242 @@
+<div ng-include="'apps/head/templates/report.head.html'" pgyer-hide></div>
+<div id="report-body-v2" class="report-body-v2">
+    <div id="report-v2" class="report-v2">
+        <div class="head row">
+            <div class="content-header row">
+                <img ng-src="{{vm.compatibility.icon_url}}" alt="icon">
+                <div class="simple-info">
+                    <h4 ng-bind-template="{{vm.compatibility.name}}&nbsp;{{vm.compatibility.app_version}}"></h4>
+                    <p ng-bind-template="{{vm.compatibility.created*1000|date:'yyyy/MM/dd HH:mm:ss'}}"></p>
+                </div>
+                <div ng-if="!vm.isOffline" class="btns">
+                    <button class="btn btn-primary" ng-click="vm.shareReportUrl()" pgyer-hide>分享报告</button>
+                    <button class="btn btn-primary" ng-click="vm.exportReportAsExcel()">下载报告</button>
+                </div>
+            </div>
+        </div>
+
+        <ul tb-nav-tabs class="nav tb-nav-tabs width-full-screen">
+            <li class="toReport"><a href="" ui-sref="report_v2" ui-sref-opts="{reload: true}" ng-bind-template="{{'概况'|translate}}"></a></li>
+            <li class="toCompatibility"><a href="" ui-sref=".compatibility" ng-bind-template="{{'兼容性分析'|translate}}"></a></li>
+            <li class="toExceptions"><a href="" ui-sref=".exceptions">问题定位<span class="number" ng-if="vm.compatibility.result_json2.types.t_r_exception.count">&nbsp;<i ng-bind-template="&nbsp;{{vm.compatibility.result_json2.types.t_r_exception.count}}&nbsp;"></i>&nbsp;</span></a></li>
+            <li class="toSubtasks"><a href="" ui-sref=".subtasks" ng-bind-template="{{'设备列表'|translate}}"></a></li>
+            <li class="toPerformance"><a href="" ui-sref=".performance" ng-bind-template="{{'性能分析'|translate}}"></a></li>
+        </ul>
+        <div class="body row">
+            <div class="content">
+                <div class="content-body">
+                    <div ui-view>
+                        <div id="report-overview-v2">
+                            <!-- 基本信息 -->
+                            <div class="basic-info row">
+                                <div class="col-md-5 left row">
+                                    <div class="left-body col-md-5" id="pie-chart"></div>
+                                    <div class="left-head row col-md-5">
+                                        <div>
+                                            <div>{{'通过率'|translate}}</div><div class="big">{{vm.passRate}}%</div></div>
+                                        <div>
+                                            <div>{{'问题终端数'|translate}}</div><div>{{vm.types.t_r_exception.count}}</div></div>
+                                        <div>
+                                            <div>{{'待优化终端'|translate}}</div><div>{{vm.types.t_r_need_optimize.count}}</div></div>
+                                        <div>
+                                            <div>{{'测试终端总数'|translate}}</div><div>{{vm.testedCount}}</div></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <hr class="hr-split-line"/>
+                                </div>
+                                <div class="col-md-5 right">
+                                    <div>
+                                        <span class="tb-change-app-type">{{'终端玩家流失数'|translate}}</span>
+                                        <span class="data-unit">{{vm.types.t_r_exception.coverage_count}}&nbsp;{{ '万'|translate }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="tb-change-app-type">{{'游戏玩家流失率'|translate}}</span>
+                                        <span class="data-unit">{{vm.overview.task_exception_avg_map.t_r_game_player_turnover_coverage}}&nbsp;%</span>
+                                    </div>
+                                    <div>
+                                        <span class="tb-change-app-type">{{'可能损失玩家(每一百万)'|translate}}</span>
+                                        <span class="data-unit">{{vm.overview.task_exception_avg_map.t_r_game_player_turnover_coverage}}&nbsp;{{'万'|translate}}</span>
+                                    </div>
+                                    <div>
+                                        <span>{{'帮助客户减少损失(每一百万用户)'|translate}}</span>
+                                        <span class="data-unit">{{vm.overview.task_exception_avg_map.t_r_game_player_turnover_money}}&nbsp;{{'万元'|translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 问题统计   -->
+                            <div>
+                                <h1>{{'问题统计'|translate}}</h1>
+                                <table class="align-center">
+                                    <thead>
+                                        <tr class="help">
+                                            <th></th>
+                                            <th><a href="" tb-word-help-v2="InstallFailure" help-text="vm.wordHelpText">安装失败</a></th>
+                                            <th><a href="" tb-word-help-v2="bootFailure" help-text="vm.wordHelpText">启动失败</a></th>
+                                            <th><a href="" tb-word-help-v2="crash" help-text="vm.wordHelpText">闪退</a></th>
+                                            <th><a href="" tb-word-help-v2="blackScreen" help-text="vm.wordHelpText">黑屏&白屏</a></th>
+                                            <th><a href="" tb-word-help-v2="frozenScreenLagFrozen" help-text="vm.wordHelpText">卡死</a></th>
+                                            <th><a href="" tb-word-help-v2="screenLagFrozen" help-text="vm.wordHelpText">卡顿</a></th>
+                                            <th><a href="" tb-word-help-v2="connectException" help-text="vm.wordHelpText">连接异常</a></th>
+                                            <th><a href="" tb-word-help-v2="uiException" help-text="vm.wordHelpText">UI异常</a></th>
+                                            <th><a href="" tb-word-help-v2="textDiffException" help-text="vm.wordHelpText">文本对比异常</a></th>
+                                            <th><a href="" tb-word-help-v2="clickException" help-text="vm.wordHelpText">控件或图像点击异常</a></th>
+                                            <th><a href="" tb-word-help-v2="other" help-text="vm.wordHelpText">其他异常</a></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>终端数</td>
+                                            <td ng-repeat="subtype in vm.subtypes">{{ subtype.count }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>覆盖人群</td>
+                                            <td ng-repeat="subtype in vm.subtypes">{{ subtype.coverage_count }}万</td>
+                                        </tr>
+                                        <tr>
+                                            <td>问题占比</td>
+                                            <!--避免浮点数运算出错 如0.333*100=33.300000000000004-->
+                                            <td ng-repeat="subtype in vm.subtypes">{{ subtype.rate*1000/10 }}%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- 行业指标 -->
+                            <div class="industry-target">
+                                <h1>{{'行业指标'|translate}}{{vm.testAppTypeText|translate}}</h1>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">{{'测试场景'|translate}}</th>
+                                            <th width="20%">{{'行业最优指标(台)'|translate}}</th>
+                                            <th width="30%">{{'行业平均指标(台)'|translate}}</th>
+                                            <th class="tb-change-app-type"  width="30%">{{'本游戏指标(台)'|translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{'安装失败'|translate}}</td>
+                                            <td>{{vm.compIndustryTop.e_r_install_failure_text}}</td>
+                                            <td>{{vm.compIndustryAvg.e_r_install_failure_text}}</td>
+                                            <td ng-class="vm.compTaskAvg.e_r_install_failure_rank=='up' ? 'tb-green' : 'tb-red'">{{vm.compTaskAvg.e_r_install_failure_text}}<span ng-class="vm.compTaskAvg.e_r_install_failure_rank=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'启动失败'|translate}}</td>
+                                            <td>{{vm.compIndustryTop.e_r_boot_failure_text}}</td>
+                                            <td>{{vm.compIndustryAvg.e_r_boot_failure_text}}</td>
+                                            <td ng-class="vm.compTaskAvg.e_r_boot_failure_rank=='up' ? 'tb-green' : 'tb-red'">{{vm.compTaskAvg.e_r_boot_failure_text}}<span ng-class="vm.compTaskAvg.e_r_boot_failure_rank=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>运行</td>
+                                            <td>{{vm.compIndustryTop.e_r_beginners_guide_text}}</td>
+                                            <td>{{vm.compIndustryAvg.e_r_beginners_guide_text}}</td>
+                                            <td ng-class="vm.compTaskAvg.e_r_beginners_guide_rank=='up' ? 'tb-green' : 'tb-red'">{{vm.compTaskAvg.e_r_beginners_guide_text}}<span ng-class="vm.compTaskAvg.e_r_beginners_guide_rank=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'合计'|translate}}</td>
+                                            <td>{{vm.compIndustryTop.t_r_exception_text}}</td>
+                                            <td>{{vm.compIndustryAvg.t_r_exception_text}}</td>
+                                            <td ng-class="vm.compTaskAvg.t_r_exception_rank=='up' ? 'tb-green' : 'tb-red'">{{vm.compTaskAvg.t_r_exception_text}}<span ng-class="vm.compTaskAvg.t_r_exception_rank=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'通过测试终端'|translate}}</td>
+                                            <td>{{vm.compIndustryTop.t_r_success_text}}</td>
+                                            <td>{{vm.compIndustryAvg.t_r_success_text}}</td>
+                                            <td ng-class="vm.compTaskAvg.t_r_success_rank=='up' ? 'tb-green' : 'tb-red'">{{vm.compTaskAvg.t_r_success_text}}<span ng-class="vm.compTaskAvg.t_r_success_rank=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>{{'性能分类'|translate}}</th>
+                                            <th>{{'行业最优指标'|translate}}</th>
+                                            <th>{{'行业平均指标'|translate}}</th>
+                                            <th>最差机型</th>
+                                            <th>最优机型</th>
+                                            <th class="tb-change-app-type">{{'本游戏指标'|translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="help">
+                                        <tr>
+                                            <td><a href="" tb-word-help-v2="dataTraffic" help-text="vm.wordHelpText">{{'流量'|translate}}[kb]</a></td>
+                                            <td>{{vm.perfIndustryTop.i_data_traffic__min/1024|number:0}}</td>
+                                            <td>{{vm.perfIndustryAvg.i_data_traffic__avg/1024|number:0}}</td>
+                                            <td>{{vm.performance.worst_device_info.i_data_traffic.device_name}}</td>
+                                            <td>{{vm.performance.best_device_info.i_data_traffic.device_name}}</td>
+                                            <td ng-class="vm.performance.task_performance_rank.i_data_traffic=='up' ? 'tb-green' : 'tb-red'">{{vm.perfTaskAvg.i_data_traffic__avg/1024|number:0}}<span ng-class="vm.performance.task_performance_rank.i_data_traffic=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="" tb-word-help-v2="bootDelay" help-text="vm.wordHelpText">{{'启动时延'|translate}}[ms]</a></td>
+                                            <td>{{vm.perfIndustryTop.i_boot_delay__min|number:2}}</td>
+                                            <td>{{vm.perfIndustryAvg.i_boot_delay__avg|number:2}}</td>
+                                            <td>{{vm.performance.worst_device_info.i_boot_delay.device_name}}</td>
+                                            <td>{{vm.performance.best_device_info.i_boot_delay.device_name}}</td>
+                                            <td ng-class="vm.performance.task_performance_rank.i_boot_delay=='up' ? 'tb-green' : 'tb-red'">{{(vm.perfTaskAvg.i_boot_delay__avg || 0)|number:2}}<span ng-class="vm.performance.task_performance_rank.i_boot_delay=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="" tb-word-help-v2="cpuUtilization" help-text="vm.wordHelpText">{{'CPU占用率'|translate}}[%]</a></td>
+                                            <td>{{vm.perfIndustryTop.i_cpu_utilization__min|number:2}}</td>
+                                            <td>{{vm.perfIndustryAvg.i_cpu_utilization__avg|number:2}}</td>
+                                            <td>{{vm.performance.worst_device_info.i_cpu_utilization.device_name}}</td>
+                                            <td>{{vm.performance.best_device_info.i_cpu_utilization.device_name}}</td>
+                                            <td ng-class="vm.performance.task_performance_rank.i_cpu_utilization=='up' ? 'tb-green' : 'tb-red'">{{vm.perfTaskAvg.i_cpu_utilization__avg|number:2}}<span ng-class="vm.performance.task_performance_rank.i_cpu_utilization=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="" tb-word-help-v2="memUtilization" help-text="vm.wordHelpText">{{'内存占用'|translate}}[kb]</a></td>
+                                            <td>{{vm.perfIndustryTop.i_mem_utilization__min|number:2}}</td>
+                                            <td>{{vm.perfIndustryAvg.i_mem_utilization__avg|number:2}}</td>
+                                            <td>{{vm.performance.worst_device_info.i_mem_utilization.device_name}}</td>
+                                            <td>{{vm.performance.best_device_info.i_mem_utilization.device_name}}</td>
+                                            <td ng-class="vm.performance.task_performance_rank.i_mem_utilization=='up' ? 'tb-green' : 'tb-red'">{{vm.perfTaskAvg.i_mem_utilization__avg|number:2}}<span ng-class="vm.performance.task_performance_rank.i_mem_utilization=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="" tb-word-help-v2="fileSize" help-text="vm.wordHelpText">{{'文件大小'|translate}}[MB]</a></td>
+                                            <td>{{vm.perfIndustryTop.file_size/1024/1024|number:1}}</td>
+                                            <td>{{vm.perfIndustryAvg.file_size/1024/1024|number:1}}</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td ng-class="vm.performance.task_performance_rank.file_size=='up' ? 'tb-green' : 'tb-red'">{{vm.perfTaskAvg.file_size/1024/1024|number:1}}<span ng-class="vm.performance.task_performance_rank.file_size=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="" tb-word-help-v2="temperature" help-text="vm.wordHelpText">{{'温度'|translate}}[℃]</a></td>
+                                            <td>{{vm.perfIndustryTop.i_temperature__min|number:2}}</td>
+                                            <td>{{vm.perfIndustryAvg.i_temperature__avg|number:2}}</td>
+                                            <td>{{vm.performance.worst_device_info.i_temperature.device_name}}</td>
+                                            <td>{{vm.performance.best_device_info.i_temperature.device_name}}</td>
+                                            <td ng-class="vm.performance.task_performance_rank.i_temperature=='up' ? 'tb-green' : 'tb-red'">{{vm.perfTaskAvg.i_temperature__avg|number:2}}<span ng-class="vm.performance.task_performance_rank.i_temperature=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="" >{{'GPU'|translate}}[%]</a></td>
+                                            <td>{{vm.perfIndustryTop.i_gpu_utilization__min|number:0|emptyReplace:'-'}}</td>
+                                            <td>{{vm.perfIndustryAvg.i_gpu_utilization__avg|number:0|emptyReplace:'-'}}</td>
+                                            <td>{{vm.performance.worst_device_info.i_gpu_utilization.device_name}}</td>
+                                            <td>{{vm.performance.best_device_info.i_gpu_utilization.device_name}}</td>
+                                            <td ng-class="vm.performance.task_performance_rank.i_install_elapse=='up' ? 'tb-green' : 'tb-red'">{{vm.perfTaskAvg.i_gpu_utilization__avg|number:0}}<span ng-class="vm.performance.task_performance_rank.i_gpu_utilization=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="" >{{'耗电量'|translate}}[mAh]</a></td>
+                                            <td>{{vm.perfIndustryTop.i_battery_usage__min}}</td>
+                                            <td>{{vm.perfIndustryAvg.i_battery_usage__avg}}</td>
+                                            <td>{{vm.performance.worst_device_info.i_battery_usage.device_name}}</td>
+                                            <td>{{vm.performance.best_device_info.i_battery_usage.device_name}}</td>
+                                            <td ng-class="vm.performance.task_performance_rank.i_battery_usage=='up' ? 'tb-green' : 'tb-red'">{{vm.perfTaskAvg.i_battery_usage__avg}}<span ng-class="vm.performance.task_performance_rank.i_battery_usage=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="" tb-word-help="frameRate" help-text="vm.wordHelpText">{{'帧速率'|translate}}[fps]</a></td>
+                                            <td>{{vm.perfIndustryTop.i_frame_rate__min|number:0}}</td>
+                                            <td>{{vm.perfIndustryAvg.i_frame_rate__avg|number:0}}</td>
+                                            <td>{{vm.performance.worst_device_info.i_frame_rate.device_name}}</td>
+                                            <td>{{vm.performance.best_device_info.i_frame_rate.device_name}}</td>
+                                            <td ng-class="vm.performance.task_performance_rank.i_frame_rate=='up' ? 'tb-green' : 'tb-red'">{{vm.perfTaskAvg.i_frame_rate__avg|number:1}}<span ng-class="vm.performance.task_performance_rank.i_frame_rate=='up' ? 'up' : 'down'"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

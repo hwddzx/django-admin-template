@@ -1,0 +1,21 @@
+<div tb-modal class="tb-modal execution-snapshot-modal">
+    <h1 class="head">{{vm.execution.snapshotsEditable?'编辑截图':'所有截图'}}<i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <div class="modal-content">
+        <div class="snapshots image-box-container adaptive-images-container" ng-class="{'editable':vm.execution.snapshotsEditable}" tb-image-box data-zindex="1050" data-offset-top="0" data-image-margin="100" box-tpl-url="apps/task/stf/templates/snapshot.box.html">
+            <div class="snapshot-item" ng-repeat="shot in vm.snapshots">
+                <div class="snapshot-box-item adaptive-image-wrap">
+                    <img ng-src="{{vm.getSnapshotUrl(shot)}}" ng-click="vm.setCurrentSnapshot(shot)" data-url="{{vm.getSnapshotUrl(shot)}}" class="image-box-item tb-adaptive-image" data-width="118" data-height="236" ng-class="{'screentshot-patch':shot.patch}" />
+                </div>
+                <div class="snapshot-actions" ng-if="vm.execution.snapshotsEditable">
+                    <div class="delete-patch" ng-if="shot.patch" ng-click="vm.deleteSnapshotPatch(shot)"><i class="icon icon-broom"></i></div>
+                    <div class="delete-snapshot" ng-click="vm.deleteSnapshot(shot)"><i class="icon icon-trash-red"></i></div>
+                </div>
+                <div class="number">{{ $index+1 }}</div>
+                <div class="fancy-box-overlay" ng-if="!vm.execution.snapshotsEditable" ng-click="vm.showSnapshot($index)"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.close()">确定</button>
+    </div>
+</div>

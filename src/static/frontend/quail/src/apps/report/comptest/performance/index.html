@@ -1,0 +1,47 @@
+    <div id="report-performance-v2">
+        <div class="col-md-12 performance-details">
+            <h1 class="col-md-12 ">{{ '性能详情' | translate }}</h1>
+            <div ng-repeat="optimize_subtypes in vm.optimize_subtypes track by $index">
+                <a ng-click="vm.refreshList(optimize_subtypes.newcode)" ng-class="{true: 'more-optimize-subtype', false: 'optimize-subtype'}[vm.hasMoreOptimizeList]">
+                    <div class="column" ng-class="{ true:'column-check',false:'column-uncheck' }[vm.btn[optimize_subtypes.newcode] === 'check']">
+                        <i class="icon performance-icons performance-{{ $index  }}"></i>
+                        <div class="text">{{ optimize_subtypes.newname }}</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="information col-md-12 ">
+        <span class="tb-change-app-type">
+            {{ '受影响玩家:' | translate }} &nbsp {{ vm.list_coverage }}{{ '*10k' | translate }}
+        </span>
+    </div>
+    <div class="col-md-12" id="pie-con">
+    </div>
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        {{ '待优化终端Top5' | translate }}
+                    </th>
+                    <th>
+                        {{ vm.list_name }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="list in vm.topFiveList | orderBy: vm.topFiveSequence" ng-class-even="'tr-bg-even'">
+                    <td>
+                        <a class="gotoIssues" target="_blank" ui-sref="subtaskDetail.performance({'taskKey':vm.taskKey, 'subtaskKey': list.key})">
+                            {{ list.device_model_name }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ vm.toFixed(list.data, 2) }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

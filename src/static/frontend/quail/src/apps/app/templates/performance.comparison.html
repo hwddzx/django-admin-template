@@ -1,0 +1,114 @@
+<div ng-controller="PerformanceComparisonCtrl as vm" class="performance-comparison-container">
+    <div class="comparison-container">
+        <div class="title-header">
+            <p>已测试APP</p>
+        </div>
+        <div class="app-icons">
+            <div ng-repeat="app in vm.apps">
+                <img ng-src="{{ app.icon_url}}" alt="{{app.name}}" ng-click="vm.showReport(app.key)">
+                <p>{{app.name}}</p>
+            </div>
+        </div>
+        <div class="title-header" id="compareListHead">
+            <p>APP测试报告</p>
+        </div>
+        <table class="performance-table">
+            <thead>
+                <tr>
+                    <th width="4%">
+                         <input type="checkbox" id="checkAll" ng-model="vm.appAllChecked" />
+                         <label for="checkAll"></label>
+                    </th>
+                    <th>报告名称</th>
+                    <th width="20%">测试日期</th>
+                    <th width="5%">删除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="list in vm.compareList.results track by $index">
+                    <td>
+                        <input type="checkbox" id="check[{{$index}}]" ng-model="list.checked"/>
+                        <label for="check[{{$index}}]"></label>
+                    </td>
+                    <td>{{list.name}}</td>
+                    <td>{{list.created | dateFilter}}</td>
+                    <td>
+                        <a href="" ng-click="vm.deleteAppReport(list.id)" ><i class="icon icon-trash-gray"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="vm.compareList.results.length == 0" class="no-data-tips">暂无数据</p>
+        <div class="pagination" v-if="vm.compareList.results.length > 0">
+            <ul>
+                <li ng-click="vm.CompareListPagination(1)" ng-class="{'not-allowed-click': vm.currentPage == 1}">首页</li>
+                <li ng-click="vm.CompareListPagination(vm.currentPage-1)" ng-class="{'not-allowed-click': vm.currentPage == 1}">前一页</li>
+                <li ng-repeat="page in vm.pageNum track by $index">
+                    <p ng-click="vm.CompareListPagination(page+1)" ng-class="{'current-page':vm.currentPage == page+1}">{{page+1}}</p>
+                </li>
+                <li ng-click="vm.CompareListPagination(vm.currentPage+1)" ng-class="{'not-allowed-click': vm.currentPage == vm.lastPage}">后一页</li>
+                <li ng-click="vm.CompareListPagination(vm.lastPage)" ng-class="{'not-allowed-click': vm.currentPage == vm.lastPage}">末页</li>
+            </ul>
+        </div>
+        <div class="performance-btns">
+            <a href="javascript:void(0);" ng-click="vm.addReportInfo('del')">批量删除</a>
+            <a href="javascript:void(0);" ng-click="vm.addReportInfo('add')">生成对比表格</a>
+        </div>
+        <div class="title-header">
+            <p>对比表格</p>
+        </div>
+        <table class="performance-table">
+            <thead>
+                <tr>
+                    <th width="4%">
+                         <input type="checkbox" id="reportCheckAll" ng-model="vm.reportAllChecked" />
+                         <label for="reportCheckAll"></label>
+                    </th>
+                    <th>报告名称</th>
+                    <th>测试报告</th>
+                    <th width="17%">测试日期</th>
+                    <th width="10%">备注</th>
+                    <th width="5%">详情</th>
+                    <th width="5%">删除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="list in vm.compareReportList.results track by $index">
+                    <td>
+                        <input type="checkbox" id="reportCheck[{{$index}}]" ng-model="list.checked"/>
+                        <label for="reportCheck[{{$index}}]"></label>
+                    </td>
+                    <td>{{list.name}}</td>
+                    <td>
+                        <div ng-repeat="item in list.reports track by $index">
+                            <p>{{item}}</p>
+                        </div>
+                    </td>
+                    <td>{{list.created | dateFilter}}</td>
+                    <td>{{list.desc}}</td>
+                    <td>
+                        <a href="" ng-click="vm.gotoPerformanceDetail(list.id)">详情</a>
+                    </td>
+                    <td>
+                        <a href="" ng-click="vm.delCompareReport(list.key)" ><i class="icon icon-trash-gray"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="vm.compareReportList.results.length == 0" class="no-data-tips">暂无数据</p>
+        <div class="pagination" v-if="vm.compareReportList.results.length > 0">
+            <ul>
+                <li ng-click="vm.compareReportListPagination(1)" ng-class="{'not-allowed-click': vm.currentPageReport == 1}">首页</li>
+                <li ng-click="vm.compareReportListPagination(vm.currentPageReport-1)" ng-class="{'not-allowed-click': vm.currentPageReport == 1}">前一页</li>
+                <li ng-repeat="page in vm.pageNumReport">
+                    <p ng-click="vm.compareReportListPagination(page+1)" ng-class="{'current-page':vm.currentPageReport == page+1}">{{page+1}}</p>
+                </li>
+                <li ng-click="vm.compareReportListPagination(vm.currentPageReport+1)" ng-class="{'not-allowed-click': vm.currentPageReport == vm.lastPageReport}">后一页</li>
+                <li ng-click="vm.compareReportListPagination(vm.lastPageReport)" ng-class="{'not-allowed-click': vm.currentPageReport == vm.lastPageReport}">末页</li>
+            </ul>
+        </div>
+        <div class="performance-btns">
+            <a href="javascript:void(0);" ng-click="vm.delCompareReports()">批量删除</a>
+        </div>
+    </div>
+</div>

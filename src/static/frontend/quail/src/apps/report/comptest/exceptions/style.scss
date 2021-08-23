@@ -1,0 +1,95 @@
+.exceptions-detail-v2 {
+    h1 {
+        margin: 20px 0;
+    }
+    .crash-link {
+        display: block;
+        margin-top: -10px;
+    }
+    ul {
+        padding: 0;
+    }
+    .pre {
+        font-family: 'Lantinghei SC', 'Helvetica Neue', Arial, 'Microsoft Yahei', sans-serif;
+        height: 170px;
+        border: none;
+        font-size: 14px;
+        padding-left: 20px;
+        line-height: 35px;
+        margin-bottom: 40px;
+        background-color: $tb-table-bg;
+    }
+    .label {
+        font-weight:normal;
+        font-size: 14px;
+        float: left;
+        width: 100px;
+        line-height: 40px;
+        color: $gray;
+    }
+    .select {
+        float: left;
+        margin: 0;
+        padding: 0;
+        .dropdown {
+            display: inline-block;
+            float: left;
+            height: 38px;
+            width: 240px;
+            margin-top: 5px;
+            padding: 5px 10px;
+            border: 1px solid $gray-border;
+            line-height: 26px;
+            > span {
+                @include text-overflow();
+                float: left;
+                width: calc(100% - 15px);
+            }
+        }
+        .dropdown-menu {
+            width: 1000px;
+            &.short-menu {
+                width: 240px;
+            }
+            .break-all {
+                word-break: break-all;
+            }
+        }
+        .fa-sort-desc {
+            float: right;
+            margin-top: 2px;
+            color: $gray;
+        }
+    }
+    .table {
+        margin-bottom: 40px;
+        .desc {
+            padding-right: 30px;
+            max-width: 740px;
+            word-wrap:break-word;
+        }
+        .handle {
+            min-width: 150px;
+        }
+    }
+    .target-link, .link {
+        cursor: pointer;
+        color: $tb-blue !important;
+    }
+    .link + .link {
+         padding: 5px;
+    }
+    .rent {
+        color: #fff;
+        padding: 5px 10px;
+        background-color: $tb-green;
+    }
+    .bespeak {
+        color: $white !important;
+        padding: 5px 10px;
+        background-color: $tb-blue;
+    }
+    .current-count {
+        display: none;
+    }
+}

@@ -1,0 +1,100 @@
+ <div class="rent-time-step choose-category">
+     <h1 class="head">请选择测试手机<i class="icon icon-popup-close" ng-click="deviceVm.cancel()"></i></h1>
+     <div class="form-group release-item row">
+         <label class="control-label">应用版本:</label>
+        <span class="release-dropdown" uib-dropdown uib-dropdown-toggle>
+              <a class="dropdown-btn" id="release-dropdown">
+                  {{ task.release.version }}({{ task.release.build }})
+                  <i class="fa fa-sort-desc"></i>
+              </a>
+              <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="release-dropdown">
+                  <li ng-repeat="release in deviceVm.releases">
+                      <a href="" title="{{ release.created|dateFilter }}"
+                         ng-click="deviceVm.chooseRelease(release)">{{ release.version }}({{ release.build }})</a>
+                  </li>
+              </ul>
+        </span>
+     </div>
+     <div class="search-device">
+         <div class="search-item-container" tb-search-crumb>
+             <label ng-hide="deviceVm.hasItemSelected()">
+                 <a class='search-item'><span>全部设备</span></a>
+             </label>
+             <label ng-repeat="filter in deviceVm.filters">
+                 <a class='search-item' ng-repeat="selectedItem in filter.selected track by $index">
+                     <span ng-bind="selectedItem.value"></span><i class='icon icon-close'
+                                                                  ng-click="deviceVm.removeSelectedItem(selectedItem, filter, $event)"></i>
+                 </a>
+             </label>
+         </div>
+     </div>
+     <div class="keyword">
+         <input  type="text" maxlength="128" class="search" ng-model="deviceVm.keywords" placeholder="输入设备品牌关键字进行过滤!">
+     </div>
+        <div class="device-container" ng-class="{true:'add-status-column'}[isReplay || isComptest]">
+            <div class="device-filters">
+                <span uib-dropdown  auto-close="outsideClick" on-toggle="vm.toggled(open)" ng-repeat="filter in deviceVm.filters">
+                  <a href id="simple-dropdown" class="device-dropdown" uib-dropdown-toggle>{{ filter.name }}<i class="fa fa-sort-desc"></i></a>
+                  <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                      <li ng-repeat="item in filter.items">
+                          <i class="icon icon-chosen" ng-if="deviceVm.isItemSelected(item,filter)"></i>
+                          <a class="filter-item" ng-click="deviceVm.toggleFilterItem(item,filter,$event)">{{ item.value }}</a>
+                      </li>
+                  </ul>
+                </span>
+            </div>
+            <div class="device-all-choose" ng-show="deviceVm.multiSelect">
+                <input id="device-all-choose" type="checkbox" ng-model="deviceVm.isChooseAll"/>
+                <label for="device-all-choose" class="check-label" ng-click="deviceVm.chooseAllFilterDevices()">
+                    <span class="checked">取消选中</span>
+                    <span class="unchecked">全选</span>
+                </label>
+            </div>
+            <div class="btn btn-gray btn-fix btn-import import-files" ng-show="isComptest&&!deviceVm.isGetDeviceKeys">
+                <span>读取设备key发起测试</span>
+                <input type="file" title="读取设备key发起测试" accept="application/JSON" ng-file-select="deviceVm.readDeviceKeys($files)">
+            </div>
+            <div class="btn btn-gray btn-fix btn-import import-files" ng-show="isComptest&&deviceVm.isGetDeviceKeys" ng-click="deviceVm.invertChooseDevices()">根据文件中读取的设备反选</div>
+            <span class="read-device-error" ng-if="readDeviceError">未发现匹配的设备</span>
+            <ul class="list-unstyled device-list">
+                <li ng-repeat="device in deviceVm.filterDevices = (deviceVm.devices | filter: deviceVm.fieldFilters | filter: deviceVm.keywords)" ng-click="deviceVm.checkDevices(device, $event)">
+                    <label class="label-wrap text-unselect" for="manufacturer{{ $index }}">
+                        <div class="device-item">
+                            <input id="manufacturer{{ $index }}" type="checkbox" ng-model="device.checked" ng-click="$event.stopPropagation()" />
+                            <label class="checkbox-label" for="manufacturer{{ $index }}"></label>{{ device.name }}
+                        </div>
+                        <div class="device-item">{{ device.os }}</div>
+                        <div class="device-item">{{ device.ram }}</div>
+                        <div class="device-item">{{ device.screen_width }}x{{ device.screen_length }}</div>
+                        <div class="device-item" title="{{ device.tags|arrayToString }}">{{ device.tags|arrayToString }}</div>
+                        <div class="device-item" ng-show="isReplay||isComptest">{{ device.status }}</div>
+                    </label>
+                </li>
+            </ul>
+            <div class="execution-way" >
+                <label for="execution-way1" ng-show="isReplay && !isComptest">
+                    <input type="radio" name="execution-way" id="execution-way1" ng-model="task.schedule_mode" value="1" />系统自行分配执行手机
+                </label>
+                <label for="execution-way2" ng-show="isReplay">
+                    <input type="radio" name="execution-way" id="execution-way2" ng-model="task.schedule_mode" value="2" />
+                    <span ng-show="isReplay && !isComptest">用例在所选手机均执行</span>
+                    <span ng-show="isReplay && isComptest">并发执行</span>
+                </label>
+                <label for="execution-way3" ng-show="isReplay && isComptest">
+                    <input type="radio" name="execution-way" id="execution-way3" ng-model="task.schedule_mode" value="3" />顺序执行
+                </label>
+                <div class="toggle-list">
+                    <span>已选手机</span><span class="checked-count" ng-bind="task.device.length"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default" ng-click="deviceVm.cancel()">取消</button>
+            <button class="btn btn-fix btn-primary" ng-click="deviceVm.preStep()" ng-if="deviceVm.hasPreStep()">上一步</button>
+            <div class="btn btn-primary btn-fix btn-import import-files import-config" ng-show="!task.isDistribute">
+                <span>重新配参</span>
+                <input type="file" title="重新配参" ng-file-select="deviceVm.resetParams($files)">
+            </div>
+            <button class="btn btn-fix btn-primary" ng-click="deviceVm.nextStep()" ng-disabled="!task.device.length">{{ getNextBtnText() }}</button>
+        </div>
+    </div>

@@ -1,0 +1,538 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/report.head.html'"></ng-include>
+<!-- /头部 -->
+<div class="report-detail-container content-container " ng-init="detail = vm.executionDetail; device = detail.device">
+    <div class="current-app-container">
+        <img ng-src="{{ detail.app.icon_url }}" />
+        <div class="info">
+            <div class="app-name" ng-bind="detail.app.name + '&nbsp;' + detail.release.version +
+                                           '&nbsp;(' + detail.release.build + ')'"></div>
+            <div ng-bind="detail.created | dateFilter"></div>
+            <div class="priority">优先级: <span class="value" ng-style="{ 'background-color':(vm.priorityDef[vm.executionDetail.testcase.priority] | priorityBackgroundColor) }" ng-bind="vm.priorityDef[vm.executionDetail.testcase.priority]"></span></div>
+            <br/>
+            <span class="share-link" ng-bind="vm.shareLink"></span>&nbsp;&nbsp;
+            <span tb-disabled-in-product data-key="{{ detail.key }}">
+              key:<code>{{ detail.key }}</code>&nbsp;id:<code>{{ detail.id }}</code>&nbsp;device_key:<code>{{ detail.device.key }}</code>
+            </span>
+        </div>
+    </div>
+    <h3>测试信息</h3>
+    <span class="download-video" ng-show="vm.isShowVideo()" ng-click="vm.downloadByUrl(vm.executionDetail.video_path)">下载视频</span>
+    <span class="play-video" ng-show="vm.isShowVideo()" ng-click="vm.playVideo(vm.executionDetail.video_path)">播放视频</span>
+    <table class="tb-no-head-border-table tb-no-head-table-title margin-bottom-30">
+        <tr>
+            <td ng-if="!detail.refer_url">
+                <div>用例ID</div>
+                <div ng-if="!detail.refer_key">无</div>
+                <div ng-if="detail.refer_key" ng-bind="detail.refer_key"></div>
+            </td>
+            <td ng-if="detail.refer_url">
+                <div>参考ID</div>
+                <a target="_blank" ng-if="detail.refer_key" ng-href="{{ detail.refer_url }}" class="refer-url" ng-bind="detail.refer_key"></a>
+                <a target="_blank" ng-if="!detail.refer_key" ng-href="{{ detail.refer_url }}" class="refer-url">查看</a>
+            </td>
+            <td>
+                <div>参数列名</div>
+                <div>{{detail.param_header}}</div>
+            </td>
+            <td tb-show-case-detail data-testcase="detail.testcase" class="detail-name">
+                <div>名称</div>
+                <div ng-if="vm.isOffline">{{ detail.name }}</div>
+                <a ng-if="!vm.isOffline" ui-sref="app.testcases({ key:detail.app.key, selectNodeId: detail.testcase_id })" class="link">{{ detail.name }}</a>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <table class="tb-no-head-border-table tb-no-head-table-title margin-bottom-30 detail-table">
+        <tr>
+            <td>
+                <div>执行时间</div>
+                <div ng-bind="detail.created | dateFilter"></div>
+            </td>
+            <td>
+                <div>手机分辨率</div>
+                <div ng-bind="device.screen_width +' × '+ device.screen_length"></div>
+            </td>
+            <td>
+                <div>机型</div>
+                <div ng-bind="device.name"></div>
+            </td>
+            <td>
+                <div>操作系统</div>
+                <div ng-bind="device.os"></div>
+            </td>
+            <td rowspan="3" class="text-center">
+                <div ng-if="!vm.canChangeCompare" class="result" ng-style="{ 'color':(detail.result | executionResultTextColor), 'border-color':(detail.result | executionResultTextColor)}" ng-bind="detail.result"></div>
+                <a ng-if="vm.canChangeCompare&&!vm.isComptestReplayTask" href="" class="result-button" ng-style="{ 'background-color':(detail.result | executionResultTextColor), 'border-color':(detail.result | executionResultTextColor)}" ng-bind="detail.result" ng-click="refreshExecutionResult()"></a>
+                <span ng-if="vm.canChangeCompare&&vm.isComptestReplayTask" class="result-button" ng-style="{ 'background-color':(detail.result | executionResultTextColor), 'border-color':(detail.result | executionResultTextColor), 'cursor':'default'}" ng-bind="detail.result"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>执行时长</div>
+                <div ng-bind="(detail.execution_duration/1000)||detail.duration | secondFilter"></div>
+            </td>
+            <td>
+                <div>截图</div>
+                <div ng-bind="vm.images.length+'张'"></div>
+            </td>
+            <td colspan="2">
+                <div>场景</div>
+                <div ng-bind="detail.scenario||'无'"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div>备注</div>
+                <pre is-overflow ng-class="{'show-all':vm.showDetailDesc}" ng-bind="detail.desc"></pre>
+                <span class="show-desc" ng-hide="vm.showDetailDesc" ng-click="vm.showDetailDesc=true">查看详情</span>
+            </td>
+        </tr>
+    </table>
+    <!-- 参数信息 -->
+    <div ng-if="vm.isParametric">
+        <h3>参数信息</h3>
+        <div class="input-alarm">
+            <input type="checkbox" id="check-parameter" ng-model="vm.isShowCheckImg" />
+            <label for="check-parameter">截图标注检查点位置</label>
+        </div>
+        <table class="tb-table-striped table-align-first-left margin-bottom-50 plugin-result-table param-result-table">
+            <thead>
+                <tr>
+                    <th class="input-col" width="260px">输入</th>
+                    <th class="text-left" width="400px">输出</th>
+                    <th class="">相关截图</th>
+                    <th ng-if="!vm.isComptestReplayTask">截图对比</th>
+                    <th width="150px">状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="!vm.outputParams.length && vm.inputParams.length">
+                    <td class="input-col">
+                        <p ng-repeat="input in vm.inputParams">{{input.alias+"/"+input.actual}}</p>
+                    </td>
+                    <td colspan="{{vm.isComptestReplayTask?3:4}}"></td>
+                </tr>
+                <tr ng-repeat="output in vm.outputParams">
+                    <td class="input-col" ng-if="$first" rowspan="{{vm.outputParams.length}}">
+                        <p ng-repeat="input in vm.inputParams">{{input.alias+"/"+input.actual}}</p>
+                    </td>
+                    <td class="text-left">
+                        <p class="orange actual-label">{{output.alias+"/"+output.actual+"/"+output.origin}}</p>
+                        <p class="gray expect-label">期望值: {{vm.hitParam(output)}}</p>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" title="查看图片" ng-click="vm.showOutputImage($index)" ng-show="output.result!=-2"><i class="icon icon-record"></i></a>
+                    </td>
+                    <td ng-if="!vm.isComptestReplayTask">
+                        <a class="link" ng-click="vm.goCompareSnapshot($index)" ng-show="output.result!=-2">查看</a>
+                    </td>
+                    <td>
+                        <div class="plugin-result" ng-class="{'0':'passed', '1': 'failed'}[output.result]" ng-bind="output.result | pluginResult"></div>
+                    </td>
+                </tr>
+                <tr ng-repeat="formula in vm.formulas">
+                    <td class="text-left orange">
+                        {{formula.alias}}
+                    </td>
+                    <td class="text-left orange">
+                        {{formula.formula}}
+                    </td>
+                    <td colspan="{{vm.isComptestReplayTask?1:2}}"></td>
+                    <td>
+                        <div class="plugin-result" ng-class="{'0':'passed', '1': 'failed'}[formula.result]" ng-bind="formula.result | pluginResult"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table ng-if="vm.formula_scripts.length" class="tb-table-striped table-align-first-left margin-bottom-50 plugin-result-table param-result-table" tb-sorting>
+            <thead>
+                <th class="input-col" width="260px">参数检查脚本名</th>
+                <th>状态</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="formulaScript in vm.formula_scripts">
+                    <td class="input-col">
+                        <a ng-href="{{formulaScript.url}}">{{formulaScript.name}}</a></td>
+                    <td>
+                        <div class="plugin-result" ng-class="{'0':'passed', '1': 'failed'}[formulaScript.result]" ng-bind="formulaScript.result | pluginResult"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 插件信息 -->
+    <div ng-if="vm.isLab && detail.plugin_results && detail.plugin_results.length">
+        <h3>插件信息</h3>
+        <table class="tb-table-striped table-align-first-left margin-bottom-50 plugin-result-table" tb-sorting>
+            <thead>
+                <tr>
+                    <th width="200px">插件名</th>
+                    <th class="text-left">备注</th>
+                    <th width="150px">状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="plugin in detail.plugin_results">
+                    <td ng-bind="plugin.alias"></td>
+                    <td class="text-left" ng-bind="plugin.log"></td>
+                    <td>
+                        <div class="plugin-result failed" ng-class="{0:'passed'}[plugin.result]" ng-bind="plugin.result===0?'通过':'失败'"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 测试页面响应时间 -->
+    <div ng-if="vm.measureResponses.length>0">
+        <h3>页面响应时间</h3>
+        <table class="tb-table margin-bottom-50">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th class="text-left">响应时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="measure in vm.measureResponses">
+                    <td ng-bind="measure.measureName"></td>
+                    <td class="text-left" ng-bind="vm.hitMeasureResponseTime(measure.responseTime)+'ms'"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 非回放用例，显示所有截图, 且可编辑 -->
+    <!-- 回放用例时，显示截图对比，如果是参数话，则不显示对比图片 -->
+    <div class="task" ng-if="!vm.isReplayTask||vm.isComptestReplayTask">
+        <h3 id="images">操作截图<button class="btn btn-fix btn-default pull-right" ng-click="vm.showSnapshots()">{{detail.snapshotsEditable?'编辑截图':'所有截图'}}</button></h3>
+        <div class="tb-overflow-hidden" tb-slider options="vm.sliderOptions" slider-api="vm.slider">
+            <div class="snapshot-left">
+                <div ng-click="vm.preSnapshot()"></div>
+            </div>
+            <div class="snapshot-container adaptive-images-container tb-slider-wrap">
+                <div class="single-snapshot" ng-class="{'patched':img.is_patched, 'repeat-left-in': vm.imagesLeftIn, 'repeat-right-in': !vm.imagesLeftIn, 'active': vm.currentNumber-1==$index}" ng-repeat="img in vm.images">
+                    <div class="snashot-img-box adaptive-image-wrap">
+                        <img class="snapshot-img" tb-adaptive-image data-lazy="{{ img.url }}" ng-click="vm.showFancybox($index)" />
+                    </div>
+                    <div class="snapshot-time">{{ img.time / 1000 | dateFilter}}</div>
+                </div>
+            </div>
+            <div class="snapshot-right">
+                <div ng-click="vm.nextSnapshot()"></div>
+            </div>
+        </div>
+        <div class="find-sign-img" ng-if="!vm.isComptestReplayTask">
+            <a class="pre-sign-img" ng-click="vm.refreshPatchedSnapshot(-1)">上一张标记</a>
+            <a class="next-sign-img" ng-click="vm.refreshPatchedSnapshot(1)">下一张标记</a>
+        </div>
+        <div class="pagination">
+            <input type="number" ng-model="vm.currentNumber" />
+            <span>&nbsp;/&nbsp;</span>
+            <span>{{ vm.images.length }}张</span>
+        </div>
+    </div>
+    <!-- 图片回归模式 -->
+    <div class="replay-task text-unselect" id="snapshot-compare-container" ng-if="vm.isReplayTask&&!vm.isComptestReplayTask">
+        <div class="replay-head">
+            <h3 ng-if="!vm.isParametric">截图对比结果</h3>
+            <h3 ng-if="vm.isParametric">截图对比效果</h3>
+            <span class="pagination" ng-if="!vm.isParametric">
+                <input type="number" ng-model="vm.currentNumber" />
+                <span>&nbsp;/&nbsp;</span>
+            <span>{{ vm.images.length }}张</span>
+            </span>
+            <div class="replay-checkbox-contrast" ng-if="!vm.isParametric">
+                <input type="checkbox" id="failed" ng-model="vm.filter.fail" class="hide" />
+                <label for="failed"><i class="replay-checkbox fail"></i>问题</label>
+            </div>
+            <div class="replay-checkbox-contrast" ng-if="!vm.isParametric">
+                <input type="checkbox" id="blocked" ng-model="vm.filter.optimizable" class="hide" />
+                <label for="blocked"><i class="replay-checkbox optimizable"></i>可忽略</label>
+            </div>
+            <div class="replay-checkbox-contrast" ng-if="!vm.isParametric">
+                <input type="checkbox" id="passed" ng-model="vm.filter.pass" class="hide" />
+                <label for="passed"><i class="replay-checkbox pass"></i>通过</label>
+            </div>
+            <button class="btn btn-default pull-right" ng-click="vm.showCompareSnapshots()" ng-if="vm.isParametric&&vm.images.length>0">所有截图</button>
+            <button class="btn btn-default pull-right" ng-click="vm.updateLayout(true)" ng-if="vm.isShowUpdateBtn(true)">更新所有需要更新截图layout</button>
+            <button class="btn btn-default pull-right" ng-click="vm.updateLayout()" ng-if="vm.isShowUpdateBtn()">更新当前对比截图layout</button>
+        </div>
+        <div class="replay-contrast" tb-replay-slider data-images-length="{{ vm.images.length }}" ng-if="!vm.isParametric">
+            <div class="replay-lists">
+                <div class="replay-list" ng-repeat="image in vm.images">
+                    <input type="radio" id="image[{{ $index }}]" ng-model="vm.currentNumber" ng-value="$index+1" ng-click="vm.refreshCompareImage($index)" name="currentNumber" class="hide" />
+                    <label for="image[{{ $index }}]">
+                        <span class="check-border"><i class="replay-list-radio" ng-style="{ 'background-color':(image.state | compareResultTextColor) }"></i></span>
+                    </label>
+                </div>
+                <div class='rolling-groove'>
+                    <div class="scroll-bar"></div>
+                </div>
+            </div>
+        </div>
+        <div class="tb-overflow-hidden" ng-if="vm.images.length>0">
+            <div class="compares-control">
+                <input type="checkbox" id="compare-true" name="showCompare" ng-model="vm.showDiff" class="hide" />
+                <label for="compare-true">
+                    <i class="icon icon-compares-true"></i>
+                </label>
+            </div>
+            <div img-error class="snapshot-container adaptive-images-container replay-diff" tb-image-box data-offset-top="50" data-image-margin="140" box-tpl-url="apps/task/stf/templates/snapshot.area.html" tb-show-diff data-area-enabled='!vm.isParametric' data-images="vm.images" data-show-diff="vm.showDiff" data-current-number="vm.currentNumber">
+                <div class="single-snapshot {{ vm.imagesLeftIn?'repeat-left-in':'repeat-right-in' }}" ng-class="{'valid-baseline':img.base.valid_baseline}" data-url="{{img.base.url}}" ng-repeat="img in vm.images | tbCompareLimitTo : vm.currentNumber">
+                    <!-- 当前图片在vm.images数组位置为:vm.currentNumber-1，加上 $index-1定位左右图片 -->
+                    <div class="snapshot-img-wrap current-img-wrap snashot-img-box "><img class="snapshot-img current-img" data-current-number="vm.currentNumber" quail-rotate-image data-index="$index" ng-src="{{ img.url | qiniuThumbnail:400}}" ng-click="vm.refreshCompareImage(vm.currentNumber+$index-2)" />
+                        <div class="snapshot-tip">[回放]</div>
+                    </div>
+                    <div class="snapshot-img-wrap base-img-wrap snashot-img-box"><img class="snapshot-img base-img" ng-if="img.base.url" data-current-number="vm.currentNumber" quail-rotate-image data-index="$index" ng-src="{{ img.base.url | qiniuThumbnail:400}}" />
+                        <span ng-if="!img.base.url" class="no-snapshot-img-tip">无对应的录制截图</span>
+                        <div class="snapshot-tip">[录制]</div>
+                    </div>
+                    <div class="snapshot-img-wrap diff-img-wrap snashot-img-box "><img class="snapshot-img diff-img" data-current-number="vm.currentNumber" quail-rotate-image data-index="$index" ng-src="{{ img.diff.url | qiniuThumbnail:400}}" />
+                        <div class="snapshot-tip">[对比]</div>
+                    </div>
+                    <div class="snapshot-time">{{ img.time / 1000 | dateFilter}}</div>
+                    <div class="diff-overlay" ng-click="vm.setCurrentSnapshot(img.base)"></div>
+                    <button class="btn btn-default show-current-replay-layout" ng-show="vm.isShowLayoutBtn(image)" ng-click="vm.showCurrentReplayLayout($event)">查看回放layout</button>
+                </div>
+            </div>
+            <div class="buttons" ng-if="vm.canChangeCompare">
+                <a class="button pass" ng-click="vm.changeCompare(true, vm.images[vm.currentNumber-1].base)" ng-if="vm.images[vm.currentNumber-1].state != 'pass'"></a>
+                <a class="button optimizable" ng-click="vm.changeCompare(false, vm.images[vm.currentNumber-1].base)" ng-if="vm.images[vm.currentNumber-1].state == 'fail'"></a>
+            </div>
+            <div class="text-center"  ng-if="vm.isParametric">
+                <a href="javascript:;" ng-click="vm.refreshCompareImage(vm.currentNumber-2)">上一页</a>
+                <span class="pagination">
+                    <input type="number" ng-model="vm.currentNumber"/>
+                    <span>&nbsp;/&nbsp;</span>
+                    <span>{{ vm.images.length }}张</span>
+                </span>
+                <a href="javascript:;" ng-click="vm.refreshCompareImage(vm.currentNumber)">下一页</a>
+            </div>
+        </div>
+    </div>
+    <!-- 性能图表 -->
+    <div>
+        <h3>性能参数</h3>
+        <div class="issues-group">
+            <div class="checkbox-item checkbox-item-cpu" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.CPU]">
+                <label class="label-checkbox" for="issues-box-1" ng-click="vm.redrawChart()"></label>
+                <input id="issues-box-1" type="checkbox" class="hide" ng-model="vm.issuesObject.CPU" />
+                <label for="issues-box-1" ng-click="vm.redrawChart()">CPU占用率(%)(平均:{{vm.cupAverage}})</label>
+            </div>
+            <div class="checkbox-item checkbox-item-memory" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.Memory]">
+                <label class="label-checkbox" for="issues-box-2" ng-click="vm.redrawChart()"></label>
+                <input id="issues-box-2" type="checkbox" class="hide" ng-model="vm.issuesObject.Memory" />
+                <label for="issues-box-2" ng-click="vm.redrawChart()">内存占用(kb)(平均:{{vm.memoryAverage}})</label>
+            </div>
+            <div ng-if="vm.hasSystemRamAvailable" class="checkbox-item checkbox-item-available-memory" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.AvailableMemory]">
+                <label class="label-checkbox" for="issues-box-3" ng-click="vm.redrawChart()"></label>
+                <input id="issues-box-3" type="checkbox" class="hide" ng-model="vm.issuesObject.AvailableMemory" />
+                <label for="issues-box-3" ng-click="vm.redrawChart()">可用内存(kb)(平均:{{vm.availableMemoryAverage}})</label>
+            </div>
+            <div class="checkbox-item checkbox-item-temperature" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.Temperature]">
+                <label class="label-checkbox" for="issues-box-5" ng-click="vm.redrawChart()"></label>
+                <input id="issues-box-5" type="checkbox" class="hide" ng-model="vm.issuesObject.Temperature" />
+                <label for="issues-box-5" ng-click="vm.redrawChart()">温度(°C)(平均:{{vm.temperatureAverage}})</label>
+            </div>
+            <div class="checkbox-item checkbox-item-datatraffic" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.DataTraffic]">
+                <label class="label-checkbox" for="issues-box-6" ng-click="vm.redrawChart()"></label>
+                <input id="issues-box-6" type="checkbox" class="hide" ng-model="vm.issuesObject.DataTraffic" />
+                <label for="issues-box-6" ng-click="vm.redrawChart()">流量(kb)(平均:{{vm.dataTrafficAverage}})</label>
+            </div>
+            <div class="checkbox-item checkbox-item-fps" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.Frame]"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-4"></label>
+                <input id="issues-box-4" type="checkbox" class="hide" ng-model="vm.issuesObject.Frame"/>
+                <label for="issues-box-4" ng-click="vm.redrawChart()">帧速率(fps)(平均:{{vm.frameAverage}})</label>
+            </div>
+            <div class="checkbox-item checkbox-item-gpu" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.gpuUsage]"
+                 ng-if="vm.gpuEnabled"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-7"></label>
+                <input id="issues-box-7" type="checkbox" class="hide" ng-model="vm.issuesObject.gpuUsage"/>
+                <label for="issues-box-7">GPU(%)(平均:{{vm.gpuUsageAverage}})</label>
+            </div>
+            <div class="checkbox-item checkbox-item-electric" ng-class="{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.batteryUsage]"
+                 ng-if="vm.batteryEnabled"  ng-click="vm.redrawChart()">
+                <label class="label-checkbox" for="issues-box-8"></label>
+                <input id="issues-box-8" type="checkbox" class="hide" ng-model="vm.issuesObject.batteryUsage"/>
+                <label for="issues-box-8">耗电量(mAh)(平均:{{vm.batteryUsageAverage}})</label>
+            </div>
+            <div class="checkbox-item checkbox-item-currentHeapSize" ng-if="vm.os != 'ios'" ng-class = "{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.cacheSize]" >
+                <label class="label-checkbox" for="issues-box-9" ng-click = "vm.redrawChart()"></label>
+                <input id="issues-box-9" type="checkbox" class="hide" ng-model = "vm.issuesObject.cacheSize" />
+                <label for="issues-box-9" ng-click = "vm.redrawChart()">应用缓存(kb)(平均:{{vm.cacheSizeAverage}})</label>
+
+            </div>
+            <div class="checkbox-item checkbox-item-devTime" ng-class = "{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.devTime]" >
+                <label class="label-checkbox" for="issues-box-10" ></label>
+                <input id="issues-box-10" type="checkbox" class="hide"/>
+                <label for="issues-box-10" ng-click = "vm.redrawChart()">安装时间(s)(总和:{{(device.installDelay/1000).toFixed(3)}})</label>
+            </div>
+            <div class="checkbox-item checkbox-item-devTime" ng-class = "{true:'checked-item',false:'unchecked-item'}[vm.issuesObject.devTime]" >
+                <label class="label-checkbox" for="issues-box-11" ></label>
+                <input id="issues-box-11" type="checkbox" class="hide"/>
+                <label for="issues-box-11" ng-click = "vm.redrawChart()">启动时间(s)(总和:{{(device.startDelay/1000).toFixed(3)}})</label>
+            </div>
+        </div>
+        <div report-performance-chart class="report-performance-chart"></div>
+    </div>
+    <!-- 性能隐患 -->
+    <h3>性能隐患</h3>
+    <div class="warning">
+        <div class="accordion" id="accordion-list">
+            <div class="accordion-group">
+                <div class="accordion-heading" tb-angle-up-down ng-class="{'warning':vm.warningsCount.cpu}">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-list" href="" data-target="#collapse-cpu-text">CPU<span ng-if="!vm.warningsCount.cpu"> ( 无隐患 )</span><span class="fa angle fa-angle-down"></span></a>
+                </div>
+                <div id="collapse-cpu-text" class="accordion-body collapse">
+                    <p>CPU是负责执行所有指令的应用程序和运行不同的子系统，维护运行的安卓系统（多媒体，音频，渲染等）的必要单元。</p>
+                    <span class="warning-title">CPU占有率</span>
+                    <p>当CPU占用过高时，用户会感觉到应用卡顿、电量消耗过快、手机发烫等症状。同时由于CPU是应用和系统的共有资源，当一个应用过多的占用CPU时，势必会影响其他应用的运行，严重时，拖累整个系统的正常运行。</p>
+                    <span class="warning-title">告警阈值</span>
+                    <p>CPU 占用最大值>= {{vm.threshold_cpu}}%</p>
+                    <span class="warning-title">官方文档</span>
+                    <ul>
+                        <li><a target="_blank" href="http://developer.android.com/training/best-performance.html">Best Practices for Performance</a></li>
+                        <li><a target="_blank" href="http://developer.android.com/training/articles/perf-tips.html">Performance Tips</a></li>
+                        <li><a target="_blank" href="http://developer.android.com/training/multiple-threads/index.html">Sending Operations to Multiple Threads</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading" tb-angle-up-down ng-class="{'warning':vm.warningsCount.ram}">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-list" href="" data-target="#collapse-memory"><span>内存</span><span ng-if="!vm.warningsCount.ram"> ( 无隐患 )</span><span class="angle fa fa-angle-down"></span> </a>
+                </div>
+                <div id="collapse-memory" class="accordion-body collapse">
+                    <p>RAM是任何软件开发环境中最有价值的资源之一，它的价值体现在物理内存受限制的系统中</p>
+                    <span class="warning-title">内存占用</span>
+                    <p>为了更好的运行多任务环境，android系统限制了每个应用可分配的堆的大小。具体的大小限制取决于手机设置。不同的厂商，不同的系统版本可能各异。如果应用占用的空间超过了限制，可能触发OutOfMemoryError</p>
+                    <span class="warning-title">告警阈值</span>
+                    <p>>= {{vm.threshold_ram}}M</p>
+                    <span class="warning-title">官方文档</span>
+                    <ul>
+                        <li><a target="_blank" href="http://developer.android.com/training/articles/memory.html">Managing Your App's Memory</a></li>
+                        <li><a target="_blank" href="https://developer.android.com/training/displaying-bitmaps/manage-memory.html">Managing Bitmap Memory</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading" tb-angle-up-down ng-class="{'warning':vm.warningsCount.fps}">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-list" href="" data-target="#collapse-rend"><span>渲染</span><span ng-if="!vm.warningsCount.fps"> ( 无隐患 )</span><span class="angle fa fa-angle-down"></span> </a>
+                </div>
+                <div id="collapse-rend" class="accordion-body collapse">
+                    <p>
+                        在构建应用程序时，需要着重考虑你的图形化需求将是什么。不同的图形化的任务用不同的技术来完成。例如，对于一个静态应用程序的图形和动画，应该用不同的图形和动画来实现，而不是一个交互式游戏。无论是什么类型的应用程序，在一定的情况下，影响用户体验（响应速度，流畅性，使用资源，电池等）。</p>
+                    <span class="warning-title">渲染时间</span>
+                    <p>实现流体渲染（60帧）每帧必须小于16ms完成。如果没有，程序创建动画的会出现卡顿现象。同时，为了提高屏幕渲染则需要保持较高的CPU和GPU使用率，同时又会造成电池消耗。</p>
+                    <span class="warning-title">告警阈值</span>
+                    <p>
+                        &lt; {{vm.threshold_fps}}fps</p>
+                    <span class="warning-title">官方文档</span>
+                    <ul>
+                        <li><a target="_blank" href="https://www.youtube.com/watch?v=CaMTIgxCSqU">官方视频</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 ng-if="device.packetPcap">网络数据包</h3>
+    <span class="download-button packet-pcap" ng-show="device.packetPcap" ng-click="vm.downloadByUrl(device.packetPcap)"></span>
+
+    <h3 ng-if="!vm.executionDetail.run_log_url">原始日志</h3>
+    <h3 ng-if="vm.executionDetail.run_log_url">日志分析</h3>
+
+    <span class="download-button" ng-show="vm.executionDetail.run_log_url" ng-click="vm.downloadLog()"></span>
+
+    <div class="margin-bottom-50" ng-if="!vm.executionDetail.run_log_url">
+        <ul class="log-tab" child-toggle-class="active">
+            <li ng-class="{ 'active': exception.name== '错误'}" ng-repeat="exception in vm.exceptionCount" ng-click="vm.subTypeKey = exception.key">
+                <span ng-bind="exception.name"></span>
+                <span class="count" ng-if="exception.count > 0" ng-bind="exception.count | ellipsisText:'2':'⋯'"></span>
+            </li>
+        </ul>
+        <div class="log-container-wrap">
+            <ul class="log-container">
+                <li ng-if="vm.exceptionCount[vm.subTypeKey].count <= 0" class="no-exception-log">没有检测到问题</li>
+                <li ng-click="vm.showLogDetail(exception)" ng-if="vm.exceptionCount[vm.subTypeKey].count > 0" ng-repeat="exception in vm.logException | subType: vm.subTypeKey">
+                    <span class="log-number" ng-bind="'#'+exception.index.line"></span>
+                    <span class="log-title text-ellipsis" ng-bind="exception.content.title +'&nbsp;&nbsp;'+ exception.content.info"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="logs margin-bottom-50" ng-if="vm.executionDetail.run_log_url">
+        <div class="search">
+            <input type="text" maxlength="128" class="search-input" ng-class="{true: 'error'}[vm.searchError]" placeholder="请输入关键字搜索" ng-model="vm.searchText"/>
+        <span class="search-controlled" ng-show="vm.showSearchControlled">
+            <span class="hint"></span>
+            <i class="icon direction-icon">
+                <span class="direction direction-up"></span>
+                <span class="direction direction-down"></span>
+            </i>
+        </span>
+            <label for="caseSensitive" class="label-checkbox" ng-class="{true:'checked', false:'unchecked'}[!!vm.isCaseSensitive]">
+                <input type="checkbox" class="hide" ng-model="vm.isCaseSensitive" id="caseSensitive"/>
+            </label>
+            <label for="caseSensitive" class="check">区分大小写</label>
+        </div>
+        <div ng-init="vm.appPidChecked=true" ng-if="vm.os != 'ios'">
+            <label class="label-checkbox" for="appPid" ng-class="{true:'checked', false:'unchecked'}[!!vm.appPidChecked]">
+                <input type="checkbox" class="hide" ng-model="vm.appPidChecked" id="appPid" ng-click="vm.refresh()"/>
+            </label>
+            <label for="appPid">只看自己程序的PID</label>
+        </div>
+        <ul class="logs-list logs-head" ng-if="vm.os != 'ios'">
+            <li>
+                <div class="dropdown-wrap">
+                    <span class="dropdown dropdown-toggle" uib-dropdown>
+                        <a class="dropdown-toggle" uib-dropdown-toggle>{{ vm.currentFilterLevel }}<i class="fa fa-sort-down"></i></a>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li ng-click="vm.changeLevel('all')">all</li>
+                            <li ng-repeat="(key, value) in vm.levels" ng-click="vm.changeLevel(key)" ng-bind="key"></li>
+                        </ul>
+                    </span>
+                </div>
+                <div>行号</div>
+                <div>时间</div>
+                <div>PID</div>
+                <div>Tag</div>
+                <div>text</div>
+            </li>
+            <li ng-if="!vm.logs&&vm.executionDetail.run_log_url">正在加载数据,请等待...</li>
+            <li ng-if="vm.logs.length==0||!vm.executionDetail.run_log_url">没有相关日志数据!</li>
+        </ul>
+        <ul class="logs-list logs-content" tb-logs-search data-vm="vm" ng-if="vm.os != 'ios'">
+            <li ng-repeat="log in vm.filtedLogs | limitTo:vm.logFilter.loadTotal:vm.logFilter.begin" class="ng-animate-disabled logs-index-{{ log.index }}">
+                <div ng-bind="log.level | logLevel"></div>
+                <div ng-bind="log.index"></div>
+                <div ng-bind="log.time"></div>
+                <div ng-bind="log.pid"></div>
+                <div ng-bind="log.tag"></div>
+                <div ng-bind="log.text" class="log-text"></div>
+            </li>
+        </ul>
+        <ul class="logs-list logs-head logs-ios" ng-if="vm.os == 'ios'">
+            <li>
+                <div>行号</div>
+                <div>时间</div>
+                <div>PID</div>
+                <div>Tag</div>
+                <div>text</div>
+            </li>
+            <li ng-if="!vm.logs&&vm.executionDetail.run_log_url">正在加载数据,请等待...</li>
+            <li ng-if="vm.logs.length==0 ||!vm.executionDetail.run_log_url">没有相关日志数据!</li>
+        </ul>
+        <ul class="logs-list logs-content logs-ios" tb-logs-search data-vm="vm" ng-if="vm.os == 'ios'">
+            <li ng-repeat="log in vm.filtedLogs | limitTo:vm.logFilter.loadTotal:vm.logFilter.begin" class="ng-animate-disabled logs-index-{{ log.index }}">
+                <div ng-bind="log.index"></div>
+                <div ng-bind="log.time"></div>
+                <div ng-bind="log.pid"></div>
+                <div ng-bind="log.tag"></div>
+                <div ng-bind="log.text"></div>
+            </li>
+        </ul>
+    </div>
+</div>
+

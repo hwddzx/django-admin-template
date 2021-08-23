@@ -1,0 +1,48 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/head.html'"></ng-include>
+<!-- /头部 -->
+<div class="preview-container clearfix">
+    <div class="left">
+        <div class="app-info">
+            <img class="app-icon" ng-src="{{ vm.preview.icon_url }}"/>
+            <div class="info">
+                <div class="app-name">
+                    <span class="name" ng-bind="vm.preview.app_name"></span>
+                </div>
+                <div>
+                    <span class="gray">版本: {{ vm.preview.version }}</span>
+                </div>
+            </div>
+        </div>
+        <ul class="unstyled list-unstyled user-list">
+            <li ng-class="{'active':!vm.currentUser}" ng-click="vm.chooseUser()">
+                <i class="icon icon-total-preview"></i>
+                <span>项目总览</span>
+            </li>
+            <li ng-repeat="user in vm.userList track by $index" ng-class="{'active':vm.currentUser == user}" ng-click="vm.chooseUser(user)">
+                <i class="icon icon-user"></i>
+                <span class="name" title="{{ user.email }}">{{ user.email }}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="right">
+        <h3>项目总览</h3>
+        <span class="gray">总体完成进度:</span>
+        <div class="app-progress-chart" app-progress-chart data-app="vm.preview"></div>
+        <span class="gray" ng-hide="vm.currentUser">成员完成进度:</span>
+        <div class="user-progress" ng-hide="vm.currentUser">
+            <div class="item" ng-repeat="user in vm.preview.testcase_progresses">
+                <i class="icon icon-user"></i><span class="name" title="{{ user.email }}">{{ user.email }}</span><br/>
+                <span ng-if="user.total_testcases">完成: {{ user.completed_testcases|transformPercent:user.total_testcases }}</span>
+            </div>
+        </div>
+        <span class="gray">场景完成进度:</span>
+        <div>
+            <div class="scenarios-permission">
+                <span class="title-left">场景</span>
+                <span class="title-right">完成度</span>
+            </div>
+            <ul class="ztree" id="testcase-tree1" tree-table></ul>
+        </div>
+    </div>
+</div>

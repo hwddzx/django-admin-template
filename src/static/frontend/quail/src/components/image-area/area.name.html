@@ -1,0 +1,79 @@
+<div class="tb-modal param-model">
+    <form tb-form-validator class="form-horizontal">
+        <h1 class="head">请确定选择区域值<i class="icon icon-popup-close" ng-click="cancel()"></i></h1>
+        <div class="form-group">
+            <label for="outputName" class="col-sm-3 control-label">参数类型:</label>
+            <div class="col-sm-9">
+                <label for="variable-type-0" ng-if="model.paramType != 'image'">
+                    <input type="radio" name="variable-type" ng-change="checkSameParameter()" id="variable-type-0" ng-model="model.area.variableType" ng-value="0">
+                    初始化参数
+                </label>
+                <label for="variable-type-1" ng-if="model.paramType != 'image'">
+                    <input type="radio" name="variable-type" ng-change="checkSameParameter()" id="variable-type-1" ng-model="model.area.variableType" ng-value="1">
+                    条件控制参数
+                </label>
+                <label for="variable-type-2" ng-if="model.paramType == 'image'">
+                    <input type="radio" name="variable-type" ng-change="checkSameParameter()" id="variable-type-2" ng-model="model.area.variableType" ng-value="2">
+                    图片参数
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="outputName" class="col-sm-3 control-label">参数名:</label>
+            <div class="col-sm-9" >
+                <input type="text" class="form-control" maxlength="32" ng-change="checkSameParameter()" name="output-name" data-bv-notempty data-bv-notempty-message="参数名不能为空"
+                    data-bv-regexp="true" data-bv-regexp-regexp="^[a-zA-Z][_]?([a-zA-Z0-9][_]?)*$" data-bv-regexp-message="参数名必须以字母开头,可以由字母、数字和不连续下划线组成!" id="outputName"
+                    ng-model="model.area.name">
+                <input type="text" class="form-control auto-change hide-input" name="captcha" data-bv-trigger="change" ng-model="model.nameExist"
+                    ng-value="model.nameExist" data-bv-notempty data-bv-notempty-message="参数名重复" />
+            </div>
+        </div>
+        <div ng-show="model.area.variableType != 2">
+        <div class="area-type-title">选择可选控件:</div>
+        <div class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+            <span>可选控件-{{ checkedAbleLayoutIndex+1 }}</span><i class="light fa fa-sort-down"></i>
+            <ul class="dropdown-menu short-menu" uib-dropdown-menu>
+                <li ng-repeat="layout in ableLayouts"><a ng-click="changeAbleLayout($index)">{{ "可选控件-"+($index+1) }}</a></li>
+            </ul>
+        </div>
+        <div class="area-type-title">选择模版:</div>
+        <div class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+            <span regexp-format-text data-regexp="regexpSelected"></span><i class="light fa fa-sort-down"></i>
+            <ul class="dropdown-menu short-menu" uib-dropdown-menu>
+                <li><a ng-click="chooseRegexp('*')" ng-if="chooseMatchAllRegexp">全部匹配</a></li>
+                <li><a ng-click="chooseRegexp()">不添加模版</a></li>
+                <li ng-repeat="regexp in regexps"><a ng-click="chooseRegexp($index)" regexp-format-text data-regexp="regexp"></a></li>
+            </ul>
+        </div>
+        <div class="area-type-title">控件识别值<span class="red" ng-show="!regexpSelected.isValidate">(此模板不能正确匹配出控件识别值)</span></div>
+        <div class="area-wrap">
+            <div class="form-group" ng-repeat="layout in ableLayouts" ng-if="model.ableLayout == layout">
+                <label for="text-layout">
+                    <input type="radio" name="text-layout" id="text-layout" ng-click="switchLayoutText()" checked="checked">
+                    {{ !regexpSelected.isCheckedAll && regexpSelected.reg_exp && regexpSelected.isValidate ? model.ableLayout.sub_string : model.ableLayout.content }}
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="text-layout-all">
+                    <input type="radio" name="text-layout" id="text-layout-all" ng-click="chooseRegexp('*')">
+                    <span>*</span>&nbsp;<span class="gray">(获取执行实时数据)</span>
+                </label>
+            </div>
+        </div>
+        </div>
+        <div ng-show="model.area.variableType == 2">
+            <div class="form-group">
+                <label for="outputName" class="col-sm-3 control-label">相似度阈值:</label>
+                <div class="col-sm-9" >
+                    <input type="text" class="form-control" maxlength="32" name="expect-num" data-bv-notempty data-bv-notempty-message="图片相似度阀值不能为空"
+                        data-bv-regexp="true" data-bv-regexp-regexp="\b0(.\d{1,100})\b" data-bv-regexp-message="图片相似度阀值必须在0到1之间" id="expectNum"
+                        ng-model="model.area.expectNum">
+                </div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default btn-watchet" ng-click="cancel()">取消</button>
+            <button class="btn btn-fix btn-primary" type="submit" data-form-submit="close()">确定</button>
+        </div>
+    </form>
+</div>

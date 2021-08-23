@@ -1,0 +1,59 @@
+<div ng-controller="ActivitiesCtrl">
+    <form>
+        <table class="table table-condensed">
+            <tbody>
+                <tr>
+                    <td translate="translate">Package</td>
+                    <td>
+                        <input type="text" placeholder="" ng-model="selectedPackageName" list="packageList" class="form-control" />
+                        <datalist id="packageList">
+                            <option ng-repeat="packageName in packageNames" ng-value="packageName"></option>
+                        </datalist>
+                        <!--typeahead='packageName for packageName in packageNames')-->
+                    </td>
+                </tr>
+                <tr>
+                    <td translate="translate">Activity</td>
+                    <td>
+                        <input type="text" placeholder="" ng-model="selectedActivityName" list="activityList" class="form-control" />
+                        <datalist id="activityList">
+                            <option ng-repeat="activityName in activityNames" ng-value="activityName"></option>
+                        </datalist>
+                        <!--typeahead='activityName for activityName in activityNames')-->
+                    </td>
+                </tr>
+                <tr>
+                    <td translate="translate">Action</td>
+                    <td>
+                        <input type="text" placeholder="" ng-model="selectedAction" list="actionList" class="form-control" />
+                        <datalist id="actionList">
+                            <option ng-repeat="action in activityActions" ng-value="action"></option>
+                        </datalist>
+                        <!--typeahead='action for action in activityActions')-->
+                    </td>
+                </tr>
+                <tr>
+                    <td translate="translate">Category</td>
+                    <td>
+                        <input type="text" placeholder="" ng-model="selectedCategory" list="categoryList" class="form-control" />
+                        <datalist id="categoryList">
+                            <option ng-repeat="category in activityCategories" ng-value="category"></option>
+                        </datalist>
+                        <!--typeahead='category for category in activityCategories')-->
+                    </td>
+                </tr>
+                <tr>
+                    <td translate="translate">Data</td>
+                    <td>
+                        <input type="text" placeholder="" ng-model="selectedData" list="dataList" class="form-control" />
+                        <datalist id="dataList">
+                            <option ng-repeat="data in activityData" ng-value="data"></option>
+                        </datalist>
+                        <!--typeahead='data for data in activityData', id='selectedData')-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="runActivity()" class="btn btn-sm btn-primary-outline pull-right"><i class="fa fa-play"></i><span translate="translate">Launch Activity</span></button>
+    </form>
+</div>

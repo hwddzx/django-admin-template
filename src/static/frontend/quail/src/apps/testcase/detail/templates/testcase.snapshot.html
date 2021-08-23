@@ -1,0 +1,418 @@
+<div class="snapshot-editor-content" ng-show="vm.actions.length || vm.isDirectory">
+    <i class="icon icon-xml-json" tb-snapshot-spliter ng-hide="vm.isShowXmlJsonPanel" ng-click="vm.toggleDetailPanel()" title="展开布局/脚本面板"></i>
+    <!--布局/脚本-->
+    <div class="xml-json-container" ng-class="{'spread': changeSpread}">
+        <div class="xml-json">
+            <div ng-init="url='apps/testcase/detail/templates/xml-props.html'">
+                <i class="icon icon-arrow-close" tb-snapshot-spliter ng-click="vm.toggleDetailPanel()" title="收起布局/脚本面板"></i>
+                <i class="icon icon-script" ng-class="{true:'active'}[vm.currentPanel=='json']" ng-click="vm.toggleXmlJsonPanel('json', $event)" title="脚本"></i>
+                <i class="icon icon-xml" ng-class="{true:'active'}[vm.currentPanel=='xml']" ng-hide="vm.isDirectory" ng-click="vm.toggleXmlJsonPanel('xml', $event)" title="布局"></i>
+                <div class="right-icons">
+                    <i class="icon icon-delete-json-block" title="批量删除" ng-click="vm.showSnapshots('deleteJson')" ng-show="vm.activeTab != 'addStep'"></i>
+                    <i class="icon icon-more" ng-show="vm.currentPanel=='xml'" uib-popover-template="url" popover-trigger="mouseenter" popover-title="属性" popover-placement="bottom-right"></i>
+                    <i class="icon" title="{{changeSpread ? '缩小' : '放大'}}" ng-class="{true: 'icon-shrink', false: 'icon-spread'}[!!changeSpread]" ng-click="changeSpread=!changeSpread"></i>
+                </div>
+                <i class="icon icon-download-xml" title="下载XML" ng-show="!vm.isDirectory&&vm.xml&&vm.currentPanel=='xml'" ng-click="vm.downloadXml(vm.xml, vm.snapshot.resourceId + '.xml')"></i>
+            </div>
+            <div class="xml-json-inner">
+                <div class="xml-panel" ng-show="vm.currentPanel=='xml'">
+                    <h3>布局</h3>
+                    <div class="xml-tree-wrap">
+                        <div class="gray" ng-if="!vm.xml">未获取到XML文件</div>
+                        <ul id="xml-tree" class="ztree" ng-if="vm.snapshot && vm.xml" xml-layout-tree data-xml="vm.xml"></ul>
+                    </div>
+                </div>
+                <div class="json-body" ng-show="vm.currentPanel=='json'">
+                    <h3>脚本</h3>
+                    <div class="json-block-wrap">
+                        <div class="json-block" ng-repeat="action in vm.script_header_json" ng-show="vm.isTestcaseDetail">
+                            <pre json-block data-block="action" contenteditable="false"></pre>
+                            <div class="pre-btn-group">
+                                <i class="icon icon-spread" title="放大编辑框" ng-click="vm.spreadJsonBlock(undefined, action)"></i>
+                            </div>
+                        </div>
+                        <div ng-repeat="action in vm.simpleActions" class="json-block" ng-class="{true:'current-action'}[(action.actionId || action.componentName) == vm.currentSelectedActionId]">
+                            <span>No. {{ $index+1 }}</span>
+                            <pre json-block data-block="action" data-actions="vm.actions" data-index="{{ $index }}" data-instance="vm.scriptJsonInstance" contenteditable="false"></pre>
+                            <div class="pre-btn-group">
+                                <i class="icon icon-add-step" title="显示完整脚本" ng-click="vm.showAllJsonBlockFields($index)"></i>
+                                <i class="icon icon-insert-grammar-next" title="此后插入语法" ng-click="vm.insertGrammar($index+1)"></i>
+                                <i class="icon icon-insert-grammar-pre" title="此前插入语法" ng-click="vm.insertGrammar($index)"></i>
+                                <i class="icon icon-insert-component-next" ng-show="vm.isTestcaseDetail" title="此后增加模块" ng-click="vm.insertComponent($index + 1)"></i>
+                                <i class="icon icon-insert-component-pre" ng-show="vm.isTestcaseDetail" title="此前增加模块" ng-click="vm.insertComponent($index)"></i>
+                                <i class="icon icon-add-next" title="此后增加一步" ng-click="vm.addJsonBlock($index, 'next')"></i>
+                                <i class="icon icon-add-pre" title="此前增加一步" ng-click="vm.addJsonBlock($index, 'pre')"></i>
+                                <i class="icon icon-spread" title="放大编辑框" ng-hide="vm.isComponent(action)" ng-click="vm.spreadJsonBlock($index, action)"></i>
+                                <i class="icon icon-delete-json-block" title="删除" ng-mousedown="vm.deleteJsonBlock($index)" ng-show="vm.activeTab != 'addStep'"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="checked-xpath" tb-copy ng-show="vm.currentPanel=='xml' && vm.xml">
+                    <input class="js-copy-text" ng-model="vm.checkedXpath" readonly>
+                    <span class="btn btn-gray js-copy-btn">复制</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--大图区-->
+    <div class="viewport">
+        <div class="snapshot-image-wrap">
+            <img img-error img-position class="snapshot-image" tb-testcase-snapshot ng-src="{{ vm.snapshot.showGesture ? vm.snapshot.url : vm.getSnapshotOriginUrl()}}" />
+            <div class="area-panel extra-panel" ng-show="vm.activeTab=='rule'&&(vm.snapshot.clickMode==0 || vm.snapshot.clickMode==2 || vm.snapshot.clickMode==4)" image-layout-area data-search-type="control" snapshot="vm.snapshot">
+                <div class="area-container"></div>
+            </div>
+            <div class="area-panel extra-panel" ng-show="vm.activeTab=='rule'&&(vm.snapshot.clickMode==3 || vm.snapshot.clickMode==5 || vm.snapshot.clickMode==6)" image-split-area data-search-type="image" snapshot="vm.snapshot" snapshots="vm.testcase.snapshots">
+                <div class="area-container"></div>
+                <div class="area-dashboard"></div>
+            </div>
+            <div class="area-panel extra-panel" ng-show="vm.activeTab=='param'" image-param-area snapshot="vm.snapshot" snapshots="vm.testcase.snapshots" script-json="vm.script_json" param-type="vm.paramType">
+                <div class="area-container"></div>
+                <div class="area-dashboard"></div>
+            </div>
+            <div class="area-panel extra-panel" ng-show="vm.activeTab=='addStep'" image-step-area snapshot="vm.snapshot" snapshots="vm.testcase.snapshots" script-json="vm.script_json">
+                <div class="area-container"></div>
+                <div class="area-dashboard"></div>
+            </div>
+            <div class="area-panel extra-panel" ng-show="vm.activeTab=='measure' && vm.firstSnapshot!=vm.snapshot" image-measure-area snapshot="vm.snapshot" snapshots="vm.testcase.snapshots" script-json="vm.script_json">
+                <div class="area-container"></div>
+                <div class="area-dashboard"></div>
+            </div>
+            <div class="anchor-panel extra-panel" ng-show="vm.activeTab=='rule'&&(vm.snapshot.clickMode==0 || vm.snapshot.clickMode==2 || vm.snapshot.clickMode==4)">
+                <div class="anchor-area" ng-repeat="anchor in vm.anchorLayouts[vm.snapshot.overlapControlPath].features track by $index" ng-click="vm.toggleCheckAnchor(anchor)" ng-class="{checked:vm.snapshot.anchor==anchor}" tb-anchor-area></div>
+            </div>
+            <div class="layout-panel extra-panel" ng-show="vm.isShowXmlJsonPanel&&vm.currentPanel=='xml'&&vm.activeTab!='param'">
+                <div class="layout-area" tb-xml-area></div>
+            </div>
+        </div>
+        <div class="panel-bottom" ng-hide="vm.isDirectory">
+            <i class="icon icon-pre" ng-click="vm.toggleStep('next')"></i>
+            <i class="icon icon-next" ng-click="vm.toggleStep('pre')"></i>
+        </div>
+    </div>
+    <!--配置区-->
+    <div class="config component-config" ng-if="vm.snapshot.componentName">
+        <div class="group">
+            <div class="gray">模块名:</div>
+            <div>{{ vm.getNameByIndex(vm.snapshot.componentName) }}</div>
+        </div>
+        <div class="group">
+            <div class="gray">别名:</div>
+            <div>{{ vm.getNameByIndex(vm.snapshot.componentName, 1) }}</div>
+        </div>
+        <div class="group">
+            <button class="btn btn-sm btn-primary" ng-click="vm.showComponent()">查看此模块</button>
+        </div>
+    </div>
+    <div class="config" ng-show="!vm.snapshot.componentName">
+        <i class="icon icon-rule" title="点击规则" ng-click="vm.activeTab='rule'" ng-if="!vm.isDirectory" ng-class="{true:'active'}[vm.activeTab=='rule']"></i>
+        <i class="icon icon-param" title="参数配置" ng-click="vm.activeTab='param'" ng-if="!vm.isDirectory" ng-class="{true:'active'}[vm.activeTab=='param']"></i>
+        <i class="icon icon-plugin" title="插件配置" ng-click="vm.activeTab='plugin'" ng-if="!vm.isDirectory" ng-class="{true:'active'}[vm.activeTab=='plugin']"></i>
+        <i class="icon icon-measure" title="测试页面响应时间" ng-click="vm.activeTab='measure'" ng-if="vm.isTestcaseDetail && vm.firstSnapshot!=vm.snapshot && !vm.isDirectory" ng-class="{true:'active'}[vm.activeTab=='measure']"></i>
+        <i class="icon icon-add-step" title="增加步骤" ng-click="vm.activeTab='addStep'" ng-if="!vm.isTestcaseDetail&&!vm.isDirectory" ng-class="{true:'active'}[vm.activeTab=='addStep']"></i>
+        <div class="props">
+            <!-- 点击规则 -->
+            <div class="tab-pane active tab-panel-base" ng-show="vm.activeTab=='rule'">
+                <h3>点击规则</h3>
+                <div class="controller-search-type">
+                    <div class="search-type-group">
+                        <div class="gray">控件</div>
+                        <label for="search-type-0">
+                            <input type="radio" name="search-type" id="search-type-0"
+                                   ng-model="vm.snapshot.clickMode" value="0">
+                            控件优先点击
+                        </label>
+                        <br/>
+                        <label for="search-type-2">
+                            <input type="radio" name="search-type" id="search-type-2"
+                                   ng-model="vm.snapshot.clickMode" value="2">
+                            控件强制点击
+                        </label>
+                        <br/>
+                        <label for="search-type-4">
+                            <input type="radio" name="search-type" id="search-type-4"
+                                   ng-model="vm.snapshot.clickMode" value="4">
+                            控件非强制点击
+                        </label>
+                    </div>
+                    <div ng-show="vm.activeTab=='rule'&&(vm.snapshot.clickMode==0 || vm.snapshot.clickMode==2 || vm.snapshot.clickMode==4)">
+                        <div class="overlap-control" ng-repeat="candidate in vm.snapshot.rectCandidates">
+                            <label for="overlap-control-{{ $index }}">
+                                <input type="radio" name="overlap-control" id="overlap-control-{{ $index }}"
+                                       ng-model="vm.snapshot.overlapControlPath" value="{{ candidate.xPath }}" ng-change="vm.checkedLayout(candidate.xPath)">
+                                可选控件-{{ $index + 1 }}
+                            </label>
+                            <div class="anchor-group" ng-if="vm.snapshot.overlapControlPath == candidate.xPath">
+                                <div ng-repeat="anchor in vm.anchorLayouts[candidate.xPath].features track by $index">
+                                    <label for="anchor-area-{{ candidate.index + 1 }}-{{$index}}" title="{{ anchor.content }}">
+                                        <input type="radio" name="anchor-radio" id="anchor-area-{{ candidate.index + 1 }}-{{ $index}}"
+                                               ng-click="vm.toggleCheckAnchor(anchor,$event)"
+                                               ng-class="{'checked':vm.snapshot.anchor==anchor}"
+                                               ng-checked="vm.snapshot.anchor==anchor"/>
+                                        {{ anchor.content }}
+                                    </label>
+                                </div>
+                                <div ng-if="vm.anchorLayouts[candidate.xPath].xPathIndex">
+                                    <label for="anchor-location">
+                                        <input type="radio" name="anchor-radio" id="anchor-location"
+                                               ng-click="vm.toggleCheckAnchor('location', $event)"
+                                               ng-class="{'checked':vm.snapshot.anchor=='location'}"
+                                               ng-checked="vm.snapshot.anchor=='location'" />
+                                        <span class="gray">按位置点击</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="anchor-placeholder" ng-if="vm.snapshot.overlapControlPath == candidate.xPath && vm.anchorLayouts[candidate.xPath].features.length==0">
+                                <span class="gray">未获取到基准点</span>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="search-type-group">
+                        <div class="gray">坐标</div>
+                        <label for="search-type-1">
+                            <input type="radio" name="search-type" id="search-type-1"
+                                   ng-model="vm.snapshot.clickMode" value="1">
+                            坐标点击
+                        </label>
+                        <div class="position js-position" ng-show="vm.snapshot.clickMode==1">
+                            <span>鼠标坐标:（</span>
+                            <span class="js-position-x">0.00</span>
+                            <span>，</span>
+                            <span class="js-position-y">0.00</span>
+                            <span>）</span>
+                        </div>
+                    </div>
+                    <div class="search-type-group">
+                        <div class="gray">图片</div>
+                        <label for="search-type-5">
+                            <input type="radio" name="search-type" id="search-type-5"
+                                   ng-model="vm.snapshot.clickMode" value="5">
+                            图片优先点击
+                        </label>
+                        <br/>
+                        <label for="search-type-3">
+                            <input type="radio" name="search-type" id="search-type-3"
+                                   ng-model="vm.snapshot.clickMode" value="3">
+                            图片强制点击
+                        </label>
+                        <br/>
+                        <label for="search-type-6">
+                            <input type="radio" name="search-type" id="search-type-6"
+                                   ng-model="vm.snapshot.clickMode" value="6">
+                            图片非强制点击
+                        </label>
+                    </div>
+                    <div ng-show="vm.activeTab=='rule'&&(vm.snapshot.clickMode==3 || vm.snapshot.clickMode==5 || vm.snapshot.clickMode==6)">
+                        <p>选择区域截图</p>
+                        <img class="split-img"/>
+                    </div>
+                </div>
+            </div>
+            <!-- 参数配置 -->
+            <div class="tab-pane tab-panel-param" ng-show="vm.activeTab=='param'">
+                <h3>参数配置</h3>
+                <div class="controller-search-type">
+                    <label for="param-type-0">
+                        <input type="radio" name="param-type" id="param-type-0"
+                               ng-model="vm.paramType" value="layout">
+                        layout参数
+                    </label>
+                    <br/>
+                    <label for="param-type-1" ng-show="vm.app.type == 'android'">
+                        <input type="radio" name="param-type" id="param-type-1"
+                               ng-model="vm.paramType" value="image">
+                        图片参数（仅针对同一手机）
+                    </label>
+                </div>
+                <dl>
+                    <dt>输入</dt>
+                    <dd ng-if="vm.snapshot.originTextValue">
+                        <span class="name">
+                            <input type="text" maxlength="32" ng-model="vm.snapshot.name" ng-blur="vm.onInputNameChanged($event)" placeholder="变量"/>
+                        </span>
+                        <span class="value"> / {{ vm.snapshot.originTextValue }}</span>
+                        <i class="icon icon-delete" ng-mousedown="vm.clearInputParameter()"></i>
+                    </dd>
+                    <dd ng-repeat="plugin in vm.snapshot.plugins | filter:vm.pluginFilter">
+                        <span class="name">
+                            <input type="text" maxlength="32" ng-model="vm.pluginParameters[plugin.phase]" ng-blur="vm.onPluginParameterNameChanged(plugin, $event)"
+                                   placeholder="插件参数名"/>
+                        </span>
+                        <span class="value"> / {{ plugin.originTextValue }}</span>
+                        <i class="icon icon-delete" title="清空文本框内容" ng-mousedown="vm.clearPluginParameter(plugin)"></i>
+                    </dd>
+                    <dt>输出</dt>
+                    <dd ng-repeat="area in vm.snapshot.ocrAreas track by $index" ng-class="{false:'gray'}[area.action=='initVariable']">
+                        <div class="reg-exp" ng-if="area.regExp">
+                            <i class="icon icon-prompt"></i>
+                            <span class="prompt-text">
+                                {{ area.regExp }}
+                                <span class="arrow-border"></span>
+                                <span class="arrow-bg"></span>
+                            </span>
+                        </div>
+                        <span class="name" title="{{ area.action=='initVariable'?'初始化变量('+area.name+')':'条件控制变量('+area.name+')' }}">{{ area.name }} <span ng-if="area.action == 'imageVariable'">(图片参数)</span></span>
+                        <span class="value" title="{{ area.expectValue }}"><span ng-if="area.action == 'imageVariable'">相似度阈值: </span> / {{ area.expectValue }}</span>
+                        <i class="icon icon-delete" ng-click="vm.removeOcrArea(area)"></i>
+                    </dd>
+                </dl>
+            </div>
+            <!-- 插件配置 -->
+            <div class="tab-pane tab-panel-plugin" ng-show="vm.activeTab=='plugin'">
+                <h3>插件配置</h3>
+                <dl>
+                    <dt>前置插件<i class="icon icon-delete" ng-if="vm.getPlugin('B')" ng-click="vm.deletePlugin('B')"></i><i
+                        class="icon icon-plugin-plus" ng-if="!vm.getPlugin('B')" ng-click="vm.addPlugin('B')"></i></dt>
+                    <dd ng-repeat="plugin in vm.snapshot.plugins | filter:{phase:'B'} track by $index ">
+                        插件名: {{ plugin.pluginName }}<br/>
+                        插件值: {{ plugin.originTextValue }}<br/>
+                        插件参数: <div class="plugin-params" ng-bind-html="plugin.params|trustAsHtml"></div>
+                    </dd>
+                    <dt>后置插件<i class="icon icon-delete" ng-if="vm.getPlugin('A')" ng-click="vm.deletePlugin('A')"></i><i
+                        class="icon icon-plugin-plus" ng-if="!vm.getPlugin('A')" ng-click="vm.addPlugin('A')"></i></dt>
+                    <dd ng-repeat="plugin in vm.snapshot.plugins | filter:{phase:'A'} track by $index ">
+                        插件名: {{ plugin.pluginName }}<br/>
+                        插件值: {{ plugin.originTextValue }}<br/>
+                        插件参数: <div class="plugin-params">{{ plugin.params|trustAsHtml }}</div>
+                    </dd>
+                </dl>
+            </div>
+            <!-- 模块新增步骤 || 目录创建模块 -->
+            <div class="tab-pane tab-panel-addStep" ng-show="vm.activeTab=='addStep'">
+                <h3>{{ vm.isDirectory?'创建模块':'添加步骤' }}</h3>
+                <div class="create-component-type">
+                    <label for="component-type-0">
+                        <input type="radio" name="component-type" id="component-type-0"
+                               ng-model="vm.snapshot.createComponentType" value="0">
+                        click
+                    </label>
+                    <label for="component-type-1">
+                        <input type="radio" name="component-type" id="component-type-1"
+                               ng-model="vm.snapshot.createComponentType" value="1">
+                        drag
+                    </label>
+                    <div>
+                        <p class="gray"  ng-show="vm.snapshot.createComponentType==0">框选要点击的控件</p>
+                        <p class="gray"  ng-show="vm.snapshot.createComponentType==1&&vm.snapshot.dragType==1">框选要替换的文字</p>
+                        <p class="gray"  ng-show="vm.snapshot.createComponentType==1&&(vm.snapshot.dragType==0||vm.snapshot.dragType==2)">选择方向并滑动</p>
+                    </div>
+                    <div class="drag-type" ng-show="vm.snapshot.createComponentType==1">
+                        <label for="drag-type-0">
+                            <input type="radio" name="drag-type" id="drag-type-0"
+                                   ng-model="vm.snapshot.dragType" value="0">
+                            指定列表
+                        </label>
+                        <label for="drag-type-1">
+                            <input type="radio" name="drag-type" id="drag-type-1"
+                                   ng-model="vm.snapshot.dragType" value="1">
+                            指定列表项
+                        </label>
+                        <label for="drag-type-2">
+                            <input type="radio" name="drag-type" id="drag-type-2"
+                                   ng-model="vm.snapshot.dragType" value="2">
+                            按坐标滑动
+                        </label>
+                    </div>
+                    <div class="drag-direction" ng-show="vm.snapshot.createComponentType==1&&(vm.snapshot.dragType==0 || vm.snapshot.dragType==2)">
+                        <label for="drag-direction-up">
+                            <input type="radio" name="drag-direction" id="drag-direction-up"
+                                   ng-model="vm.snapshot.dragDirection" value="up">
+                            up
+                        </label>
+                        <label for="drag-direction-right">
+                            <input type="radio" name="drag-direction" id="drag-direction-right"
+                                   ng-model="vm.snapshot.dragDirection" value="right">
+                            right
+                        </label>
+                        <label for="drag-direction-down">
+                            <input type="radio" name="drag-direction" id="drag-direction-down"
+                                   ng-model="vm.snapshot.dragDirection" value="down">
+                            down
+                        </label>
+                        <label for="drag-direction-left">
+                            <input type="radio" name="drag-direction" id="drag-direction-left"
+                                   ng-model="vm.snapshot.dragDirection" value="left">
+                            left
+                        </label>
+                    </div>
+                    <div class="drag-orientation" ng-show="vm.snapshot.createComponentType==1&&vm.snapshot.dragType==1">
+                        <label for="drag-direction-horizontal">
+                            <input type="radio" name="drag-orientation" id="drag-direction-horizontal"
+                                   ng-model="vm.snapshot.dragOrientation" value="horizontal">
+                            horizontal
+                        </label>
+                        <label for="drag-direction-vertical">
+                            <input type="radio" name="drag-orientation" id="drag-direction-vertical"
+                                   ng-model="vm.snapshot.dragOrientation" value="vertical">
+                            vertical
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- 测试界面响应时间 -->
+            <div class="tab-pane tab-panel-measure" ng-show="vm.activeTab=='measure'">
+                <h3>选择区域截图<i class="icon icon-delete" ng-click="vm.deleteMeasure()"></i></h3>
+                <img class="measure-img"/>
+            </div>
+        </div>
+        <div class="panel-bottom">
+            <div class="show-gesture">
+                <input type="checkbox" id="show-gesture" ng-model="vm.snapshot.showGesture"/>
+                <label for="show-gesture" class="check-label">
+                    <span class="unchecked">显示手势</span>
+                    <span class="checked">显示手势</span>
+                </label>
+            </div>
+            <div class="ignore">
+                <input type="checkbox" id="check-ignore" ng-model="vm.snapshot.ignoreAction"/>
+                <label for="check-ignore" class="check-label" ng-click="vm.ignoreAction(vm.snapshot)">
+                    <span class="unchecked">忽略此步</span>
+                    <span class="checked">忽略此步</span>
+                </label>
+            </div>
+            <a href="" class="batch-ignore" ng-click="vm.showSnapshots('ignore')">批量忽略</a>
+        </div>
+    </div>
+    <!--缩略图-->
+    <div class="thumbnails">
+        <i class="icon icon-more" ng-click="vm.showSnapshots()" title="所有截图"></i>
+        <i class="icon icon-section" ng-click="vm.configSection()" title="section配置"></i>
+        <h3>截图(<span ng-bind="vm.testcase.snapshots | snapshotsCount"></span>张)</h3>
+        <div class="snapshot-editor-slider">
+            <div class="checkbox-wrap text-unselect">
+                <input type="checkbox" id="check-snapshot" ng-model="vm.filterEditedSnapshot" ng-change="vm.toggleStepFilter()"/>
+                <label for="check-snapshot"></label>
+                <label for="check-snapshot">仅标注图片</label>
+            </div>
+            <div class="slider-inner" tb-testcase-snapshot-slider>
+                <div class="adaptive-images-container">
+                    <div ng-repeat="step in vm.steps ">
+                        <div class="snapshot-item" ng-class="{'active':step.key==vm.snapshot.key}" ng-click="vm.selectSnapshot(step.key)">
+                            <div class="adaptive-image-wrap" img-error>
+                                <img class="snapshot-image thumbnail-image" ng-src="{{ step[step.isComponent?'first_snapshot':(step.resourceId?'resourceId':'key')] | linkByActionId: 'gesturesImg' | qiniuThumbnail }}"/>
+                            </div>
+                            <div class="overlay">
+                                <i class="icon icon-selected"></i>
+                            </div>
+                        </div>
+                        <div class="meta">
+                            <i class="icon icon-edit" ng-if="vm.isSnapshotEdited(vm.getSnapshotByKey(step.key))"></i>
+                            <i class="icon icon-overlap" ng-if="vm.getSnapshotByKey(step.key).rectCandidates.length>1"></i>
+                            <span class="number">{{ $index + 1 }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ignore-overlay" ng-show="vm.snapshot.ignoreAction"></div>
+</div>
+<div class="component-compose-container" ng-show="!vm.isDirectory && !vm.actions.length">
+    <div class="component-compose">
+        <div class="no-data">
+            <span class="">{{ vm.testcase.script_key?"空脚本":"什么都没有" }},你可以</span>
+            <a class="link" ng-click="vm.insertComponent(0)">添加模块</a>
+        </div>
+    </div>
+</div>

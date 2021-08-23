@@ -1,0 +1,18 @@
+<div class="tb-full-modal tc-snapshots-modal">
+    <div class="modal-header">
+        <div class="modal-header-inner" >
+            <ul class="list-unstyled nav-header">
+                <li ui-sref-active="active"><a ui-sref=".snapshot">配置</a></li>
+                <li ui-sref-active="active" ng-if="vm.isTestcaseDetail"><a ui-sref=".params">参数</a></li>
+            </ul>
+
+            <h2 ng-bind="vm.testcase.id+':'+vm.testcase.name"></h2>
+            <div class="right text-center">
+                <button class="btn btn-sm btn-primary" ng-click="vm.close(true)">保存</button>
+                <button class="btn btn-sm btn-primary" ng-mousedown="vm.close()">取消</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-content half " ui-view>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="reports-container">
+    <div class="head">
+        <h3>报告列表</h3>
+    </div>
+    <div class="table-container">
+        <table tb-paging-table data-table-ctrl="pagination" class="tb-table-striped">
+            <thead>
+            <tr>
+                <th>报告名</th>
+                <th>生成时间</th>
+                <th>版本(Build号)</th>
+                <th>总数(通过率)</th>
+                <th>报告链接</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="report in pagination.data">
+                <td width="20%">{{ report.name }}</td>
+                <td width="20%">{{ report.created | dateFilter }}</td>
+                <td width="20%" ng-if="!report.release.version">{{ '-' }}</td>
+                <td width="20%" ng-if="report.release.version">{{ report.release.version+'('+report.release.build+')' }}</td>
+                <td width="20%" class="text-center">
+                    <span>{{ report.metrics.execution_count }}</span>&nbsp;
+                    <span>({{ report.metrics.execution_success_count | transformPercent : report.metrics.execution_count }}</span>)
+                </td>
+                <td width="20%">
+                    <a href="" ui-sref="reportDetail({hashkey:report.hashkey})" class="reports-detail-link" target="_blank"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

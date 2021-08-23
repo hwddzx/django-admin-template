@@ -1,0 +1,651 @@
+$headFontColor:#191e25;
+$headDescFontColor:#8792a3;
+$deviceBorderColor:#edf2f7;
+$deviceTableHeadBgColor:#fafcff;
+$deviceTableThFontColor:#8792a3;
+$deviceTableTdFontColor:#191e25;
+$tableOddColor:#fafcff;
+$tableRowHover:#f4f7fb;
+$searchInptBorder:#edf2f7;
+$headDividerColor:#1a7ff2;
+$filterBtnBg:#fafcff;
+$filterBtnBorder:#edf2f7;
+$rentDevicesTableHeadBg:#edf2f7;
+$rentDevicesTableBorder:#edf2f7;
+$grayDarkBg:#eff3f7;
+$gray-light:#f4f7fb;
+$blue-light:#f1f7fe;
+body {
+    background-color: #fff!important;
+}
+
+.recharge-link:hover {
+    text-decoration: underline;
+    color: $blue;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@-ms-keyframes fadeOut {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+header {
+    .remain {
+        float: right;
+        margin-top: 20px;
+        margin-right: 0;
+        line-height: 30px;
+        font-size: 14px;
+        .time {
+            font-size: 16px;
+        }
+        .fa-sort-desc {
+            vertical-align: text-top;
+        }
+        .bill {
+            color: #fff;
+            margin-left: 10px;
+        }
+    }
+    .upload {
+        float: right;
+        margin-left: 50px;
+        margin-right: 15px;
+        height: 64px;
+        position: relative;
+        .icon-upload-tip {
+            position: absolute;
+        }
+        .upload-link {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            top: 16px;
+            border-radius: 4px;
+            padding: 0;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                .icon-upload-tip {
+                    background-position-y: 0;
+                }
+            }
+            .upload-badge {
+                right: -2px!important;
+                top: -2px!important;
+            }
+        }
+    }
+}
+
+.rent-devices-container {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #edf2f7;
+    .head {
+        height: 53px;
+        line-height: 53px;
+        text-align: center;
+        background-color: $rentDevicesTableHeadBg;
+        font-size: 12px;
+        color: $deviceTableThFontColor;
+        .column {
+            height: 53px;
+            line-height: 53px;
+        }
+    }
+    .device-row {
+        border-bottom: 1px solid $rentDevicesTableBorder;
+    }
+    .column-wrap {
+        width: 1120px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .column {
+        display: inline-block;
+        float: left;
+        height: 70px;
+        line-height: 70px;
+        padding: 0 10px;
+        color: #191e25;
+        font-size: 14px;
+        .icon-using {
+            line-height: 25px;
+            text-align: center;
+            &:hover {
+                background-position: 0 24px;
+            }
+            span {
+                margin-left: 11px;
+            }
+        }
+    }
+    .column:nth-child(1) {
+        width: 120px;
+    }
+    .column:nth-child(2) {
+        width: 360px;
+    }
+    .column:nth-child(3) {
+        width: 180px;
+    }
+    .column:nth-child(4) {
+        width: 180px;
+    }
+    .column:nth-child(5) {
+        width: 110px;
+    }
+    .column:nth-child(6) {
+        width: 107px;
+    }
+}
+
+.other-devices-container {
+    width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+    .busy {
+        display: inline-block;
+        width: 53px;
+        text-align: center;
+    }
+    h2 {
+        margin: 0;
+        height: 100px;
+        line-height: 100px;
+        font-size: 24px;
+        color: $headFontColor;
+        .desc {
+            display: block;
+            position: relative;
+            top: -30px;
+            font-size: 14px;
+            padding-top: 10px;
+            line-height: 1.2;
+            color: $headDescFontColor;
+        }
+    }
+    .device-search {
+        position: relative;
+        padding: 15px 0;
+        .search-ipt {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 50px 0 5px;
+            border: 1px solid $blue;
+        }
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 15px;
+            width: 50px;
+            height: 40px;
+            margin: 0;
+            padding: 0;
+            line-height: 40px;
+            border-radius: 0;
+            vertical-align: bottom;
+            &:hover .icon {
+                background-position: 0 20px;
+            }
+        }
+    }
+    .device-filter-container {
+        padding-bottom: 10px;
+        .device-filters {
+            float: right;
+        }
+        .device-search {
+            position: relative;
+            width: 200px;
+            height: 38px;
+            border: 1px solid $searchInptBorder;
+            border-radius: 20px;
+            padding: 0 20px;
+            .icon-search {
+                position: absolute;
+                left: 10px;
+                top: 9px;
+            }
+            .search-ipt {
+                height: 100%;
+                margin-left: 15px;
+                width: 145px;
+                border: 0;
+            }
+        }
+    }
+}
+
+.table-devices {
+    margin-top: 15px;
+    border-bottom: 1px solid $deviceBorderColor;
+    thead tr th {
+        border-bottom-color: $deviceBorderColor;
+    }
+    tr {
+        background-color: #fff;
+    }
+    th {
+        height: 50px;
+        font-size: 14px;
+        padding: 0 10px;
+        color: $deviceTableThFontColor;
+        // background-color: $deviceTableHeadBgColor;
+        border-bottom-width: 1px;
+        text-align: right;
+        font-weight: normal;
+    }
+    td {
+        height: 70px;
+        font-size: 14px;
+        padding: 0 10px;
+        line-height: 70px;
+        color: $deviceTableTdFontColor;
+        text-align: right;
+        border-bottom: 1px solid $deviceBorderColor;
+        &:first-child {
+            padding: 0 20px 0;
+            text-align: left;
+        }
+        &:nth-child(2) {
+            text-align: left;
+        }
+    }
+    .unlock-link {
+        margin-left: 20px;
+    }
+    .device-row {
+        &:hover {
+            background-color: $tableRowHover;
+        }
+        &.placeholder-row {
+            height: 200px;
+            &:hover {
+                background-color: #fff;
+            }
+        }
+    }
+    .icon-free-manufacturer {
+        height: 70px!important;
+    }
+}
+
+.table-odd-color tbody tr:nth-child(even) {
+    background-color: $tableOddColor
+}
+
+$timeBorder:#edf2f7;
+.rent-modal {
+    position: relative;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 3px;
+    h1 {
+        line-height: 50px;
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+    }
+    .icon-popup-close {
+        position: absolute;
+        right: -30px;
+        top: -30px;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        &:hover {
+            background-position-y: 32px;
+        }
+    }
+    p {
+        margin-bottom: 5px;
+    }
+    .time-select {
+        margin-top: 15px;
+        margin-left: 30px;
+        text-align: center;
+        padding: 0;
+        li {
+            position: relative;
+            width: 160px;
+            height: 100px;
+            display: inline-block;
+            float: left;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 2px solid $timeBorder;
+            cursor: pointer;
+            color: $black;
+            @include vertical-column-center;
+            &.custom-time {
+                color: $black;
+            }
+            &:hover {
+                border-color: $skyBlue;
+            }
+            &.selected {
+                border-color: $blue;
+                color: $blue;
+                .icon {
+                    visibility: visible;
+                }
+            }
+            .custom-hour-ipt {
+                width: 60px;
+                height: 30px;
+                font-size: 20px;
+                text-align: center;
+                padding: 0;
+                margin: 0;
+                color: inherit;
+                line-height: 1.2;
+                border-radius: 3px;
+                border: 1px solid $timeBorder;
+                background-color: $blueBg;
+                &:focus {
+                    background-color: #fff;
+                }
+                &:hover {
+                    line-height: 1.2;
+                }
+            }
+            .icon {
+                visibility: hidden;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+            .help {
+                font-size: 12px;
+                color: red;
+            }
+            span {
+                dsisplay: block;
+                margin-top: 0;
+                color: inherit;
+                &.times {
+                    font-size: 24px;
+                }
+                &.unit {
+                    font-size: 14px;
+                    color: inherit;
+                }
+            }
+        }
+    }
+    .times {
+        margin-top: 15px;
+        .times-select {
+            display: inline;
+            margin-left: 5px;
+            width: 30%;
+        }
+    }
+    .modal-foot {
+        text-align: right;
+        margin-top: 50px;
+    }
+    .icon-checkbox-disable {
+        margin-right: 8px;
+    }
+    > p {
+        margin-left: 30px;
+    }
+    .orange {
+        color: #ff7e00;
+    }
+}
+
+.comptest-rent-modal {
+    p {
+        margin-bottom: 10px;
+    }
+    a {
+        color: $orange;
+    }
+}
+
+.rio-safe-modal {
+    background-color: $green;
+    color: #fff;
+    h1 {
+        color: #fff;
+    }
+    .icon-safe {
+        margin-top: 15px;
+    }
+    .modal-foot {
+        margin-top: 15px;
+        .btn-default {
+            background: #fff;
+            border: 0;
+            color: $green;
+        }
+        .btn {
+            margin: 0;
+        }
+    }
+}
+
+.device-row:hover .manufacturer-icon {
+    left: -100px;
+}
+
+.rent-device-icon-link .manufacturer-icon {
+    left: -100px!important;
+}
+
+.device-status-col {
+    .popover {
+        top: 15px!important;
+        left: auto!important;
+        right: 81px!important;
+        width: 145px!important;
+        min-height: 46px;
+    }
+}
+
+.device-manufacturer-col {
+    position: relative;
+    padding: 0px !important;
+    .manufacturer-icon-link {
+        position: relative;
+        display: inline-block;
+        width: 100px;
+        height: 70px;
+        overflow: hidden;
+    }
+    .manufacturer-icon {
+        position: absolute;
+        width: 200px;
+        height: auto;
+        top: 0;
+        left: 0;
+    }
+    .popover {
+        display: block;
+        top: -116px!important;
+        left: 70px!important;
+        width: 292px!important;
+        height: 300px!important;
+        max-width: 400px;
+        padding: 0;
+        border-color: #c9d7e4 !important;
+        background-color: rgba(255, 255, 255, 1);
+        .popover-content {
+            padding: 0!important;
+            margin: 0;
+        }
+        .arrow {
+            visibility: hidden;
+        }
+        .device-modal {
+            // padding:20px;
+            // border:1px sold #ccc;
+            // width: 400px;
+            height: 300px;
+            .device-detail {
+                margin: 0 auto;
+                width: 200px;
+                text-align: left;
+            }
+            h1 {
+                font-size: 20px;
+                height: 77px;
+                line-height: 80px;
+                margin-bottom: 0;
+                color: #191e25;
+            }
+            p {
+                line-height: 22px;
+                font-size: 14px;
+                margin-bottom: 0;
+                color: #8e9194;
+                font-weight: 300;
+            }
+        }
+    }
+}
+
+.popover-wrap {
+    position: relative;
+    .popover {
+        background-color: #fff3e7;
+        border: 1px solid #ffaa57;
+        border-radius: 4px;
+        color: #ff7e00;
+        font-family: 'Lantinghei SC', 'Helvetica Neue', 'Microsoft Yahei', Arial, sans-serif;
+        .arrow {
+            border-left-color: #ffaa57;
+            &:after {
+                border-left-color: #fff3e7;
+            }
+        }
+    }
+}
+
+.top-banner {
+    position: relative;
+    width: 1120px;
+    margin: 50px auto 0;
+    .banner-picture {
+        width: 1120px;
+        border: 0;
+        cursor: pointer;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            list-style: none;
+        }
+    }
+    .flex-arrow {
+        width: 16px;
+        height: 40px;
+        //top: 0;
+        cursor: pointer;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none;
+        transition: none;
+        &.flex-prev {
+            background-image: url(img/btn-banner-prev.png);
+            background-size: 100%;
+            left: 0;
+            &::before {
+                display: none;
+            }
+        }
+        &.flex-next {
+            background-image: url(img/btn-banner-next.png);
+            background-size: 100%;
+            right: 0;
+            &::before {
+                display: none;
+            }
+        }
+    }
+    .flex-control-nav {
+        bottom: -30px;
+        li a {
+            border-color: $grayLightBorder;
+            background: #fff;
+            &.flex-active {
+                background: $grayLightBorder;
+            }
+        }
+    }
+    .flex-direction-nav {
+        width: 1120px;
+        margin: 0 auto;
+    }
+}
+
+.flexslider {
+    .flex-viewport {
+        height: 100px;
+    }
+    .flex-viewport ul,
+    .flex-viewport li {
+        height: 100px;
+    }
+}

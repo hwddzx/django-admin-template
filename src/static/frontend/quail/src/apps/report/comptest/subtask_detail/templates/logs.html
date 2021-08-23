@@ -1,0 +1,76 @@
+<div class="logs" xmlns="http://www.w3.org/1999/html" panel-switch-logs data-scroll-to-log="vm.scrollToLog">
+    <div class="search">
+        <input type="text" maxlength="128" class="search-input" ng-class="{true: 'error'}[vm.searchError]" placeholder="请输入关键字搜索" ng-model="vm.searchText"/>
+        <span class="search-controlled" ng-class="{false: 'hide'}[vm.showSearchControlled]">
+            <span class="hint"></span>
+            <i class="icon direction-icon">
+                <span class="direction direction-up"></span>
+                <span class="direction direction-down"></span>
+            </i>
+        </span>
+        <label for="caseSensitive" class="label-checkbox" ng-class="{true:'checked', false:'unchecked'}[!!vm.isCaseSensitive]">
+            <input type="checkbox" class="hide" ng-model="vm.isCaseSensitive" id="caseSensitive"/>
+        </label>
+        <label for="caseSensitive" class="check">区分大小写</label>
+    </div>
+    <div ng-init="vm.appPidChecked=true" ng-if="vm.os != 'ios'">
+        <label class="label-checkbox" for="appPid" ng-class="{true:'checked', false:'unchecked'}[!!vm.appPidChecked]">
+            <input type="checkbox" class="hide" ng-model="vm.appPidChecked" id="appPid" ng-click="vm.refresh()"/>
+        </label>
+        <label for="appPid">只看自己程序的PID</label>
+        <a class="btn btn-primary" ng-if="vm.subtaskDetail.all_log_url" ng-href="{{ vm.subtaskDetail.all_log_url+'?download' }}">下载日志</a>
+    </div>
+    <a class="btn btn-primary ios-download-btn" ng-if="vm.subtaskDetail.all_log_url && vm.os == 'ios'" ng-href="{{ vm.subtaskDetail.all_log_url+'?download' }}">下载日志</a>
+    <ul class="logs-list logs-head" ng-if="vm.os != 'ios'">
+        <li>
+        <div>
+        <span class="dropdown dropdown-toggle" uib-dropdown>
+            <a class="dropdown-toggle" uib-dropdown-toggle>{{ vm.currentFilterLevel }}<i class="fa fa-sort-down"></i></a>
+            <ul class="dropdown-menu" uib-dropdown-menu ng-if="vm.os != 'ios'">
+                <li ng-click="vm.changeLevel('all')">all</li>
+                <li ng-repeat="(key, value) in vm.levels" ng-click="vm.changeLevel(key)" ng-bind="key"></li>
+            </ul>
+        </span>
+        </div>
+        <div>行号</div>
+        <div>时间</div>
+        <div>PID</div>
+        <div>Tag</div>
+        <div>text</div>
+        </li>
+        <li ng-if="!vm.logs&&vm.subtaskDetail.mini_log_url&&vm.os != 'ios'">正在加载数据,请等待...</li>
+        <li ng-if="(vm.logs.length==0||!vm.subtaskDetail.mini_log_url) && vm.os != 'ios'">没有相关日志数据!</li>
+    </ul>
+    <ul class="logs-list logs-content" tb-comptest-logs-search data-vm="vm" ng-if="vm.os != 'ios'">
+        <li ng-repeat="log in vm.filtedLogs | limitTo:vm.filter.loadTotal:vm.filter.begin" class="ng-animate-disabled logs-index-{{ log.index }}"
+        ng-class="{'exception': vm.exceptionLog.index == log.index, 'last-log':log==vm.filtedLogs[vm.filtedLogs.length-1]}">
+            <div ng-bind="log.level | logLevel"></div>
+            <div ng-bind="log.index"></div>
+            <div ng-bind="log.time"></div>
+            <div ng-bind="log.pid"></div>
+            <div ng-bind="log.tag"></div>
+            <div ng-bind="log.text" class="log-text"></div>
+        </li>
+    </ul>
+    <ul class="logs-list logs-head logs-ios" ng-if="vm.os == 'ios'">
+        <li>
+        <div>行号</div>
+        <div>时间</div>
+        <div>PID</div>
+        <div>Tag</div>
+        <div>text</div>
+        </li>
+        <li ng-if="!vm.logs&&vm.os == 'ios'">正在加载数据,请等待...</li>
+        <li ng-if="(vm.logs.length==0) && vm.os == 'ios'">没有相关日志数据!</li>
+    </ul>
+    <ul class="logs-list logs-content logs-ios" tb-comptest-logs-search data-vm="vm" ng-if="vm.os == 'ios'">
+        <li ng-repeat="log in vm.filtedLogs | limitTo:vm.filter.loadTotal:vm.filter.begin" class="ng-animate-disabled logs-index-{{ log.index }}"
+        ng-class="{'exception': vm.exceptionLog.index == log.index, 'last-log':log==vm.filtedLogs[vm.filtedLogs.length-1]}">
+            <div ng-bind="log.index"></div>
+            <div ng-bind="log.time"></div>
+            <div ng-bind="log.pid"></div>
+            <div ng-bind="log.tag"></div>
+            <div ng-bind="log.text"></div>
+        </li>
+    </ul>
+</div>

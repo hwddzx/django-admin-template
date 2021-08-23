@@ -1,0 +1,61 @@
+<div class="tb-modal">
+    <h1 class="head"><span>配置section</span><i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <div class="tips gray" ng-hide="vm.section || vm.showTestcaseTree">提示:点击要作为section的第一张图和最后一张图</div>
+    <div class="tips gray" ng-show="!vm.section && vm.showTestcaseTree">提示:选择用例,用例名作为section名字</div>
+    <div class="tips gray" ng-show="vm.section">提示:点击"收起"返回所有截图</div>
+    <div class="section-container">
+        <div class="section-wrap">
+            <div class="sub-title">所有截图({{ vm.snapshots.length || 0 }})</div>
+            <div class="adaptive-images-container">
+                <div class="snapshot-item" ng-repeat="snapshot in vm.snapshots" img-error>
+                    <div class="adaptive-image-wrap" ng-if="snapshot.componentName" ng-click="vm.selectSnapshot($index)">
+                        <div class="component-snapshot"></div>
+                        <div class="overlay" ng-show="snapshot.isSelected"></div>
+                    </div>
+                    <div class="adaptive-image-wrap" ng-if="!snapshot.componentName" ng-click="vm.selectSnapshot($index)">
+                        <img class="snapshot-image" tb-adaptive-image data-width="120" ng-src="{{ snapshot.url | qiniuThumbnail }}"/>
+                        <div class="overlay" ng-show="snapshot.isSelected"></div>
+                    </div>
+                    <div class="meta">
+                        <div class="number">{{ $index + 1 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-snapshots" ng-class="{true:'show'}[!!vm.section]">
+            <div class="sub-title">section({{ vm.section.name }}): 截图({{ vm.snapshots.length || 0 }})
+                <a href="" ng-click="vm.section=''">收起</a>
+            </div>
+            <div class="adaptive-images-container">
+                <div class="snapshot-item" ng-repeat="snapshot in vm.section.snapshots" img-error>
+                    <div class="adaptive-image-wrap" ng-if="snapshot.componentName">
+                        <div class="component-snapshot"></div>
+                    </div>
+                    <div class="adaptive-image-wrap" ng-if="!snapshot.componentName">
+                        <img class="snapshot-image" tb-adaptive-image data-width="120" ng-src="{{ snapshot.url | qiniuThumbnail }}"/>
+                    </div>
+                    <div class="meta">
+                        <div class="number">{{ $index + 1 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-list">
+            <div class="sub-title">section列表</div>
+            <ul class="list list-unstyled">
+                <li ng-repeat="section in vm.sections">
+                    <i class="icon icon-delete" title="删除此section" ng-click="vm.removeSection(section)"></i>
+                    <span ng-click="vm.sectionSnapshots(section)">{{ section.name }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="testcase-tree-wrap" ng-if="vm.showTestcaseTree" ng-class="{true:'show'}[vm.showTestcaseTree]">
+            <ul class="ztree" id="section-tree" tb-tree setting="vm.setting" nodes="vm.nodes" not-linkage="'true'"></ul>
+        </div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-hide="vm.showTestcaseTree" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-default" ng-show="vm.showTestcaseTree" ng-click="vm.preStep()">上一步</button>
+        <button class="btn btn-fix btn-primary" ng-click="vm.close()">确定</button>
+    </div>
+</div>

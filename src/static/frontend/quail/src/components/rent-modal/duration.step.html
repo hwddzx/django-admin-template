@@ -1,0 +1,219 @@
+<div class="rent-time-step">
+    <form class="form-horizontal" tb-form-validator data-bv-excluded="">
+        <h1 class="head">{{timeVm.task.scheduled_task_id ? "更新定时任务" : "请为本次测试命名"}}<i class="icon icon-popup-close" ng-click="timeVm.cancel()" ></i></h1>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">测试名称:</label>
+            <div class="col-sm-9">
+                <input type="text" maxlength="128" name="taskName" class="form-control" ng-model="timeVm.task.name"
+                       data-bv-notempty data-bv-notempty-message="任务名称不能为空！"
+                       ng-disabled="timeVm.task.scheduled_task_id">
+            </div>
+        </div>
+        <div ng-show="timeVm.rentType=='replay'">
+            <div class="form-group" ng-show="timeVm.task.key">
+                <label class="col-sm-3 control-label">选择版本:</label>
+                <div class="col-sm-9">
+                    <select id="version" ng-model="timeVm.task.app_release_id">
+                        <option ng-repeat="release in timeVm.releases" value="{{release.id}}">{{release.version}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">优先级:</label>
+                <div class="col-sm-9">
+                    <input type="number" name="taskPriority" class="form-control" ng-model="timeVm.task.priority" min="0" max="100"
+                           data-bv-notempty data-bv-notempty-message="优先级不能为空！"
+                           data-bv-integer-message="请输入0-100的整数"
+                           data-bv-lessThan-message="请输入0-100的整数"
+                           data-bv-greaterThan-message="请输入0-100的整数"
+                           placeholder="请输入0-100的整数"
+                           ng-disabled="timeVm.task.scheduled_task_id">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">回放次数:</label>
+                <div class="col-sm-9">
+                    <input name="repeat-times" class="form-control" ng-model="timeVm.task.repeatTimes"
+                           data-bv-notempty data-bv-notempty-message="回放次数不能为空！"
+                           data-bv-regexp="true"
+                           data-bv-regexp-regexp="^([1-9][0-9]{0,1}|100)$"
+                           data-bv-regexp-message="请输入1到100的整数"
+                           placeholder="请输入1-100的整数">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask">
+                <label class="col-sm-3 control-label">发起时间:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="schedule-time" class="form-control" ng-model="timeVm.task.scheduleTime"
+                           data-bv-notempty data-bv-notempty-message="发起时间不能为空！"
+                           data-bv-regexp="true"
+                           data-bv-regexp-regexp="^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d$"
+                           data-bv-regexp-message="请输入正确的日期格式,例如:2018-06-29 12:00:00"
+                           placeholder="例如:2018-06-29 12:00:00">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask">
+                <label class="col-sm-3 control-label">截止时间:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="end-time" class="form-control" ng-model="timeVm.task.endTime"
+                           pattern="(^$)|^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d$"
+                           data-bv-regexp-message="请输入正确的日期格式,例如:2018-06-29 12:00:00"
+                           placeholder="指发起任务的结束时间，例如:2018-06-29 12:00:00">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask">
+                <label class="col-sm-3 control-label">重复周期(单位:分钟):</label>
+                <div class="col-sm-9">
+                    <input type="number" name="periodValue" class="form-control" ng-model="timeVm.task.periodValue" max="10080" min="1"
+                           data-bv-integer-message="请输入1-10080的正整数"
+                           data-bv-lessThan-message="请输入1-10080的整数"
+                           data-bv-greaterThan-message="请输入1-10080的整数"
+                           placeholder="请输入1到10080的正整数（单位：分钟）">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask && timeVm.task.periodValue">
+                <label class="col-sm-3 control-label">选择定时范围:</label>
+                <div class="col-sm-9">
+                    <span uib-dropdown auto-close="outsideClick">
+                        <a href class="ul-dropdown" uib-dropdown-toggle>{{ timeVm.task.whichDays_text }}
+                            <i class="glyphicon glyphicon-chevron-down"></i></a>
+                        <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                            <li ng-repeat="item in timeVm.whichDayItems">
+                                <i ng-if="item.selected" class="icon icon-chosen"></i>
+                                <a class="filter-item" ng-click="timeVm.toggleWhichDayItems(item,$event)">{{ item.name }}</a>
+                             </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask && timeVm.task.periodValue">
+                <label class="col-sm-3 control-label">每天发起时间:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="whitch-time-start" class="form-control" ng-model="timeVm.task.which_time_start"
+                           data-bv-regexp="true"
+                           data-bv-regexp-regexp="^(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d$"
+                           data-bv-regexp-message="请输入正确的时间格式,例如:12:00:00"
+                           placeholder="指每天发起任务的时间，例如:12:00:00">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask && timeVm.task.periodValue">
+                <label class="col-sm-3 control-label">每天截止时间:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="whitch-time-stop" class="form-control" ng-model="timeVm.task.which_time_stop"
+                           data-bv-regexp="true"
+                           data-bv-regexp-regexp="^(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d$"
+                           data-bv-regexp-message="请输入正确的时间格式,例如:12:00:00"
+                           placeholder="指每天停止发起任务的时间，例如:12:00:00">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask&&timeVm.task.periodValue">
+                <label class="col-sm-3 control-label">定时任务结束时间:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="dead-Line" class="form-control" ng-model="timeVm.task.deadLine"
+                           pattern="(^$)|^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d$"
+                           data-bv-regexp-message="请输入正确的日期格式,例如:2018-06-29 12:00:00"
+                           placeholder="指创建任务的结束时间，例如:2018-06-29 12:00:00">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask">
+                <label class="col-sm-3 control-label">重测次数:</label>
+                <div class="col-sm-9">
+                    <input type="number" name="retest" class="form-control" ng-model="timeVm.task.retest_times" min="0" max="5"
+                           data-bv-notempty data-bv-notempty-message="重测次数不能为空！"
+                           data-bv-integer-message="请输入0-5的整数"
+                           data-bv-lessThan-message="请输入0-5的整数"
+                           data-bv-greaterThan-message="请输入0-5的整数"
+                           placeholder="请输入0-5的整数"
+                           ng-disabled="timeVm.isTimedTask&&timeVm.task.scheduled_task_id">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isTimedTask">
+                <label class="col-sm-3 control-label">重测类型:</label>
+                <div class="clear-model">
+                    <input ng-disabled="timeVm.task.scheduled_task_id" type="radio" id="retest-type-0" name="retest-type" ng-model="timeVm.task.retest_type" value="0">
+                    <label for="retest-type-0">阻塞</label>
+                    <input ng-disabled="timeVm.task.scheduled_task_id" type="radio" id="retest-type-1" name="retest-type" ng-model="timeVm.task.retest_type" value="-1">
+                    <label for="retest-type-1">失败</label>
+                    <input ng-disabled="timeVm.task.scheduled_task_id" type="radio" id="retest-type-2" name="retest-type" ng-model="timeVm.task.retest_type" value="-2">
+                    <label for="retest-type-2">阻塞或失败</label>
+                    <input ng-disabled="timeVm.task.scheduled_task_id" type="radio" id="retest-type-3" name="retest-type" ng-model="timeVm.task.retest_type" value="-3">
+                    <label for="retest-type-3">强制复测</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">清理模式:</label>
+                <div class="clear-model">
+                    <input ng-disabled="timeVm.task.scheduled_task_id" type="radio" id="clear-mode-0" name="clear-mode" ng-model="timeVm.task.clearMode" value="0">
+                    <label for="clear-mode-0">不清理</label>
+                    <input ng-disabled="timeVm.task.scheduled_task_id" type="radio" id="clear-mode-1" name="clear-mode" ng-model="timeVm.task.clearMode" value="1">
+                    <label for="clear-mode-1">执行前清理数据(iOS为重装)</label>
+                    <input ng-disabled="timeVm.task.scheduled_task_id" type="radio" id="clear-mode-2" name="clear-mode" ng-model="timeVm.task.clearMode" value="2">
+                    <label for="clear-mode-2">执行前清理数据且执行后卸载应用</label>
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isOther()">
+                <label class="col-sm-3 control-label">其他:</label>
+                <div class="clear-model">
+                    <span ng-show="timeVm.isTimedTask">
+                        <input ng-disabled="timeVm.task.scheduled_task_id" type="checkbox" id="is_override" name="is_override" ng-model="timeVm.task.is_override">
+                        <label for="is_override">是否覆盖重测</label>
+                    </span>
+                    <span ng-show="timeVm.isComptest&&!timeVm.isTimedTask&&timeVm.isAndroid">
+                        <input type="checkbox" id="is_monkey" name="is_monkey" ng-model="timeVm.task.is_monkey">
+                        <label for="is_monkey">monkey测试</label>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isComptest&&!timeVm.isTimedTask&&timeVm.task.is_monkey&&timeVm.isAndroid">
+                <label class="col-sm-3 control-label">monkey测试步骤数:</label>
+                <div class="col-sm-9">
+                    <input type="number" name="monkey_steps" class="form-control" ng-model="timeVm.task.monkey_steps"
+                           data-bv-regexp="true"
+                           data-bv-regexp-regexp="^([1-9][0-9]{0,1}|100)$"
+                           data-bv-regexp-message="请输入1到100的整数"
+                           placeholder="请输入1-100的整数">
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isShowMail()">
+                <label class="col-sm-3 control-label">是否发送邮件:</label>
+                <div class="clear-model">
+                    <input type="radio" id="send-mail-0" name="send-mail" ng-model="timeVm.task.isSendmail" value="1">
+                    <label for="send-mail-0">发送</label>
+                    <input type="radio" id="send-mail-1" name="send-mail" ng-model="timeVm.task.isSendmail" value="0">
+                    <label for="send-mail-1">不发送</label>
+                </div>
+            </div>
+            <div class="form-group" ng-show="timeVm.isShowMail()&&timeVm.task.isSendmail==1">
+                <label class="col-sm-3 control-label">选择邮箱:</label>
+                <div class="col-sm-9">
+                    <select id="mail" ng-model="timeVm.task.mail_group">
+                        <option ng-repeat="mail in timeVm.mails" value="{{mail.id}}">{{mail.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" ng-show="!timeVm.isTimedTask || timeVm.stateName == 'app.dialtesttasks'"> <!--拨测需要保存视频功能-->
+                <label class="col-sm-3 control-label">是否保存视频文件:</label>
+                <div class="clear-model">
+                    <input type="radio" id="save-video-0" name="save-video" ng-model="timeVm.task.save_video" value="1" ng-click="timeVm.alertVideoWarnning()">
+                    <label for="save-video-0">保存</label>
+                    <input type="radio" id="save-video-1" name="save-video" ng-model="timeVm.task.save_video" value="0">
+                    <label for="save-video-1">不保存</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">上报结果到redmine:</label>
+                <div class="clear-model">
+                    <input type="radio" id="send_report-0" name="send_report" ng-model="timeVm.task.send_report" value="1">
+                    <label for="send_report-0">是</label>
+                    <input type="radio" id="send_report-1" name="send_report" ng-model="timeVm.task.send_report" value="0">
+                    <label for="send_report-1">否</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default" ng-click="timeVm.cancel()">取消</button>
+            <button class="btn btn-fix btn-primary" ng-click="timeVm.preStep()" ng-if="timeVm.hasPreStep()">上一步</button>
+            <button class="btn btn-fix btn-primary" type="submit" data-form-submit="timeVm.close()">{{ getNextBtnText() }}</button>
+        </div>
+    </form>
+</div>

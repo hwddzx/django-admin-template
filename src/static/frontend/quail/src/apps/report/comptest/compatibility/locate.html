@@ -1,0 +1,35 @@
+<div id="compatibility-locale-v2">
+    <i class="icon icon-popup-close" ng-click="vm.cancel()"></i>
+    <div class="modal-title">
+        <h1>
+            {{ vm.exception.name }}
+        </h1>
+    </div>
+    <div class="modal-body">
+        <table>
+            <thead>
+                <tr class="gray">
+                    <th>
+                        {{ '问题终端' | translate }}
+                    </th>
+                    <th>
+                        {{ '问题类型' | translate }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="list in vm.exception.list | limitTo: vm.exceptionListSize"  ng-click="vm.cancel()">
+                    <td>
+                        <a class="gotoIssues" target="_blank" ui-sref="subtaskDetail.performance({'taskKey':vm.taskKey, 'subtaskKey': list.key})">
+                             {{ list.device_model.name }}
+                        </a>
+                    </td>
+                    <td class="tb-change-app-type">
+                        {{ list.result_subtype_text[0] }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-if="vm.exception.list.length>vm.exceptionListSize" ng-click="vm.loadExcpetionList()">more</button>
+    </div>
+</div>

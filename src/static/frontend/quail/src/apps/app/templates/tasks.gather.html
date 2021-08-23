@@ -1,0 +1,80 @@
+<div ng-controller="TasksGatherCtrl as vm" class="tasks-gather-container">
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="deviceType">平台：</label>
+            <select id="deviceType" ng-model="vm.filters.device_type" ng-change="vm.changeSelectedDeviceType()">
+                <option ng-repeat="deviceType in vm.deviceTypes" value="{{deviceType}}">{{deviceType}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="appName">项目名称：</label>
+            <select id="appName" ng-model="vm.filters.app_key" ng-change="vm.changeSelectedApp()">
+                <option ng-repeat="app in vm.filteredApps" value="{{app.key}}">{{app.name}}</option>
+            </select>
+        </div>
+        <div class="form-group device-type-select">
+            <span uib-dropdown auto-close="outsideClick">
+                <a href class="ul-dropdown" uib-dropdown-toggle>{{ vm.filters.types_text }}<i
+                        class="fa fa-sort-desc"></i></a>
+                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                    <li ng-repeat="item in vm.taskTypes">
+                        <i ng-if="item.selected" class="icon icon-chosen"></i>
+                        <a class="filter-item" ng-click="vm.toggleTaskType(item,$event)">{{ item.name }}</a>
+                    </li>
+                </ul>
+            </span>
+        </div>
+        <div class="form-group date-pick">
+            <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.startPopup.date" is-open="vm.startPopup.opened" ng-required="true"
+                   close-text="关闭"
+                   clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"/>
+                 <span class="form-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('startPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+        </div>
+        <div class="form-group date-pick">
+            <input type="text" class="form-control" uib-datepicker-popup="{{ vm.format }}" ng-model="vm.endPopup.date" is-open="vm.endPopup.opened" ng-required="true"
+                   close-text="关闭"
+                   clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"/>
+                 <span class="form-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="vm.openDatePicker('endPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+        </div>
+        <div class="form-group btn-group">
+            <button class="btn btn-default" ng-click="vm.getAppTasks()">查询</button>
+        </div>
+    </form>
+    <table class="tb-table-striped">
+        <thead>
+        <tr>
+            <th>项目名称</th>
+            <th>平台</th>
+            <th>任务类型</th>
+            <th>APP版本</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>执行时间</th>
+            <th>通过率(通过/总数)</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody ng-if="vm.tasks.length > 0">
+        <tr ng-repeat="task in vm.tasks">
+            <td>{{vm.filters.selected_app.name}}</td>
+            <td>{{vm.filters.device_type}}</td>
+            <td>{{task.task_type}}</td>
+            <td>{{task.app_release_version}}</td>
+            <td>{{task.launch_time}}</td>
+            <td>{{task.completed_time}}</td>
+            <td>{{task.duration | secondFilter}}</td>
+            <td>{{task.execution_success_count + '/' + task.execution_count}}</td>
+            <td ng-if="!task.launch_time && task.status == 0">排队中</td>
+            <td ng-if="task.launch_time || task.status != 0">{{task.status | taskStatus}}</td>
+            <td>
+                <a ng-click="vm.goExecutions(task)" class="link">查看</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,126 @@
+{% extends 'account/login.base.html' %}
+{% load static %}
+{% block title %}管理平台 - 登录{% endblock %}
+
+{% block formarea %}
+    <div id="login-box" class="login-box visible widget-box no-border">
+        <div class="widget-body">
+            <div class="widget-main">
+                <h4 class="header blue lighter bigger">
+                    <i class="ace-icon fa fa-coffee green"></i>
+                    请输入登录信息
+                </h4>
+
+                <div class="space-6"></div>
+
+                <form id="id-login-form" method="post" action="{% url 'admin:account:login' %}">
+                    {% csrf_token %}
+                    <fieldset>
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                              <input type="text" class="form-control" name="username" placeholder="用户名"/>
+                              <i class="ace-icon fa fa-user"></i>
+                            </span>
+                        </label>
+
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                              <input type="password" class="form-control"
+                                     name="password" placeholder="密码"/>
+                              <i class="ace-icon fa fa-lock"></i>
+                            </span>
+                        </label>
+
+                        <div class="space"></div>
+
+                        <div class="clearfix">
+                            {#                          <label class="inline">#}
+                            {#                            <input type="checkbox" class="ace"/>#}
+                            {#                            <span class="lbl"> Remember Me</span>#}
+                            {#                          </label>#}
+
+                            <button type="submit"
+                                    class="width-35 pull-right btn btn-sm btn-primary">
+                                <i class="ace-icon fa fa-key"></i>
+                                <span class="bigger-110">登录</span>
+                            </button>
+                        </div>
+
+                        <div class="space-4"></div>
+                    </fieldset>
+                </form>
+
+                {% if result.ret and result.ret != 0 %}
+                    {% comment %} 显示登录失败信息 {% endcomment %}
+                    <div class="space-6"></div>
+                    <div class="alert alert-warning">
+                        {{ result.errmsg }}
+                    </div>
+                {% endif %}
+
+                {#      <div class="social-or-login center">#}
+                {#        <span class="bigger-110">使用合作网站账号登录</span>#}
+                {#      </div>#}
+                {##}
+                {#      <div class="space-6"></div>#}
+                {##}
+                {#      <div class="social-login center">#}
+                {#        <a class="btn btn-primary">#}
+                {#          <i class="ace-icon fa fa-qq"></i>#}
+                {#        </a>#}
+                {##}
+                {#        <a class="btn btn-danger">#}
+                {#          <i class="ace-icon fa fa-weibo"></i>#}
+                {#        </a>#}
+                {##}
+                {#        <a class="btn btn-success">#}
+                {#          <i class="ace-icon fa fa-weixin"></i>#}
+                {#        </a>#}
+                {#      </div>#}
+            </div>
+            <!-- /.widget-main -->
+
+            <div class="toolbar clearfix">
+                <div>
+                    <a href="{% url 'admin:account:forget_password' %}" data-target="#forgot-box"
+                       class="forgot-password-link">
+                        <i class="ace-icon fa fa-arrow-left"></i>
+                        忘记密码?
+                    </a>
+                </div>
+                {##}
+                {#      <div>#}
+                {#        <a href="{% url 'admin:account:customer_sign_up' %}" class="user-signup-link">#}
+                {#          免费注册#}
+                {#          <i class="ace-icon fa fa-arrow-right"></i>#}
+                {#        </a>#}
+                {#      </div>#}
+            </div>
+        </div><!-- /.widget-body -->
+    </div><!-- /.login-box -->
+{% endblock %}
+{% block extrajs %}
+    <script type="text/javascript">
+        // this is used to swtich the box shown to the user.
+        // since the sign_up/login account level is different in yawp we don't use it
+        /*jQuery(function($) {
+          $(document).on('click', '.toolbar a[data-target]', function(e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+            $('.widget-box.visible').removeClass('visible');//hide others
+            $(target).addClass('visible');//show target
+          });
+        });*/
+        $(document).ready(function () {
+            var $form = $('#id-login-form');
+            /*FIXME: If you have a remembered username and password for a site,
+            the current version of Chrome will autofill your username/email address into the field before any type=password field.
+            It does not care what the field is called - just assumes the field before password is going to be your username.
+            make a dummy input to workaround this issue.
+            for more information please check: http://stackoverflow.com/questions/15738259/disabling-chrome-autofill
+            */
+            $form.prepend('<input style="display:none" type="text" name="fakeusernameremembered">');
+            $form.prepend('<input style="display:none" type="password" name="fakepasswordremembered">');
+        });
+    </script>
+{% endblock extrajs %}

@@ -1,0 +1,66 @@
+<div ng-controller="DeviceControlCtrl" class="interact-control fill-height as-table stf-device-control">
+    <div class="as-cell fill-height">
+        <div class="as-table fill-height">
+            <div class="as-row fill-height">
+                <div ng-controller="DeviceScreenCtrl" ng-if="device" style="height:100%" class="fill-height as-row-cell">
+                    <div ng-file-drop="installFile($files)" ng-file-drag-over-class="dragover" class="fill-height">
+                        <device-context-menu device="device" control="control">
+                            <device-screen device="device" control="control"></device-screen>
+                        </device-context-menu>
+                    </div>
+                </div>
+            </div>
+            <div ng-hide="$root.standalone" class="stf-vnc-bottom as-row">
+                <div class="controls" style="width:100%!important;">
+                    <div class="group-wrap text-unselect">
+                        <div class="btn-group btn-group-justified">
+                            <a device-control-key="menu" title="{{&quot;Menu&quot;}}" class="btn btn-primary btn-lg no-transition"></a>
+                            <a device-control-key="home" title="{{&quot;Home&quot;}}" class="btn btn-primary btn-lg no-transition"></a>
+                            <a device-control-key="back" title="{{&quot;Back&quot;}}" class="btn btn-primary btn-lg no-transition"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="controls-group-include">
+    <div class="ios-controls-group text-unselect" ng-controller="ScreenControlCtrl" ng-if="deviceType=='ios'">
+        <a href="" device-control-key="home" class="control-home-link control-inner-btn"><i class="icon icon-home" /></a>
+        <a href="" device-control-key="refresh" class="control-refresh-link control-inner-btn"><i class="icon icon-refresh" /></a>
+        <a href="" class="control-input-link control-inner-btn" ng-click="inputTextDialog()"><i class="icon icon-input" /></a>
+    </div>
+    <div class="android-controls-group text-unselect" ng-controller="ScreenControlCtrl" ng-if="deviceType=='android'" ng-class="{'script-record':task.isScriptRecord}">
+        <div class="control-pause-btn" ng-click="pause()"><i class="fa fa-play fa-lg" title="继续录制" ng-show="isPaused" /><i class="fa fa-pause fa-lg" title="暂停录制" ng-hide="isPaused" /></div>
+        <div class="control-replay-btn" ng-click="replayRecord()" ng-show="isPaused"><i class="fa fa-eject" title="回放已录制步骤" ng-hide="isReplayed" /><i class="fa fa-stop" title="停止回放" ng-show="isReplayed" /></div>
+        <div class="control-lock-btn" ng-click="press()"><i class="icon icon-lock" ng-show="isScreenLocked" /><i class="icon icon-unlock" ng-hide="isScreenLocked" /></div>
+        <div class="control-hd-btn" tb-range-wrap ng-click="opened=!opened" ng-class="{opened:opened}">
+            <i class="icon icon-hd" />
+            <div class="hd-slider-wrap" ng-click="$event.stopPropagation();">
+                <i class="icon icon-hd-gray" />
+                <i class="icon icon-rabbit" />
+                <input type="range" ng-model="quality" tb-range-slider ng-change="onQualityChanged()" min="-5" max="5" data-orientation="vertical">
+            </div>
+        </div>
+        <a href="" device-control-key="back" class="control-back-link control-inner-btn"><i class="icon icon-back" /></a>
+        <a href="" device-control-key="home" class="control-home-link control-inner-btn"><i class="icon icon-home" /></a>
+        <a href="" device-control-key="menu" class="control-list-link control-inner-btn"><i class="icon icon-list" /></a>
+        <a href="" ng-if="!task.isScriptRecord" ng-click="screenshot()" class="control-photocam-link control-inner-btn"><i class="icon icon-photocam" /></a>
+        <!-- <div class="photom-cam-wrap" ng-class="{active:screenshot.multi}">
+            <div class="photocam-btn item-btn" ng-click="startScreenshot()" title="截屏">
+                <i class="icon icon-photocam" />
+            </div>
+            <div class="sparrow-btn item-btn" ng-click="screenshot.multi=!screenshot.multi">
+                <i class="icon icon-left-sparrow" />
+            </div>
+            <div class="screentshot-label" title="连续截屏">
+                <span>连续拍摄</span>
+                <input type="number" integer-number-input ng-readonly="isScreenshoting" ng-model="screenshot.steps" />
+                <span>张</span>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<ng-include ng-show="task.type != 0" src="'components/layout/layout.html'"></ng-include >

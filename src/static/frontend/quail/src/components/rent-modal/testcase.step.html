@@ -1,0 +1,59 @@
+<div class="testcase-step">
+    <h1 class="head">{{title || '请选择版本及测试用例'}}<i class="icon icon-popup-close" ng-click="testcaseVm.cancel()" ></i></h1>
+    <div class="form-group release-item row" ng-if="!testcaseVm.isFilter">
+        <label class="control-label">应用版本:</label>
+        <span class="release-dropdown" uib-dropdown uib-dropdown-toggle>
+              <a class="dropdown-btn" id="release-dropdown">
+                {{task.release.version}}({{task.release.build}})
+                <i class="fa fa-sort-desc"></i>
+              </a>
+              <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="release-dropdown">
+                <li ng-repeat="release in testcaseVm.releases">
+                  <a href="" title="{{ release.created|dateFilter }}" ng-click="testcaseVm.chooseRelease(release)">{{release.version}}({{release.build}})</a>
+                </li>
+              </ul>
+        </span>
+        <span uib-dropdown uib-dropdown-toggle>
+            <label id="button-template-url" ng-click="testcaseVm.getTestcaseTags()">标签<i class="fa fa-sort-desc"></i></label>
+            <div class="dropdown-menu tags-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url" ng-show="testcaseVm.tags.length">
+                <ul>
+                    <li role="menuitem" ng-repeat="tag in testcaseVm.tags" ng-click="testcaseVm.stopPropagation($event)">
+                        <label for="tag-{{ $index }}">
+                            <input type="checkbox" id="tag-{{ $index }}" ng-model="tag.checked"/>
+                            <span title="{{ tag.name }}">{{ tag.name }}</span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="memu-foot">
+                    <a>取消</a>
+                    <a ng-click="testcaseVm.orFilterTestCases()">过滤（并集）</a>
+                    <a ng-click="testcaseVm.andFilterTestCases()">过滤（交集）</a>
+                </div>
+            </div>
+        </span>
+        <a href="javascript:void(0);" class="pull-right" tb-lab-hide ng-click="testcaseVm.createRelease()">新建版本</a>
+    </div>
+    <div class="checkbox-wrap text-unselect" ng-if="isRevise">
+        <input type="checkbox" id="check-hide-testcase" ng-change="testcaseVm.toggleExecutedTestcase()" ng-model="testcaseVm.nodes.hideExecutedTestcase" />
+        <label for="check-hide-testcase"></label>
+        <span>隐藏已执行过的测试用例</span>
+    </div>
+    <div class="checkbox-wrap text-unselect" ng-if="isScriptRecord">
+        <input type="checkbox" id="check-hide-testcase" ng-change="testcaseVm.toggleRecordedTestcase()" ng-model="testcaseVm.nodes.hideRecordedTestcase" />
+        <label for="check-hide-testcase"></label>
+        <span>隐藏已录制过的测试用例</span>
+    </div>
+    <div class="testcase-tree-wrap">
+        <ul class="testcase-tree ztree" id="testcase-tree" tb-tree setting="testcaseVm.setting" nodes="testcaseVm.nodes"></ul>
+    </div>
+    <div class="testcase-help">
+        <p class="script-warin" ng-show="hasScript">
+            未录制脚本的用例不显示
+        </p>
+        <p class="check-count">已选择 {{testcaseVm.checkedCount}} 个用例</p>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="testcaseVm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-disabled="needTestcase&&!testcaseVm.checkedCount" ng-click="testcaseVm.nextStep()">{{ getNextBtnText() }}</button>
+    </div>
+</div>

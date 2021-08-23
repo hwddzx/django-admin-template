@@ -1,0 +1,19 @@
+<div class="gather-modal">
+    <h1 class="head"><span>编辑用例集</span><i class="icon icon-popup-close" ng-click="vm.cancel()"></i></h1>
+    <div class="form-group release-item row">
+        <div class="check-count">已选择 {{ vm.checkedCount }} 个用例</div>
+        <div class="checkbox-wrap text-unselect">
+            提示:已分配过的用例不支持删除
+        </div>
+    </div>
+    <div class="testcase-tree-wrap">
+        <ul class="testcase-tree ztree" id="edit-testcase-tree" tb-tree setting="vm.setting" nodes="vm.nodes"></ul>
+    </div>
+    <div class="search-panel">
+        <input class="case-gather-name" type="text" maxlength="128" ng-model="vm.model.gather.name"  placeholder="请输入用例集名称"/>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-disabled="!vm.checkedCount|| !vm.model.gather.name" ng-click="vm.save()">完成</button>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div ng-include="'apps/head/templates/report.head.html'" pgyer-hide></div>
+<div class="subtask-detail">
+    <div class="subtask-detail-container" ng-init="detail = vm.subtaskDetail">
+        <div class="content-header">
+            <img ng-src="{{ vm.subtaskDetail.icon_url }}" alt="icon">
+            <div class="simple-info">
+                <h4 ng-bind-template="{{ detail.name }}&nbsp;{{ detail.app_version }}"></h4>
+                <p ng-bind-template="{{ detail.created*1000|date:'yyyy/MM/dd HH:mm:ss'}}"></p>
+            </div>
+        </div>
+        <div class="content-banner" switch-subtask data-subtasks="vm.subtasks" data-current-subtask-key="vm.currentSubtaskKey" detail-device-model-name="detail.device_model.name">
+            <h1 class="title test-result" ng-class="{true:'pass', false:'fail'}[detail.is_passed]" ng-bind="'测试结果: '+(detail.is_passed?'通过':'不通过')"></h1>
+            <select smart-select2 class="select2" ng-model="vm.currentSubtaskKey">
+                <option ng-repeat="subtask in vm.subtasks" value="{{ subtask.key }}">{{subtask.device_model.name}}</option>
+            </select>
+            <div class="can-rent"  pgyer-hide subtask-id="vm.subtaskDetail.id" tb-rent-sure ng-if="vm.canRent&&vm.rioEnabled&&!vm.isOffline"><img ng-src="assets/img/report/issues/rent_possible.png" alt=""><span ng-bind-template="{{'租用手机'|translate}}"></span><i class="fa fa-angle-left"></i></div>
+            <div class="cant-rent disabled"  pgyer-hide ng-if="!vm.canRent&&vm.rioEnabled&&!vm.isOffline"><img src="assets/img/report/issues/rent_impossible.png" alt=""><span>{{'租用手机'|translate}}</span><i class="fa fa-angle-left"></i></div>
+            <a class="switch pre">上一部</a>
+            <a class="switch next">下一部</a>
+        </div>
+        <div class="fail-desc" ng-if="!detail.is_passed">
+            <h1 class="title">问题说明</h1>
+            <div class="fail-desc-box" ng-repeat="item in vm.exceptionDetails">
+                <div class="left" ng-if="vm.hasSubtaskDetailImage">
+                    <img ng-if="item.image" ng-src="{{ item.image + '?imageView2/2/w/200/'}}" ng-click="vm.showExceptionFancybox(item.image)"/>
+                    <div ng-if="!item.image" class="snapshot-time">无对应问题截图</div>
+                    <div class="snapshot-time " ng-bind="item.performance.imageTime"></div>
+                </div>
+                <div class="right">
+                    <div>操作系统: <span ng-bind="item.os"></span></div>
+                    <div>问题类型: <span ng-bind="item.type"></span></div>
+                    <div ng-if="!vm.subtaskDetail.raw_exception_desc">问题摘要: <span ng-bind="item.desc"></span></div>
+                    <a ng-click="vm.gotoExceptionLog()" ng-if="vm.subtaskDetail.raw_exception_desc" class="btn btn-primary exception-desc">问题摘要: <span ng-bind="item.desc"></span></a>
+                    <div>CPU占用率: <span ng-bind="item.performance.cpu + '%'"></span></div>
+                    <div>内存占用: <span ng-bind="item.performance.ram + 'kb'"></span></div>
+                    <div>可用内存: <span ng-bind="item.performance.systemRamAvailable + 'kb'"></span></div>
+                    <div>温度: <span ng-bind="item.performance.temperature + '°C'"></span></div>
+                    <div>流量: <span ng-bind="item.performance.totalFlow + 'kb'"></span></div>
+                    <a ng-click="vm.gotoExceptionSnapshot(item.image)"  class="btn btn-primary">在全部截图中显示</a>
+                </div>
+            </div>
+        </div>
+        <ul class="nav tb-nav-tabs width-full-screen">
+            <li class="toPerformance"><a ui-sref=".performance" ui-sref-opts="{reload: true}">性能分析</a></li>
+            <li class="toLogs"><a ui-sref=".logs">日志分析</a></li>
+            <li class="toProfile"><a ui-sref=".profile">设备参数</a></li>
+            <li class="toSnapshots"><a ui-sref=".snapshots">全部截图</a></li>
+        </ul>
+        <div ui-view=""></div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/head.html'"></ng-include>
+<!-- /头部 -->
+<div class="main performance-comparison-container detail-container">
+    <div class="title-header">
+        <p>性能对比</p>
+    </div>
+    <div class="form-group">
+        <span>选择手机型号</span>
+        <select ng-model="vm.select_device" placeholder="选择手机型号">
+            <option ng-repeat="device in vm.devices" value="{{device}}">{{device}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <span>选择用例</span>
+        <select ng-model="vm.select_testcase" placeholder="选择用例">
+            <option ng-repeat="case in vm.testcases" value="{{case}}">{{case}}</option>
+        </select>
+    </div>
+    <table class="performance-table">
+        <thead>
+            <tr>
+                <th >报告名称</th>
+                <th width="10%">手机型号</th>
+                <!--<th class="fix-fa">-->
+                    <!--<span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>-->
+                        <!--{{vm.select_testcase}}  <i class="light fa fa-sort-down"></i>-->
+                        <!--<ul class="unstyle-list vertical-group-list dropdown-menu short-menu" uib-dropdown-menu>-->
+                            <!--<li ng-repeat="case in vm.testcases"><a ng-click="vm.chooseFilter(case)">{{ case }}</a><li>-->
+                        <!--</ul>-->
+                    <!--</span>-->
+                <!--</th>-->
+                <th width="12%">用例名</th>
+                <th width="7%">CPU(%)</th>
+                <th width="10%">内存占用(kb)</th>
+                <th width="10%">可用内存(kb)</th>
+                <th width="7%">温度(°C)</th>
+                <th width="10%">帧速率(fps)</th>
+                <th width="7%">GPU(%)</th>
+                <th width="10%">耗电量(mAh)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="detail in vm.compareReportDetail">
+                <td>{{detail.report}}</td>
+                <td>{{detail.device}}</td>
+                <td>{{detail.testcase}}</td>
+                <td>{{detail.cpu | number:2}}</td>
+                <td>{{detail.ram | number:2}}</td>
+                <td>{{detail.ram_available | number:2}}</td>
+                <td>{{detail.temperature | number:2}}</td>
+                <td>{{detail.fps | number:2}}</td>
+                <td>{{detail.gpu | number:2}}</td>
+                <td>{{detail.battery | number:2}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p ng-if="vm.compareReportDetail.length == 0" class="no-data-tips">暂无数据</p>
+    <div class="performance-btns">
+        <a href="javascript:void(0);" ng-click="vm.gotoPerformance()">返回</a>
+        <a href="javascript:void(0);" ng-click="vm.download()">下载表格</a>
+    </div>
+</div>

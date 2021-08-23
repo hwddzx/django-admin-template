@@ -1,0 +1,20 @@
+<div class="tb-modal">
+    <div class="tb-modal-header">
+        <div class="icon icon-popup-close" ng-click="cancel()"></div> 租用失败手机列表
+    </div>
+    <div class="tb-modal-content rent-failed-devices">
+        <!-- <label ng-repeat="device in model.fialed_devices">{{device.name}}</label> -->
+        <table class="tb-table">
+            <tbody>
+                <tr ng-repeat="device in model.failed_devices track by $index">
+                    <td class="text-left">{{device.name}}</td>
+                    <td class="text-center">{{ device.os }}</td>
+                    <td class="text-center">{{ device.screen_width }}x{{ device.screen_length }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tb-modal-foot">
+        <button class="btn btn-primary btn-fix" ng-click="close()">知道了</button>
+    </div>
+</div>

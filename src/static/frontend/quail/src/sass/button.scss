@@ -1,0 +1,47 @@
+.btn {
+    border-radius: 0!important;
+    font-weight: 300;
+    &.btn-gray {
+        background-color: #fff;
+        color: $black;
+        border: 1px solid $gray-border;
+        &:hover {
+            border-color: $gray-border;
+            background-color: $gray-border;
+            color: $black;
+        }
+        &[disabled] {
+            background-color: #fff;
+            color: lighten($black, 10%);
+            border: 1px solid lighten($gray-border, 10%);
+        }
+        &.active {
+            border-color: $blue-border;
+            color: $blue;
+            @include box-shadow(none);
+            &:hover {
+                color: #fff !important;
+                background-color: $blue;
+            }
+        }
+    }
+    &.import-files {
+        position: relative;
+        overflow: hidden;
+        input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 100px;
+        }
+        input[disabled] {
+            cursor: not-allowed!important;
+        }
+    }
+}

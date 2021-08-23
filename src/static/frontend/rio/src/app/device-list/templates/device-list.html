@@ -1,0 +1,230 @@
+<!-- 头部 -->
+<ng-include src="'app/head/templates/head.html'"></ng-include>
+<!-- /头部 -->
+<div class="other-devices-container" style="margin-bottom: 0px;">
+    <div class="margin_auto display_flex flex_end" style="width: 1120px;">
+        <div class="device-search" style="width: 230px;margin-top: -50px;">
+            <img src="http://toolsforest.com/yuancheng_img/ss.png" style="position: absolute;left: 3px;top:25px;width: 24px;" alt="" />
+            <input type="text" class="search-ipt" style="padding-left: 30px;" ng-keyup="searchWD($event)" placeholder="请输入内容" ng-model="keywords" />
+            <a href="" class="btn white search-btn" ng-click="searchWD('13')" style="background: rgba(25, 149, 243, 1.0)">
+                搜索
+                <!-- <img src="http://toolsforest.com/yuancheng_img/search.png" style="width: 25px;" alt="" /> -->
+            </a>
+        </div>
+    </div>
+</div>
+<!-- 已租用设备列表 -->
+<div class="rent-devices-container margin_top_10 rent-devices-table" ng-show="rentingDevice.length">
+    <div class="head">
+        <div class="column-wrap text-left clearfix">
+            <div class="column text-left">我的设备</div>
+            <div class="column"></div>
+            <div class="column">剩余时间</div>
+            <div class="column">操作系统</div>
+            <div class="column">分辨率</div>
+            <div class="column">状态</div>
+        </div>
+    </div>
+    <div class="device-row" ng-repeat="device in rentingDevice">
+        <div class="column-wrap text-left clearfix">
+            <div class="column device-manufacturer-col text-left" ng-mouseenter="setCurrentDevice(device)">
+                <a href="" class="manufacturer-icon-link rent-device-icon-link"
+                    uib-popover-template="'app/device-list/templates/device-modal.html'" popover-placement="right"
+                    popover-trigger="mouseenter"><img class="manufacturer-icon"
+                        ng-src="{{device.manufacturer_icon}}" /></a>
+            </div>
+            <div class="column">{{device.name}}</div>
+            <div class="column">{{device.left_time | tohhmmss}}</div>
+            <div class="column">{{device.os}}</div>
+            <div class="column">{{device.screen_width + 'x' + device.screen_height}}</div>
+            <div class="column">
+                <!-- <span ng-if="device.status==4">回放中</span> -->
+                <a href="" class="icon-using icon"
+                    ng-click="loadRentInfo(device)"><span>进入</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ／已租用设备列表 -->
+<!-- banner -->
+<div class="top-banner flexslider" ng-if="banners.length > 0" flex-slider-carousel>
+    <ul class="slides">
+        <li ng-repeat="banner in banners">
+            <a class="banner-link" target="_blank" ng-if="banner['link']" ng-href="{{ banner['link'] }}">
+                <img class="banner-picture" ng-src="{{ banner['image_url'] }}" />
+            </a>
+            <a class="banner-link" ng-if="banner['text']" ng-click="showDescription(banner['text'])">
+                <img class="banner-picture" ng-src="{{ banner['image_url'] }}" />
+            </a>
+        </li>
+    </ul>
+    <ul class="flex-direction-nav">
+        <li class="flex-nav-prev"><a class="flex-prev flex-arrow" href="#"></a></li>
+        <li class="flex-nav-next"><a class="flex-next flex-arrow" href="#"></a></li>
+    </ul>
+</div>
+<!-- /banner -->
+<!-- 其他设备列表 -->
+<div class="other-devices-container">
+    <!-- <h2>设备列表-
+    <span class="desc">多部手机正准备帮您提高开发效率，赶快开始吧！</span>
+    </h2> -->
+    <!-- 过滤条件 -->
+    <div device-filters filters="filters" class="text-unselect"></div>
+    <!-- 搜索框 -->
+    <!-- <div class="device-search">
+        <input type="text" class="search-ipt" ng-model="keywords" />
+        <a href="" class="btn search-btn"><i class="icon icon-search"></i></a>
+    </div> -->
+    <!-- 设备列表 暂时 -->
+    <!-- <table class="table table-devices table-odd-color" scroll-load-table data-ctrl="tableCtrl">
+        <thead>
+            <tr>
+                <th width="480px" colspan="2" class="text-left">设备</th>
+                <th width="180px">操作系统</th>
+                <th width="290px">分辨率</th>
+                <th>状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="device-row" ng-if="customer.is_free_user&&devices.other.length">
+                <td class="device-manufacturer-col" width="120px">
+                    <a class="manufacturer-icon-link"><i class="icon manufacturer-icon icon-free-manufacturer" /></a>
+                </td>
+                <td>TB-device-free</td>
+                <td>Android</td>
+                <td>--</td>
+                <td>
+                    <a href="" ng-click="rentByFreeUser()" class="btn btn-blue rent-btn">试用</a>
+                </td>
+            </tr>
+            <tr class="device-row" ng-if="tableCtrl.isItemShow($index)" ng-repeat="device in devices.other | filter:keywords | filter: fieldFilters as results">
+                <td class="device-manufacturer-col" width="120px" ng-mouseenter="setCurrentDevice(device)">
+                    <a class="manufacturer-icon-link" href="" uib-popover-template="'app/device-list/templates/device-modal.html'" popover-placement="right" popover-trigger="mouseenter"><img class="manufacturer-icon" ng-src="{{device.manufacturer_icon}}" /></a>
+                </td>
+                <td data-device-key="{{device.key}}">{{device.name}}
+                    <p ng-if="customer.is_sys"  ng-bind-template="{{ device.key }} {{ deviceStatusText(device) }} "></p>
+                </td>
+                <td>{{device.os}}</td>
+                <td>{{device.screen_width + 'x' + device.screen_length}}</td>
+                <td class="popover-wrap device-status-col">
+                    <span class="gray busy" ng-if="!isDeviceAvailable(device)">{{ device | rioDeviceStatus}}</span>
+                    <a href="" ng-click="showRentModal(device)" ng-if="!customer.is_free_user&&isDeviceAvailable(device)" class="btn green-btn rent-btn" >{{ device | rioDeviceStatus}}</a>
+                    <a href="" class="btn green-btn rent-btn" ng-if="customer.is_free_user&&isDeviceAvailable(device)" uib-popover-template="'app/device-list/templates/device-popover.html'" popover-placement="left" popover-trigger="focus">{{ device | rioDeviceStatus}}</a>
+                </td>
+            </tr>
+            <tr class="device-row placeholder-row" ng-hide="devices.other.length">
+                <td colspan="5" class="text-center">维护中</td>
+            </tr>
+        </tbody>
+    </table> -->
+    <!-- 新的 -->
+    <div class="margin_auto margin_top_20" style="width: 1120px;" data-ctrl="tableCtrl">
+        <div class="display_flex wrop">
+            <div ng-if="deviceList.length != 0" class="display_flex width_25 margin_bottom_15"
+                ng-repeat="device in deviceList ">
+                <div class="width_30 position_relative">
+                    <div class="sx_line pcs">
+                        {{device.status == 3 ? '离线' : device.status == 0 ? '' : '租用中'}}
+                    </div>
+                    <img ng-src="{{tableCtrl.getWhichPhonePng(device)}}" class="width_100" alt="">
+                </div>
+                <div class="height_100 display_flex margin_left_14 flex_column flex_jusify_space">
+                    <div title="{{device.name}}" class="font_size_15" style="margin-top: 8px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;width: 150px;">
+                        <svg ng-if="device.hot" style="width: 25px;height: 25px;" t="1627634447095" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3165" width="200" height="200"><path d="M531.456 596.992c-11.264 0-20.48 3.584-26.624 11.264-6.656 7.68-10.24 26.624-10.24 56.832 0 32.256 2.56 54.272 6.656 65.536 4.608 9.216 14.848 14.336 30.208 14.336 11.776 0 20.48-4.096 25.088-12.288 5.12-11.264 7.68-33.792 7.68-67.584 0-29.696-2.048-48.64-6.656-56.32-5.632-7.68-14.336-11.776-26.112-11.776z" fill="#e82100" p-id="3166"></path><path d="M834.56 412.672c-32.256-59.904-75.776-134.656-132.608-175.616 19.968 44.032 24.064 118.784-16.896 155.136C616.448 130.56 445.952 76.8 445.952 76.8 465.92 211.968 372.736 359.424 282.624 469.504c-3.072-53.76-6.656-91.136-34.816-142.336-6.144 97.792-80.896 177.664-101.376 275.456-24.576 119.808 12.288 210.944 154.624 303.104 141.312 91.648 327.68 51.2 460.8-34.816 53.76-34.816 99.328-82.432 121.856-142.848 38.912-104.96 2.048-221.184-49.152-315.392z m-423.424 365.056H358.912v-84.992H305.664v84.992H253.952v-213.504h52.224v92.672h53.248v-92.672h52.224v213.504z m187.904-20.992c-8.704 15.872-31.232 24.064-67.584 24.064s-59.392-8.704-69.632-26.112c-12.8-20.48-18.944-50.176-18.944-89.088 0-40.448 6.144-67.584 17.92-81.92 13.312-14.848 36.864-22.016 70.656-22.016 32.256 0 54.272 7.168 66.048 20.992 12.288 15.36 18.944 43.008 18.944 82.944-0.512 41.472-6.144 71.68-17.408 91.136z m217.6-156.672h-65.024v177.664h-52.224v-177.664h-67.072v-35.84h183.808v35.84z" fill="#e82100" p-id="3167"></path></svg>
+                        {{device.name}}
+                    </div>
+                    <div class="font_size_13 gray">
+                        品牌: {{device.manufacturer}}
+                    </div>
+                    <div class="font_size_13 gray">
+                        版本: {{device.os}}
+                    </div>
+                    <div class="font_size_13 gray">
+                        分辨率: {{device.screen_width+'X'+device.screen_height}}
+                    </div>
+                    <div class="font_size_13 gray">
+                        手机型号: {{device.model}}
+                    </div>
+                    <div class="display_flex">
+                        <!-- v.status == 3 ? '维护中' : v.status == 0 ? '' : '离线';  @click="showSj(item)" @click="showSj(item)"-->
+                        <!-- <div class="zyy cursor zycg" ng-if="device.subscribed">
+                            预约成功
+                        </div> -->
+                        <div class="display_flex" ng-if="!device.pay_unlock">
+                            <div class="zyy cursor" ng-if="!customer.is_free_user&&isDeviceAvailable(device)" ng-click="showRentModal(device)">
+                                {{ device|rioDeviceListStatus}}
+                            </div>
+                            <div ng-if="!(!customer.is_free_user&&isDeviceAvailable(device))" class="display_flex">
+                                <div class="zyy cursor zycg" ng-if="device.subscribed&&((device|rioDeviceListStatus)=='预约')">
+                                    预约成功
+                                </div>
+                                <div ng-if="!(device.subscribed&&((device|rioDeviceListStatus)=='预约'))" class="display_flex">
+                                    <div class="zyy bluebg cursor" ng-if="!(!customer.is_free_user&&isDeviceAvailable(device))&&(device.status|rioDeviceListStatusValue)=='租用中'" ng-class="{'zyz_gray': (device.status|rioDeviceListStatusValue)=='租用中','zyz_blue': (device.status|rioDeviceListStatusValue)=='预约'}">
+                                        {{ device|rioDeviceListStatus}}
+                                    </div>
+                                    <div class="zyy bluebg cursor" ng-if="!(!customer.is_free_user&&isDeviceAvailable(device))&&(device.status|rioDeviceListStatusValue)!=='租用中'" ng-class="{'zyz_gray': (device.status|rioDeviceListStatusValue)=='租用中','zyz_blue': (device.status|rioDeviceListStatusValue)=='预约'}" ng-click="showReservationModel(device)">
+                                        {{ device|rioDeviceListStatus}}
+                                    </div>
+                                    <div class="zyy lxkfx cursor margin_left_10 position_relative" ng-if="(device.status|rioDeviceStatusValue)=='租用中'" onclick="javascript:document.querySelector('#lim_mini').click()">
+                                        联系客服
+                                        <div class="dddd">
+                                            该机型已被他人租用, 请租用其他机型或稍作等待, 如有疑问或紧急需求请联系<a  onclick="javascript:document.querySelector('#lim_mini').click()">客服</a> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="display_flex" ng-if="device.pay_unlock">
+                            <div class="display_flex">
+                                <div class="display_flex">
+                                    <div class="zyy bluebg cursor zyz_gray" ng-click="paid()">
+                                        付费解锁
+                                    </div>
+                                    <div class="zyy lxkfx cursor margin_left_10 position_relative" onclick="javascript:document.querySelector('#lim_mini').click()">
+                                        联系客服
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="deviceList.length == 0"
+            style="height: 400px;width: 1120px;display: flex;justify-content: center;align-items: center;">
+            <div>
+                <a class="manufacturer-icon-link"><i class="icon manufacturer-icon icon-free-manufacturer" style="background-position: 20% 50%;background-size: auto;width: 130px;" /></a>
+                <a style="font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;font-size: 18px;color: #999999;line-height: 25px;">什么都没有哦~</a>
+            </div>
+        </div>
+        <div style="width: 100%;text-align: right;">
+            <ul uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" ng-change="pageChanged()" items-per-page="16" previous-text="&lsaquo;" next-text="&rsaquo;" boundary-link-numbers="true"></ul>
+        </div>
+
+    </div>
+    <!-- 预约框 -->
+    <div ng-if="is_show_reservation" class="hoverdiv">
+        <div class="reservation_box pcs text_center" >
+            <img src="http://toolsforest.com/yuancheng_img/cancel.png" ng-click="Hideyysj();" style="width: 30px;position:absolute;right:-40px;top:-40px" class="" alt="">
+            <div class="font_size_20">
+                预约成功提示
+            </div>
+            <div class="margin_top_20 gray font_size_13 margin_bottom_20 margin_top_20" style="line-height: 20px;">
+                我们已收到您的预约，请留下您的联系方式，该机型可用时我们将第一时间与您联系
+            </div>
+            <div class="width_80 margin_auto display_flex flex_jusify_space" style="margin-top: 30px;">
+                <select name="" id="selects"  ng-model="selected_type">
+                    <option value="QQ" selected>QQ号码</option>
+                    <option value="Email">Email</option>
+                    <option value="Phone">手机号</option>
+                </select>
+                <input class="ippt flex_1 margin_left_10" placeholder="{{'请输入您的'+selected_type_list[selected_type]}}" id="input_number" type="text">
+            </div>
+            <div class="butttton cursor" ng-click="yysj()">
+                确认
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /所有设备列表 -->

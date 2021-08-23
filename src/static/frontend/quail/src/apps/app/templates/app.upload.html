@@ -1,0 +1,43 @@
+<div tb-modal class="tb-modal app-create-modal">
+    <form tb-form-validator data-bv-excluded="">
+        <i class="icon icon-popup-close" ng-click="cancel()"></i>
+        <h1 class="head" ng-show="!uploading">
+            <span ng-if="!app.key">新建应用</span>
+            <span ng-if="app.key">上传版本</span>
+        </h1>
+        <h1 ng-show="uploading.errorMsg">上传失败</h1>
+        <div class="modal-content">
+            <div ng-show="!uploading" class="app-info text-center">
+                <div class="parsing" ng-if="parsing.parsing">
+                    <div class="loading" ng-if="parsing.parsing && !parsing.errorMsg" tb-loading data-auto-start="true" data-disable-overlay="true"></div>
+                    <div class="error-helper text-center" ng-if="parsing.errorMsg">{{parsing.errorMsg}}</div>
+                </div>
+                <div ng-show="!parsing.parsing">
+                    <img ng-src="{{app.icon_url}}">
+                    <div class="form-group">
+                        <label class="text-ellipsis">{{ fileName }}</label>
+                        <input type="text" maxlength="128" class="form-control" ng-show="!app.key" ng-model="app.name" name="appName" data-bv-notempty data-bv-notempty-message="应用名称不能为空！">
+                    </div>
+                </div>
+            </div>
+            <div ng-show="uploading" class="uploading">
+                <div ng-hide="uploading.errorMsg">
+                    <div class="progress rio-upload-progress ql-upload-progress">
+                        <div class="progress-bar" ng-class="{'progress-error':upload.error}" tb-progress-bar data-percent="uploading.percent">
+                            <span>{{uploading.percent}}%</span>
+                        </div>
+                    </div>
+                    <div class="text-center">Uploading</div>
+                    <div class="text-center">
+                        <button class="btn btn-long btn-primary" ng-click="cancel()">取消上传</button>
+                    </div>
+                </div>
+                <div class="error-helper text-center" ng-if="uploading.errorMsg">{{uploading.errorMsg}}</div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-primary" ng-show="!uploading && !parsing.parsing" type="submit" data-form-submit="upload()">确定</button>
+            <button class="btn btn-fix btn-primary" ng-show="uploading.errorMsg||parsing.parsing" ng-click="cancel()">退出</button>
+        </div>
+    </form>
+</div>

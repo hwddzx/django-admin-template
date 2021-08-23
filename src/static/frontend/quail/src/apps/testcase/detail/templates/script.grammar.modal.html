@@ -1,0 +1,47 @@
+<div class="tb-modal">
+    <h1 class="head">脚本语法配置
+        <i class="icon icon-popup-close" ng-click="vm.cancel()"></i>
+    </h1>
+    <div class="modal-content">
+        <div class="head">
+            <label>语法:</label>
+            <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                <span ng-bind="vm.model.grammar"></span>
+                <i class="fa fa-sort-desc"></i>
+                <ul class="unstyle-list vertical-group-list dropdown-menu" uib-dropdown-menu>
+                    <li ng-repeat="grammar in vm.grammars" ng-click="vm.configAction('grammar',grammar)"><span ng-bind="grammar"></span></li>
+                </ul>
+            </span>
+            <span ng-hide="vm.isHide">
+                <label>变量:</label>
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    <span ng-bind="vm.model.variable"></span>
+                    <i class="fa fa-sort-desc"></i>
+                    <ul class="unstyle-list vertical-group-list dropdown-menu" uib-dropdown-menu>
+                        <li ng-repeat="variable in vm.variables" ng-click="vm.configAction('variable', variable)"><span ng-bind="variable"></span></li>
+                    </ul>
+                </span>
+                <label>条件:</label>
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    <span ng-bind="vm.model.condition"></span>
+                    <i class="fa fa-sort-desc"></i>
+                    <ul class="unstyle-list vertical-group-list dropdown-menu" uib-dropdown-menu>
+                        <li ng-repeat="condition in vm.conditions" ng-click="vm.configAction('condition', condition)"><span ng-bind="condition"></span>
+                        </li>
+                    </ul>
+                </span>
+                <label>值:</label>
+                <input type="text" class="form-control" ng-model="vm.model.input" ng-change="vm.configAction('input', vm.model.input)" placeholder="请输入条件判断值!"/>
+            </span>
+            <span ng-if="vm.model.grammar=='repeat'">
+                <label>重复执行数:</label>
+                <input type="text" class="form-control" ng-model="vm.model.repeatCount" ng-change="vm.configAction('repeatCount', vm.model.repeatCount)" placeholder="请输入重复执行数!"/>
+            </span>
+        </div>
+        <textarea ng-model="vm.action"></textarea>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-click="vm.close()">确定</button>
+    </div>
+</div>

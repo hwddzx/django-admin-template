@@ -1,0 +1,22 @@
+<div tb-modal class="tb-modal replay-snapshot-layout">
+    <h2 class="text-center">回放截图和layout</h2>
+    <i class="icon icon-popup-close" ng-click="cancel()"></i>
+
+    <div class="wrap">
+        <div class="left" ng-init="url='apps/testcase/detail/templates/xml-props.html'">
+            <div class="icon-wrap">
+                <i class="icon icon-more" ng-show="vm.layoutProps.length" uib-popover-template="url" popover-trigger="mouseenter" popover-title="属性"
+                   popover-placement="bottom-right"></i>
+            </div>
+            <img ng-src="{{ vm.layoutImg.url }}"/>
+            <div class="area-wrap">
+                <div class="layout-area" tb-xml-area></div>
+            </div>
+        </div>
+        <div class="right">
+            <i class="icon icon-download-xml" title="下载XML" ng-if="vm.xml" ng-click="vm.downloadXml(vm.xml, vm.currentXml)"></i>
+            <ul id="xml-tree" class="ztree" replay-layout-tree data-xml="vm.xml"></ul>
+             <div ng-if="!vm.xml">xml为空或者还未取到xml</div>
+        </div>
+    </div>
+</div>

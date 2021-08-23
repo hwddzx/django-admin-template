@@ -1,0 +1,124 @@
+<div class="scan-modal rio-modal">
+    <form class="form-horizontal" tb-form-validator data-bv-excluded="">
+        <h1 class="head" ng-if="vm.modelType=='ignore'">忽略异常<i class="icon icon-popup-close" ng-click="vm.cancel()"></i></h1>
+        <div ng-show="vm.modelType=='create'">
+            <h4>基本配置</h4>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" ng-class="{true: 'font-red'}[vm.valid.scantype_text]">扫描种类:</label>
+                <div class="col-sm-9">
+                    <span uib-dropdown auto-close="outsideClick">
+                        <a ng-class="{true: 'border-red'}[vm.valid.scantype_text]" href class="ul-dropdown" uib-dropdown-toggle>{{ vm.scantask.scantype_text }}
+                            <i class="glyphicon glyphicon-chevron-down"></i></a>
+                        <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                            <li ng-repeat="item in vm.scanTypes">
+                                <i ng-if="item.selected" class="icon icon-chosen"></i>
+                                <a class="filter-item" ng-click="vm.toggleScantypeItem(item,$event);vm.validate()">{{ item.name }}</a>
+                             </li>
+                        </ul>
+                    </span>
+                    <p ng-show="vm.valid.scantype_text" class="font-form-valid">扫描种类不能为空</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">项目名称:</label>
+                <div class="col-sm-9">
+                    <input disabled name="name" class="form-control" ng-model="vm.scantask.name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">路径:</label>
+                <div class="col-sm-9">
+                    <input disabled type="text" name="repertory" class="form-control" ng-model="vm.scantask.repertory">
+                </div>
+            </div>
+            <h4 ng-show="vm.isSelectedSensitive()">敏感词扫描配置</h4>
+            <div class="form-group" ng-show="vm.isSelectedSensitive()">
+                <label class="col-sm-3 control-label" ng-class="{true: 'font-red'}[vm.valid.sensitive_text]">敏感词扫描规则:</label>
+                <div class="col-sm-9">
+                    <span uib-dropdown auto-close="outsideClick">
+                        <a ng-class="{true: 'border-red'}[vm.valid.sensitive_text]" href id="simple-dropdown" class="ul-dropdown" uib-dropdown-toggle title="{{vm.scantask.sensitive_text}}">{{ vm.scantask.sensitive_text }}
+                            <i class="glyphicon glyphicon-chevron-down"></i></a>
+                        <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                            <li ng-repeat="item in vm.sensitiveItems">
+                                <i ng-if="item.selected" class="icon icon-chosen"></i>
+                                <a class="filter-item" ng-click="vm.toggleSensitiveItem(item,$event);vm.validate()">{{ item.name }}</a>
+                             </li>
+                        </ul>
+                    </span>
+                    <p ng-show="vm.valid.sensitive_text" class="font-form-valid">敏感词规则不能为空</p>
+                </div>
+            </div>
+            <div class="form-group" ng-show="vm.isSelectedSensitive()">
+                <label class="col-sm-3 control-label">敏感词忽略目录:</label>
+                <div class="col-sm-9">
+                    <input name="ignore_files" class="form-control" ng-model="vm.scantask.ignore_files" placeholder="各项之间用英文逗号隔开，请填相对路径(如忽略svn路径下main文件夹，填写main即可)">
+                </div>
+            </div>
+            <div class="form-group" ng-show="vm.isSelectedSensitive()">
+                <label class="col-sm-3 control-label">敏感词忽略关键字:</label>
+                <div class="col-sm-9">
+                    <input name="ignore_keywords" class="form-control" ng-model="vm.scantask.ignore_keywords" placeholder="各项之间用英文逗号隔开">
+                </div>
+            </div>
+            <div class="form-group" ng-show="vm.isSelectedSensitive()">
+                <label class="col-sm-3 control-label">是否忽略注释行:</label>
+                <div class="radio-content">
+                    <input type="radio" id="ignoreCommentLines-1" name="ignoreCommentLines"
+                           ng-model="vm.scantask.ignore_comment_lines" value="1">
+                    <label for="ignoreCommentLines-1">忽略</label>
+                    <input type="radio" id="ignoreCommentLines-0" name="ignoreCommentLines"
+                           ng-model="vm.scantask.ignore_comment_lines" value="0">
+                    <label for="ignoreCommentLines-0">不忽略</label>
+                </div>
+            </div>
+            <div></div>
+            <h4 ng-show="vm.isSelectedSafe()">三方库扫描配置</h4>
+            <div class="form-group" ng-show="vm.isSelectedSafe()">
+                <label class="col-sm-3 control-label">三方库扫描规则:</label>
+                <div class="col-sm-9">
+                    <input disabled name="safe_text" class="form-control" ng-model="vm.scantask.safe_text">
+                </div>
+            </div>
+            <div class="form-group" ng-show="vm.isSelectedSafe()">
+                <label class="col-sm-3 control-label">三方库忽略目录:</label>
+                <div class="col-sm-9">
+                    <input name="dependency_ignore_files" class="form-control" ng-model="vm.scantask.dependency_ignore_files" placeholder="各项之间用英文逗号隔开，请填相对路径(如忽略svn路径下main文件夹，填写main即可)">
+                </div>
+            </div>
+            <div class="form-group" ng-show="vm.isSelectedSafe()">
+                <label class="col-sm-3 control-label">三方库忽略漏洞:</label>
+                <div class="col-sm-9">
+                    <input name="dependency_ignore_vulnerabilities" class="form-control" ng-model="vm.scantask.dependency_ignore_vulnerabilities" placeholder="各项之间用英文逗号隔开">
+                </div>
+            </div>
+            <div class="form-group" ng-show="vm.isSelectedSafe()">
+                <label class="col-sm-3 control-label">三方库忽略等级:</label>
+                <div class="col-sm-9">
+                    <span uib-dropdown auto-close="outsideClick">
+                        <a href class="ul-dropdown" uib-dropdown-toggle>{{ vm.scantask.level_text }}
+                            <i class="glyphicon glyphicon-chevron-down"></i></a>
+                        <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                            <li ng-repeat="item in vm.levels">
+                                <i ng-if="item.selected" class="icon icon-chosen"></i>
+                                <a class="filter-item" ng-click="vm.toggleLevelItem(item,$event)">{{ item.name }}</a>
+                             </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div ng-show="vm.modelType=='ignore'">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">忽略原因:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="repertory" class="form-control" ng-model="vm.exception.desc">
+                </div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default" ng-click="vm.cancel()">关闭</button>
+            <button ng-show="vm.modelType=='create'" class="btn btn-fix btn-primary" type="submit" ng-click="vm.commit()">确定</button>
+            <button ng-show="vm.modelType=='ignore'" class="btn btn-fix btn-primary" type="submit" ng-click="vm.close()">确定</button>
+        </div>
+    </form>
+</div>

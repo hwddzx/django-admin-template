@@ -1,0 +1,43 @@
+<div tb-modal class="tb-modal execution-snapshot-modal">
+    <h1 class="head">
+        所有截图
+        <i class="icon icon-popup-close" ng-click="vm.close()" ></i>
+        <div class="show-base-wrap">
+            <input type="checkbox" id="showBase" ng-click="vm.toggleShowBase()"/>
+            <label for="showBase" class="check-label">
+                <span class="unchecked">显示录制截图</span>
+                <span class="checked">显示录制截图</span>
+            </label>
+        </div>
+    </h1>
+    <div class="modal-content">
+        <div class="snapshots image-box-container adaptive-images-container">
+            <div class="snapshot-item-wrap" ng-repeat="snapshot in vm.compareSnapshots" ng-class="{true:'show-base'}[vm.isShowBase]">
+                <div class="snapshot-item">
+                    <div class="snapshot-box-item adaptive-image-wrap">
+                        <img ng-src="{{ snapshot.currentGesture | qiniuThumbnail }}" class="image-box-item" quail-rotate-image2/>
+                    </div>
+                    <div class="text-center" ng-if="vm.isShowBase">
+                        <span>[回放]</span>
+                        <span class="pull-right">{{ $index+1 }}</span>
+                    </div>
+                    <div class="fancy-box-overlay" ng-click="vm.showCompareSnapshot(2 * $index)"></div>
+                </div>
+                <div class="snapshot-item"  ng-if="vm.isShowBase">
+                    <div class="snapshot-box-item adaptive-image-wrap">
+                        <img ng-if="snapshot.baseGesture" ng-src="{{ snapshot.baseGesture | qiniuThumbnail }}" class="image-box-item" quail-rotate-image2/>
+                        <span ng-if="!snapshot.baseGesture" class="no-data-tip">无对应的录制截图</span>
+                    </div>
+                    <div class="text-center" ng-if="vm.isShowBase">
+                        <span>[录制]</span>
+                        <span class="pull-right">{{ $index+1 }}</span>
+                    </div>
+                    <div class="fancy-box-overlay" ng-click="vm.showCompareSnapshot(2 * $index + 1)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal-foot">
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.close()">确定</button>
+    </div>
+</div>

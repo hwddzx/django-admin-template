@@ -1,0 +1,32 @@
+<div class="tb-modal retest-modal">
+    <h1 class="head">重测<i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <div class="modal-content">
+        <div class="retest-wrap">
+            <div class="row form-group" ng-show="vm.isReplay()">
+                <div class="col-md-2">应用版本:</div>
+                <div class="col-md-10">
+                    <span class="dropdown dropdown-toggle version-dropdown" uib-dropdown uib-dropdown-toggle>
+                        {{ vm.release.version }}<i class="light fa fa-sort-down"></i>
+                        <ul class="dropdown-menu retest-version-menu" uib-dropdown-menu>
+                            <li ng-repeat="release in vm.releases"><a ng-click="vm.chooseRelease(release)">{{ release.version }}</a><li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">重测类型:</div>
+                <div class="col-md-10">
+                    <label for="retest{{ type.type }}" ng-repeat="type in vm.retestTypes"><input type="radio" id="retest{{ type.type }}" name="retest-type" ng-click="vm.chooseType(type.type)" ng-checked="type.type==vm.checkedType"/>{{ type.label }}</label>
+                </div>
+            </div>
+            <div class="row form-group" ng-show="vm.checkedType==vm.retestType.params||vm.checkedType==vm.retestType.file">
+                <button class="choose-file-btn" ng-file-select="vm.selectedFileCallback($files)">选择文件</button>
+            </div>
+            <div class="msg form-group">{{ vm.tips.msg }}</div>
+        </div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default btn-long" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary btn-long" ng-disabled="!vm.tips.isValidate" ng-click="vm.close()">确定</button>
+    </div>
+</div>

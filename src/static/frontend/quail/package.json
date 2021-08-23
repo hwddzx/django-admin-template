@@ -1,0 +1,40 @@
+{
+  "name": "rio",
+  "version": "1.0.10",
+  "description": "rio",
+  "keywords": [
+    "adb",
+    "android",
+    "stf",
+    "test",
+    "remote"
+  ],
+  "bugs": {
+    "url": "https://github.com/openstf/stf/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "laketea",
+    "email": "laketea@163.com"
+  },
+  "devDependencies": {
+    "bower": "^1.5.2",
+    "grunt": "^0.4.5",
+    "grunt-angular-file-loader": "^1.1.5",
+    "grunt-angular-templates": "^0.5.7",
+    "grunt-angular-translate": "^0.3.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-compass": "^1.0.4",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-http-server": "^1.4.0",
+    "grunt-ng-annotate": "^1.0.1",
+    "grunt-replace": "^0.11.0",
+    "grunt-useref": "git+ssh://git@gitlab.testbird.io:frontend/grunt-use-ref.git",
+    "grunt-wiredep": "^2.0.0"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "preferGlobal": true
+}

@@ -1,0 +1,12 @@
+<div tb-modal class="tb-modal execution-snapshot-modal">
+    <h1 class="head">查看截图<i class="icon icon-popup-close" ng-click="close()" ></i></h1>
+    <div class="tb-modal-content">
+        <div class="snapshots image-box-container">
+            <div class="snapshot-item" ng-repeat="url in model.urls track by $index">
+                <div class="snapshot-box-item">
+                    <img change-img-width ng-src="{{ url }}" class="image-box-item"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

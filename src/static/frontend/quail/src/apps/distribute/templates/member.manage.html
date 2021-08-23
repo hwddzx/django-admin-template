@@ -1,0 +1,33 @@
+<div class="task-distribute-container member-manage-container">
+    <div class="app-info">
+        <img class="app-icon" ng-src="{{ vm.appInfo.icon_url }}"/>
+        <div class="info"><span class="name" ng-bind="vm.appInfo.name"></span><!--版本:<span ng-bind="vm.appInfo.version"></span--></div>
+    </div>
+    <div class="member-invite-container">
+        <h3>成员邀请</h3>
+        <input type="text" maxlength="128" ng-model="vm.addMemberEmails" placeholder="请输入邀请人邮箱,多个邮箱请使用英文逗号(,)分割"/>
+        <a class="btn btn-primary member-invite-btn" ng-click="vm.addMembers()">邀请</a>
+        <div class="error" ng-show="vm.nonexistentMembers.length>0">
+            <span ng-repeat="member in vm.nonexistentMembers" ng-bind="member+($last?'':',')"></span>
+            未注册,添加失败!
+        </div>
+    </div>
+    <div class="member-container">
+        <h3>当前项目人员管理</h3>
+        <a class="btn btn-default remove-member-btn" ng-click="vm.deleteMembers()">删除成员</a>
+        <ul class="list-unstyled">
+            <li>
+                <input type="checkbox" id="all" tb-select-all models="vm.memberList" ng-model="vm.memberList.allChecked"/>
+                <label for="all"></label>
+                <span>邮箱</span>
+            </li>
+            <li ng-repeat="member in vm.memberList">
+                <input type="checkbox" id="check-{{$index}}"  ng-model="member.checked"/>
+                <label for="check-{{$index}}"></label>
+                <label for="check-{{$index}}" ng-bind="member.member"></label>
+            </li>
+        </ul>
+        <div class="text-center gray" ng-show="vm.memberList.length==0">请输入邀请人邮箱邀请成员!</div>
+        <a class="btn btn-primary complete-member-btn" ui-sref="^.distribute">完成</a>
+    </div>
+</div>

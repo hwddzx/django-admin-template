@@ -1,0 +1,304 @@
+<div ui-view></div>
+<div id="test-case-container" class="test-case-container clearfix">
+    <div class="test-case-head">
+        <h3>用例管理</h3>
+        <div class="testcase-btns">
+            <span class="btn-test-case" testcase-upload-script ng-show="vm.model.testCase.type == 1">
+                <i class="icon testcases-icon upload-script"></i>
+                <span>批量脚本上传</span>
+                <input type="file" class="hide" multiple="multiple" accept="text/javascript, application/javascript"/>
+            </span>
+            <div class="pull-left">
+                <span uib-dropdown uib-dropdown-toggle>
+                    <label id="button-template-url" ng-click="vm.getTestcaseTags()">标签<i class="fa fa-sort-desc"></i></label>
+                    <div class="dropdown-menu tags-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url" ng-show="vm.testcasesTags.length">
+                        <ul>
+                            <li role="menuitem" ng-repeat="tag in vm.testcasesTags" ng-click="$event.stopPropagation()">
+                                <label for="test-case-tag-{{ $index }}">
+                                    <input type="checkbox" id="test-case-tag-{{ $index }}" ng-model="tag.checked"/>
+                                    <span title="{{ tag.name }}">{{ tag.name }}</span>
+                                </label>
+                            </li>
+                            <li role="menuitem">
+                                <label for="filter-no-tag-case" ng-click="$event.stopPropagation()">
+                                    <input type="checkbox" id="filter-no-tag-case" ng-checked="vm.isFilterNoSetTag" ng-click="vm.filterNoSetTagTestcase($event)"/>
+                                    <span class="gray">仅过滤未打标签的用例</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="memu-foot">
+                            <a>取消</a>
+                            <a ng-click="vm.filterTestCases('or')">过滤（并集）</a>
+                            <a ng-click="vm.filterTestCases('and')">过滤（交集）</a>
+                        </div>
+                    </div>
+                </span>
+            </div>
+            <div class="pull-left">
+                <label>有脚本:</label>
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    <span ng-bind="vm.currentScriptStatus.name"></span><i class="fa fa-sort-desc"></i>
+                <ul class="unstyle-list vertical-group-list dropdown-menu" uib-dropdown-menu>
+                    <li ng-repeat="item in vm.statusOptions" ng-click="vm.currentScriptStatus = item"><span ng-bind="item.name"></span></li>
+                </ul>
+                </span>
+            </div>
+            <div class="pull-left">
+                <label>是否提交:</label>
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    <span ng-bind="vm.currentDebugStatus.name"></span><i class="fa fa-sort-desc"></i>
+                <ul class="unstyle-list vertical-group-list dropdown-menu" uib-dropdown-menu>
+                    <li ng-repeat="item in vm.currentScriptStatus.debug" ng-click="vm.currentDebugStatus = item"><span ng-bind="item.name"></span></li>
+                </ul>
+                </span>
+            </div>
+            <div class="pull-left">
+                <label>是否轮询:</label>
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    <span ng-bind="vm.currentFastModeStatus.name"></span><i class="fa fa-sort-desc"></i>
+                <ul class="unstyle-list vertical-group-list dropdown-menu" uib-dropdown-menu>
+                    <li ng-repeat="item in vm.currentScriptStatus.fastMode" ng-click="vm.currentFastModeStatus = item"><span ng-bind="item.name"></span></li>
+                </ul>
+                </span>
+            </div>
+            <a class="btn-test-case" tb-fade-in data-target="import-testcase-container" data-container="testcase-popup-container"><i class="icon testcases-icon inimport"></i>导入用例</a>
+            <a class="btn-test-case" ng-click="vm.exportExcel(app)"><i class="icon testcases-icon export"></i>导出Excel</a>
+            <a class="btn-test-case" ng-click="vm.exportExecuteResult()"><i class="icon testcases-icon export"></i>导出执行结果</a>
+            <a class="btn-test-case" tb-fade-in data-target="testcase-tags" data-container="testcase-popup-container"><i class="icon testcases-icon icon-tags"></i>标签配置</a>
+            <a class="btn-test-case" ng-click="vm.setTagsForTestCases()"><i class="icon testcases-icon icon-tags"></i>批量设置标签</a>
+            <a class="btn-test-case" tb-fade-in data-target="import-testcase-regexps" data-container="testcase-popup-container"><i class="icon testcases-icon icon-regexp"></i>模板配置</a>
+        </div>
+        <div class="permission-layer" ng-if="!vm.hasPermissionEdit"></div>
+    </div>
+    <div class="tb-spliter" tb-spliter data-border-width="10">
+        <div class="left spliter-left">
+            <div class="title-wrap">
+                <span class="title">用例</span>
+                <button class="btn-add btn btn-xs btn-default add-scenario-btn" type="button" ng-disabled="vm.model.isEdit" ng-click="vm.addTestcase(vm.testcaseType.scenario)">
+                    <span id="add-case" title="新增用例" class="ztree-icon" ng-class="{false:'add-scenario',true:'add-scenario-disabled'}[vm.model.isEdit]"></span>新增场景</button>
+                <button class="btn-add btn btn-xs btn-default add-case-btn" type="button" ng-disabled="vm.model.isEdit" ng-click="vm.addTestcase(vm.testcaseType.case)">
+                    <span id="add-scenario" title="新增用例集" class="ztree-icon" ng-class="{false:'add-case',true:'add-case-disabled'}[vm.model.isEdit]"></span>新增用例</button>
+                <div class="permission-layer" ng-if="!vm.hasPermissionEdit"></div>
+            </div>
+            <div class="input-alarm">
+                <input type="checkbox" id="delete-confirm"  ng-model="vm.setting.noDeleteConfirm" />
+                <label for="delete-confirm">强制删除</label>
+            </div>
+            <ul id="testcasesTree" class="ztree" tb-z-tree data-nodes="vm.testcases.filteredData" data-setting="vm.setting"></ul>
+        </div>
+        <div class="right spliter-right">
+            <form>
+                <div class="title-wrap">
+                    <div ng-show="!vm.rootSelected()">
+                        <div class="title" ng-show="vm.scenarioSelected()">
+                            <span ng-show="vm.model.isEdit">场景编辑</span>
+                            <span ng-show="!vm.model.isEdit">场景详情</span>
+                            <small tb-is-system>-ID:{{ vm.model.testCase.id }}</small>
+                        </div>
+                        <div class="title" ng-show="!vm.scenarioSelected()">
+                            <span ng-show="vm.model.isEdit">用例编辑</span>
+                            <span ng-show="!vm.model.isEdit">用例详情</span>
+                            <small tb-is-system>-ID:{{ vm.model.testCase.id }}</small>
+                        </div>
+                        <a class="btn-test-case" ng-show="vm.model.testCase.type == 0" ng-click="vm.createRecordTask(app, vm.model.testCase)"><i class="icon testcases-icon record-task"></i>录制脚本</a>
+                        <span class="btn-test-case" ng-show="vm.model.testCase.type == 0 && vm.model.testCase.script_key" ng-click="vm.downloadScript(true)">
+                            <i class="icon testcases-icon download-script"></i>
+                            <span>下载展开脚本</span>
+                        </span>
+                        <span class="btn-test-case" ng-show="vm.model.testCase.type == 0 && vm.model.testCase.script_key" ng-click="vm.downloadScript()">
+                            <i class="icon testcases-icon download-script"></i>
+                            <span>脚本下载</span>
+                        </span>
+                        <span class="btn-test-case" testcase-upload-script ng-show="vm.model.testCase.type == 0">
+                            <i class="icon testcases-icon upload-script"></i>
+                            <span>脚本上传</span>
+                            <input type="file" class="hide" accept="text/javascript, application/javascript"/>
+                        </span>
+                        <span class="btn-test-case" ng-show="vm.model.testCase.type == 0 && vm.model.testCase.script_key" ng-click="vm.copyScript()">
+                            <i class="icon testcases-icon copy-script"></i>
+                            <span>克隆用例</span>
+                        </span>
+                        <a class="btn-test-case submit-script" ng-show="vm.model.testCase.type == 0" ng-click="vm.updateTestCaseSubmitStatus()">
+                            <input type="checkbox" id="submit-script"  ng-checked="vm.model.testCase.is_submitted" />
+                            <label for="submit-script">提交</label>
+                        </a>
+                        <a class="btn-test-case submit-script" ng-show="vm.model.testCase.type == 0" ng-click="vm.updateTestCaseFastMode()">
+                            <input type="checkbox" id="submit-script"  ng-checked="vm.model.testCase.fast_mode" />
+                            <label for="submit-script">轮询</label>
+                        </a>
+                        <span class="agent" ng-bind-html="vm.model.testCase.assignee|trustAsHtml"></span>
+                    </div>
+                </div>
+                <div class="content">
+                    <div ng-show="vm.rootSelected()">
+                        <p class="text-center root-btn-group">请
+                            <button class="btn btn-link add-case-btn" type="button" ng-click="vm.addTestcase(vm.testcaseType.case)">添加用例</button>或
+                            <button class="btn btn-link add-scenario-btn" type="button" ng-click="vm.addTestcase(vm.testcaseType.scenario)">添加场景</button>
+                        </p>
+                    </div>
+
+                    <div class="testcase-config-area" ng-show="vm.model.testCase.type == 0">
+                        <div  class="form-group" ng-show="vm.model.testCase.status == 0&&vm.model.testCase.snapshots.length">
+                            <label class="title">sleep:</label>
+                            <span class="btn-add btn btn-xs btn-default" ng-click="vm.setSleep(1)">重置sleep</span>
+                        </div>
+                        <div ng-show="vm.model.testCase.status == 0&&vm.model.testCase.snapshots.length" class="form-group">
+                            <label class="title">点击规则:</label>
+                            <span class="btn-add btn btn-xs btn-default" ng-click="vm.setSnapshotsDefaultClickType(1)">坐标点击</span>
+                            <span class="btn-add btn btn-xs btn-default" ng-click="vm.setSnapshotsDefaultClickType(0)">控件优先点击</span>
+                            <span class="btn-add btn btn-xs btn-default" ng-click="vm.setSnapshotsDefaultClickType(2)">控件强制点击</span>
+                        </div>
+                        <div ng-show="vm.model.testCase.status == 0" class="teatcase-ready">
+                            <label class="title">配置功能:</label>
+                            <div class="snapshot-container" ng-if="vm.model.testCase.script_json.actions.length" ui-sref=".detail.snapshot({id:vm.model.testCase.id, snapshotKey:vm.model.testCase.snapshots[0].key})">
+                                <div class="snapshot-box" ng-repeat="snapshot in vm.model.testCase.snapshots | limitTo : 6">
+                                    <img img-error class="snapshot-img tb-center-image" ng-src="{{ snapshot | linkUrlBySnapshot:vm.model.testCase | qiniuThumbnail }}"/>
+                                    <div class="component-watermark" ng-if="snapshot.componentName"></div>
+                                </div>
+                                <div class="snapshot-box placeholder">
+                                    <p><span class="count">{{ vm.model.testCase.snapshots | snapshotsCount }}</span>张截图 ></p>
+                                </div>
+                            </div>
+                            <div class="snapshot-container" ng-if="vm.model.testCase.script_key && !vm.model.testCase.script_json.actions.length" ui-sref=".detail.snapshot({id:vm.model.testCase.id})">
+                                <div class="snapshot-box placeholder">
+                                    <p><span class="count">没有截图 </span></p>
+                                </div>
+                            </div>
+                            <div class="snapshot-container" ng-if="!vm.model.testCase.script_key && !vm.model.testCase.script_json.actions.length" ui-sref=".detail.snapshot({id:vm.model.testCase.id})">
+                                <div class="snapshot-box placeholder">
+                                    <p><span class="count">未录制</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="vm.model.testCase.status == 1" class="testcase-result testcase-recording text-center">
+                            <div class="spinner" tb-loading data-auto-start="true" data-disable-overlay="true"></div>
+                            <p>录制结果上传中，请耐心等待</p>
+                        </div>
+                        <div ng-show="vm.model.testCase.status == -1" class="testcase-result testcase-record-failed text-center">
+                            <div class="icon-failed-wrap"><i class="icon icon-testcase-failed"></i></div>
+                            <p>脚本录制失败，请重新录制</p>
+                        </div>
+                    </div>
+                    <div ng-show="vm.model.testCase.type == 0 && vm.model.testCase.script_key">
+                        <div  class="form-group">
+                            <label class="title">标签:</label>
+                            <div>
+                                <div class="tag-item" ng-repeat="tag in vm.model.testCase.tags">{{ tag }}</div>
+                            </div>
+                            <div class="btn-group" uib-dropdown>
+                                <div id="button-template-url" class="btn-set-tag" uib-dropdown-toggle ng-click="vm.getAllTags('all')">设置标签<i class="fa fa-sort-desc"></i></div>
+                                <div class="dropdown-menu tags-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url" ng-show="vm.tags.length">
+                                    <ul>
+                                        <li role="menuitem" ng-repeat="tag in vm.tags" ng-click="$event.stopPropagation()">
+                                            <label for="tag-{{ $index }}">
+                                                <input type="checkbox" id="tag-{{ $index }}" ng-model="tag.checked"/>
+                                                <span title="{{ tag.name }}">{{ tag.name }}</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    <div class="memu-foot">
+                                        <a>取消</a>
+                                        <a ng-click="vm.setTags()">确定</a>
+                                    </div>
+                                </div>
+                                <!--<a href="" class="btn btn-gray btn-fix" ng-click="vm.setTagsForTestCases()">批量设置标签</a>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!vm.model.isEdit && !vm.rootSelected()">
+
+                        <div ng-show="!vm.scenarioSelected()" class="form-group">
+                            <label class="title">优先级:</label>
+                            <div class="priority">
+                                <div class="value" ng-style="{ 'background-color':(vm.priorityDef[vm.model.testCase.priority] | priorityBackgroundColor) }" ng-bind="vm.priorityDef[vm.model.testCase.priority]"></div>
+                            </div>
+                            <a class="btn-test-case" ng-click="vm.editTestCase()"><i class="icon testcases-icon editor"></i>编辑资料</a>
+                        </div>
+
+                        <a class="btn-test-case scenario" ng-if="vm.scenarioSelected()" ng-click="vm.editTestCase()"><i class="icon testcases-icon editor"></i>编辑资料</a>
+                        <div class="form-group">
+                            <label class="title">标题:</label>
+                            <pre class="name" ng-bind="vm.model.testCase.name"></pre>
+                        </div>
+                        <div ng-show="!vm.scenarioSelected()" class="form-group">
+                            <label class="title">前置条件:</label>
+                            <pre ng-bind-html="vm.model.testCase.pre_condition|trustAsHtml"></pre>
+                        </div>
+                        <div class="form-group">
+                            <label class="title">{{ vm.scenarioSelected()?'描述':'测试步骤' }}：</label>
+                            <pre ng-bind-html="vm.model.testCase.desc|trustAsHtml"></pre>
+                        </div>
+                        <div ng-show="!vm.scenarioSelected()" class="form-group">
+                            <label class="title">期望结果:</label>
+                            <pre ng-bind-html="vm.model.testCase.expect_result|trustAsHtml"></pre>
+                        </div>
+                    </div>
+                    <div ng-show="vm.model.isEdit && !vm.rootSelected()">
+                        <div class="form-group" ng-show="!vm.scenarioSelected()">
+                            <label class="title">优先级:</label>
+                            <div class="priority">
+                                <input type="text" maxlength="128" class="hide form-control auto-change" name="priorityValue" ng-model="vm.clonedTestCase.priority" data-bv-trigger="change" required/>
+                                <span ng-repeat="(key, priority) in vm.priorityDef">
+                                    <input type="radio" id="{{ key }}" name="priority" ng-model="vm.clonedTestCase.priority" ng-value="key" />
+                                    <label name="priority" for="{{ key }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        <i class="fa fa-dot-circle-o"></i> {{ priority }}
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="title">标题:</label>
+                            <input type="text" name="title" class="title form-control auto-change title-input" set-focus focus-on="{{vm.model.isEdit}}" ng-model="vm.clonedTestCase.name" maxlength="128" placeholder="标题不能为空!"/>
+                        </div>
+                        <div class="form-group" ng-show="!vm.scenarioSelected()">
+                            <label class="title">前置条件:</label>
+                            <textarea ng-model="vm.clonedTestCase.pre_condition" name="desc" class="form-control" maxlength="500"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="title">{{ vm.scenarioSelected()?'描述':'测试步骤' }}:</label>
+                            <textarea ng-model="vm.clonedTestCase.desc" name="desc" class="form-control" maxlength="500"></textarea>
+                        </div>
+                        <div class="form-group" ng-show="!vm.scenarioSelected()">
+                            <label class="title">期望结果:</label>
+                            <textarea ng-model="vm.clonedTestCase.expect_result" name="desc" class="form-control" maxlength="500"></textarea>
+                        </div>
+                        <div class="pull-right">
+                            <a class="btn btn-default btn-sm" ng-show="vm.model.isEdit" ng-click="vm.model.isEdit=false">取消</a>
+                            <button class="btn btn-primary btn-sm" ng-show="vm.model.isEdit" type="button" ng-disabled="!vm.clonedTestCase.name" ng-click="vm.updateTestCase()">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="permission-layer" ng-if="!vm.hasPermissionEdit"></div>
+        </div>
+    </div>
+    <div id="testcase-popup-container">
+        <div class="import-testcase-container" id="import-testcase-container">
+            <div class="btn-container">
+                <span class="btn close" data-fade-up>X</span>
+            </div>
+            <div class="import-test-case-wrap">
+                <div class="btn-import excel-import">
+                    <input type="file" ng-file-select="vm.importFromExcel($files)">
+                    <div class="icon icon-excel-import">
+                        <span>从excel导入</span>
+                    </div>
+                    <div class="text-center">请首先<a ng-href="{{ vm.model.excelTemplateUrl }}" target="_blank">下载Excel模板</a>,将您所有的用例按格式填入</div>
+                </div>
+            </div>
+        </div>
+        <div id="import-testcase-regexps" class="import-testcase-regexps">
+            <div class="btn-container">
+                <span class="btn close" data-fade-up>X</span>
+            </div>
+            <ng-include src="'apps/testcase/templates/regexps.html'" ></ng-include>
+        </div>
+        <div id="testcase-tags" class="testcase-tags">
+            <div class="btn-container">
+                <span class="btn close" data-fade-up ng-click="vm.reloadPage()">X</span>
+            </div>
+            <ng-include src="'apps/testcase/templates/tags.html'" ></ng-include>
+        </div>
+    </div>
+</div>

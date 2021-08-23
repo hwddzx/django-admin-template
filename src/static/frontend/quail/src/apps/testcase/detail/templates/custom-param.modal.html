@@ -1,0 +1,20 @@
+<div class="tb-modal param-model">
+        <form tb-form-validator class="form-horizontal">
+            <h1 class="head">参数名<i class="icon icon-popup-close" ng-click="vm.cancel()"></i></h1>
+            <div class="form-group">
+                <label for="outputName" class="col-sm-3 control-label">参数名:</label>
+                <div class="col-sm-9" >
+                    <input type="text" class="form-control" maxlength="32" ng-change="vm.checkSameParameter()" name="output-name" data-bv-notempty data-bv-notempty-message="参数名不能为空"
+                        data-bv-regexp="true" data-bv-regexp-regexp="^[a-zA-Z][_]?([a-zA-Z0-9][_]?)*$" data-bv-regexp-message="参数名必须以字母开头,可以由字母、数字和不连续下划线组成!" id="outputName"
+                        ng-model="vm.name">
+                    <input type="text" class="form-control auto-change hide-input" name="captcha" data-bv-trigger="change" ng-model="vm.nameExist"
+                        ng-value="vm.nameExist" data-bv-notempty data-bv-notempty-message="参数名重复" />
+                </div>
+            </div>
+
+            <div class="modal-foot">
+                <button class="btn btn-fix btn-default btn-watchet" ng-click="vm.cancel()">取消</button>
+                <button class="btn btn-fix btn-primary" type="submit" data-form-submit="vm.close()">确定</button>
+            </div>
+        </form>
+    </div>

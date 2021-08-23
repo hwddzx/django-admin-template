@@ -1,0 +1,19 @@
+<div tb-modal class="tb-modal plugin-uplad-modal">
+    <i class="icon icon-popup-close" ng-click="vm.cancel()"></i>
+    <h1>上传插件</h1>
+    <div class="modal-content">
+        <i class="icon icon-plugin"></i>
+        <div class="file-name" ng-bind="vm.file.name"></div>
+        <input name="plugin" type="radio" id="plugin-dev" ng-model="vm.pluginType" value="{{vm.pluginTypeEnum['plugin-dev']}}">
+        <label for="plugin-dev"></label>
+        <label for="plugin-dev" class="plugin-type-text">手机端执行插件</label>
+        <input name="plugin" type="radio" id="plugin-tc" ng-model="vm.pluginType" value="{{vm.pluginTypeEnum['plugin-tc']}}">
+        <label for="plugin-tc"></label>
+        <label for="plugin-tc" class="plugin-type-text">工控机端执行插件</label>
+        <input class="plugin-name" type="text" maxlength="50" placeholder="输入插件名称" ng-model="vm.pluginName"/>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-primary" ng-disabled="!vm.pluginName || vm.uploading" ng-click="vm.upload()">确定</button>
+        <button class="btn btn-fix btn-default" ng-disabled="vm.uploading" ng-click="vm.cancel()">取消</button>
+    </div>
+</div>

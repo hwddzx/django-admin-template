@@ -1,0 +1,11 @@
+<div class="rent-modal comptest-rent-modal rio-modal">
+    <h1 class="head">提示<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+    <p>如果您同时有远程调试抵扣券和充值账户余额，本次租用消耗的机时将优先使用远程调试抵扣券，不足部分按照每分钟1.5元的标准从您的充值账户余额扣除</p>
+    <p>{{message}}</p>
+    <p>机时太少？<a target="_blank" ng-href="{{ rechargeUrl }}">点击立即充值</a></p>
+    <p class="red-text" ng-show="errorMsg">{{errorMsg}}</p>
+    <div class="modal-foot">
+        <button class="btn btn-long btn-default" ng-click="cancel()">取消</button>
+        <button class="btn btn-long btn-primary" ng-click="close();rent()">确认租用</button>
+    </div>
+</div>

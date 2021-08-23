@@ -1,0 +1,75 @@
+.account-main {
+    width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+    h2 {
+        margin-top: 45px;
+        margin-bottom: 30px;
+        padding-left: 10px;
+        font-size: 24px;
+        color: $black;
+    }
+    h4 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        padding-left: 10px;
+        font-size: 14px;
+        color: $gray;
+    }
+    .table-orders td {
+        &:first-child {
+            padding-left: 10px;
+        }
+        &:nth-child(2) {
+            color: $green;
+        }
+    }
+    .order-desc-col {
+        direction: rtl;
+        span {
+            margin-right: 3px;
+        }
+        .repay-btn {
+            display: block;
+            text-align: center;
+            width: 50px;
+            font-size: 14px;
+        }
+    }
+}
+
+.rent-records {
+    margin-bottom: 50px;
+    .table-devices {
+        margin-bottom: 0;
+    }
+    .device-row:hover {
+        .icon-log-download {
+            background: url('img/icon-log-download-hover.png');
+            background-size: 100%;
+        }
+    }
+    a.log-download-link {
+        margin-right: 18px;
+    }
+    .btn-light {
+        cursor: default;
+        @include box-shadow(none);
+    }
+    .rent-btn {
+        width: 60px;
+        padding-left: 0;
+        padding-right: 0;
+        font-size: 13px;
+    }
+    .popover-wrap {
+        position: relative;
+        .popover {
+            top: -23px!important;
+            right: 45px!important;
+            left: auto!important;
+            width: 276px!important;
+            height: 66px!important;
+        }
+    }
+}

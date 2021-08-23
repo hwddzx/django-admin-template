@@ -1,0 +1,419 @@
+.testcase-component {
+    user-select: none;
+    position: relative;
+    height: 100%;
+    .component-head {
+        position: relative;
+        height: 50px;
+        background-color: $blue-lighter;
+        border-bottom: 1px solid $border-gray;
+        h3 {
+            float: left;
+            line-height: 50px;
+            display: inline-block;
+            margin: 0 0 0 15px;
+            font-size: 20px;
+        }
+        .pull-right {
+            margin-right: 80px;
+            .btn {
+                float: right;
+                margin-left: 20px;
+                padding: 0;
+                color: $black;
+                line-height: 48px;
+                font-size: 12px;
+                cursor: pointer;
+                .icon-export {
+                    width: 18px;
+                    height: 15px;
+                    background-image: url(img/testcase/icons.png?ts=imageTimeStamp);
+                    background-size: 90px 190px;
+                    background-position: -8px -85px;
+                }
+                &:hover {
+                    color: $blue;
+                    .icon-export {
+                        background-position: -28px -85px;
+                    }
+                }
+            }
+        }
+    }
+    .tb-spliter {
+        position: relative;
+        overflow: inherit;
+        width: 1150px;
+        height: calc(100% - 50px);
+        .input-alarm {
+            @include input-alarm-class;
+            text-align: left;
+            padding-left: 18px;
+        }
+        .spliter-bar {
+            position: absolute;
+            display: inline-block;
+            width: 10px;
+            height: 100%;
+            opacity: 0;
+            z-index: 1;
+            cursor: col-resize;
+            &.mouse-down,
+            &:hover {
+                opacity: 0.6;
+            }
+        }
+        .left {
+            overflow: auto;
+            float: left;
+            width: 290px;
+            height: 100%;
+            border-right: 10px solid #fafcff;
+            .title-wrap {
+                position: relative;
+                height: 50px;
+                line-height: 50px;
+                padding: 0 10px;
+                font-size: 18px;
+                .btn {
+                    float: right;
+                    display: block;
+                    margin-top: 12px;
+                }
+                .btn+.btn {
+                    margin-right: 10px;
+                }
+                .icon-create {
+                    width: 16px;
+                    height: 16px;
+                    line-height: 22px;
+                }
+                .title {
+                    float: left;
+                }
+            }
+            ul.component-list {
+                margin: 0;
+                padding-left: 20px;
+                li {
+                    margin: 0;
+                    line-height: 30px;
+                    &:hover,
+                    &.active {
+                        cursor: pointer;
+                        color: $blue;
+                        .icon-remove {
+                            display: inline-block;
+                        }
+                    }
+                    .icon-remove {
+                        display: none;
+                    }
+                }
+            }
+        }
+        .right {
+            float: left;
+            width: 860px;
+            height: 100%;
+            border-left: 0;
+            overflow: auto;
+            .component-title-btn {
+                float: right;
+                font-size: 14px;
+                cursor: pointer;
+                margin-left: 10px;
+                .icon {
+                    width: 18px;
+                    height: 15px;
+                    background-image: url(./img/testcase/icons.png?ts=imageTimeStamp);
+                    background-size: 90px 190px;
+                }
+                &:hover {
+                    color: $blue;
+                    .icon-update {
+                        background-position: -28px -160px;
+                    }
+                    .copy-script {
+                        background-position: -66px -12px;
+                    }
+                    .icon-create-component {
+                        background-position: -66px -36px;
+                    }
+                }
+                .icon-update {
+                    background-position: -8px -160px;
+                }
+                .copy-script {
+                    background-position: -46px -12px;
+                }
+                .icon-create-component {
+                    background-position: -46px -36px;
+                }
+            }
+            .no-data {
+                position: relative;
+                top: 50%;
+                left: 50%;
+                width: 200px;
+                height: 160px;
+                margin-top: -80px;
+                margin-left: -100px;
+                text-align: center;
+                line-height: 50px;
+                .icon-no-component {
+                    display: block;
+                    width: 110px;
+                    height: 110px;
+                    margin-left: 40px;
+                    background-image: url(./img/component/no-component.png);
+                    background-size: 100%;
+                }
+                .text {
+                    margin-top: 10px;
+                    line-height: 24px;
+                }
+            }
+            .component-detail {
+                .form-group {
+                    overflow: hidden;
+                    margin-bottom: 30px;
+                    .btn {
+                        margin-top: 5px;
+                        margin-right: 5px;
+                        padding: 5px;
+                    }
+                }
+                .title {
+                    float: left;
+                    width: 13%;
+                    margin: 0 2% 0 0;
+                    font-size: 14px;
+                    line-height: 40px;
+                    text-align: right;
+                }
+                .component-key {
+                    user-select: text;
+                }
+            }
+            pre,
+            .pre {
+                float: left;
+                width: 85%;
+                margin: 0;
+                border: 1px solid #d1d9e0;
+                background-color: transparent;
+                min-height: 40px;
+                user-select: text;
+            }
+            .pre {
+                padding: 10px;
+                line-height: 30px;
+            }
+            .snapshot-container {
+                float: left;
+                width: 85%;
+                border: 1px solid $gray-border;
+                overflow: hidden;
+                @include default-transition;
+                &:hover {
+                    cursor: pointer;
+                    border-color: $blue-border;
+                }
+                .snapshot-box {
+                    float: left;
+                    position: relative;
+                    width: 80px;
+                    height: 80px;
+                    margin-right: 9px;
+                    overflow: hidden;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+                .placeholder {
+                    padding-left: 10px;
+                    p {
+                        position: absolute;
+                        bottom: 0;
+                        font-size: 12px;
+                        color: $gray;
+                    }
+                }
+            }
+        }
+        .component-snapshot {
+            margin-left: 40px;
+            margin-top: 40px;
+            display: block;
+            position: absolute;
+            max-width: 100px;
+            left: -50px;
+            top: -89px;
+            width: 100px;
+            height: 178px;
+            background-image: url(img/component/component.png);
+            background-size: 100% 100%;
+        }
+    }
+    .component-title {
+        margin: 0;
+        padding: 20px;
+        text-align: left;
+        .btn {
+            margin-left: 60px;
+        }
+        .icon-create {
+            display: inline-block;
+            position: relative;
+            top: -3px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+    }
+}
+
+.component-manage {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: $white;
+    z-index: 1;
+    .tb-spliter {
+        height: 100%;
+    }
+    .right {
+        .not-case-tips {
+            padding-top: 150px;
+            font-size: 18px;
+            color: $gray;
+            text-align: center;
+        }
+        .component-manage-head {
+            overflow: hidden;
+            padding: 20px 0 20px 20px;
+            width: 100%;
+            .title {
+                font-size: 18px;
+                float: left;
+            }
+            .btn {
+                float: right;
+                margin-left: 15px;
+            }
+        }
+        .component-manage-content {
+            overflow: auto;
+            height: calc(100% - 70px);
+            padding: 10px 20px 0 40px;
+            .form-group {
+                overflow: hidden;
+                margin-bottom: 30px;
+                label {
+                    float: left;
+                    width: 60px;
+                    margin-right: 10px;
+                    line-height: 35px;
+                    text-align: right;
+                }
+                input,
+                textarea {
+                    float: left;
+                    width: calc(100% - 70px);
+                }
+                .text {
+                    line-height: 35px;
+                }
+            }
+        }
+    }
+    .component-list {
+        overflow: hidden;
+        list-style: none;
+        padding: 10px 0 0 0;
+        li {
+            float: left;
+            position: relative;
+            width: 50px;
+            margin: 0 20px 0 0;
+            text-align: center;
+            cursor: pointer;
+            .component-icon {
+                width: 50px;
+                height: 50px;
+                background-image: url(img/component/component-icon.png);
+                background-position: -50px 0;
+                background-size: 100px;
+            }
+            .icon-remove {
+                display: none;
+                position: absolute;
+                top: -8px;
+                right: -8px;
+            }
+            &:hover {
+                .icon-remove {
+                    display: inline-block;
+                }
+                .component-icon {
+                    background-position: 0 0;
+                }
+                .text {
+                    color: $blue;
+                }
+            }
+            .text {
+                display: inline-block;
+                width: 100%;
+                margin-top: 5px;
+                color: $black;
+                @include text-overflow;
+            }
+        }
+    }
+    .adaptive-images-container {
+        overflow: hidden;
+        width: calc(100% + 40px);
+        margin-left: -20px;
+        .snapshot-item {
+            float: left;
+            position: relative;
+            margin: 10px 20px;
+            cursor: pointer;
+            &:hover {
+                .overlay {
+                    display: block !important;
+                }
+            }
+            .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: calc(100% - 22px);
+                background: rgba(0, 0, 0, 0.5);
+                &:after {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -8px;
+                    margin-left: -8px;
+                    content: ' ';
+                    width: 16px;
+                    height: 16px;
+                    background-image: url(img/testcase/icon-selected.png);
+                    background-size: 100% 100%;
+                }
+            }
+            .meta {
+                text-align: center;
+                line-height: 25px;
+            }
+        }
+    }
+    .directory {
+        padding: 20px;
+    }
+}

@@ -1,0 +1,44 @@
+<div class="parameters">
+    <ul class="parameters-list" ng-init="parameter = vm.subtaskDetail.device_model">
+        <li>
+            <div class="title">终端型号</div>
+            <div class="content" ng-bind="parameter.name"></div>
+        </li>
+        <li>
+            <div class="title">分辨率</div>
+            <div class="content" ng-bind="parameter.resolution"></div>
+        </li>
+        <li>
+            <div class="title">CPU型号</div>
+            <div class="content" title="{{parameter.cpu}}" ng-bind="parameter.cpu"></div>
+        </li>
+        <li>
+            <div class="title">内部存储空间</div>
+            <div class="content" title="{{parameter.rom}}" ng-bind="parameter.rom"></div>
+        </li>
+        <li>
+            <div class="title">GPU型号</div>
+            <div class="content" title="{{parameter.gpu}}" ng-bind="parameter.gpu"></div>
+        </li>
+        <li>
+            <div class="title">SD存储空间</div>
+            <div class="content" ng-bind="parameter.sdcard"></div>
+        </li>
+        <li>
+            <div class="title">内存</div>
+            <div class="content" ng-bind="parameter.ram"></div>
+        </li>
+        <li>
+            <div class="title">操作系统</div>
+            <div class="content" ng-bind="parameter.os"></div>
+        </li>
+        <li>
+            <div class="title">网络</div>
+            <div class="content">WIFI</div>
+        </li>
+        <li>
+            <div class="title">屏幕尺寸</div>
+            <div class="content" ng-bind="parameter.screen_size"></div>
+        </li>
+    </ul>
+</div>

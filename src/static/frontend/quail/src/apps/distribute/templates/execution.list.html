@@ -1,0 +1,24 @@
+<div class="right-btn-group">
+    <div class="btn btn-primary distribute-btn" ng-click="vm.gatherModal()">分配任务</div>
+    <div ng-click="vm.redistribute()"><i class="icon"></i>重新分配</div>
+</div>
+<ul class="nav tb-nav-no-border">
+    <li ng-class="{true:'active'}[vm.type==1]" ng-click="vm.initExecutionList(1)"><a>脚本录制</a></li>
+    <li ng-class="{true:'active'}[vm.type==0]" ng-click="vm.initExecutionList(0)"><a>自助功能测试任务</a></li>
+</ul>
+<div class="ztree-column-head">
+    <ul class="list-unstyled list-inline">
+        <li class="node_name">用例名称</li>
+        <li class="tree-column-wrap">
+            <span class="tree-column">分配对象</span>
+            <span class="tree-column">分配时间</span>
+            <span class="tree-column">完成时间</span>
+            <span class="tree-column">状态</span>
+            <span class="tree-column">查看</span>
+            <span class="tree-column">执行</span>
+        </li>
+    </ul>
+</div>
+<div>
+    <ul class="ztree" id="scene-tree" compile-html></ul>
+</div>

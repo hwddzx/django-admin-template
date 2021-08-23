@@ -1,0 +1,20 @@
+<div class="tb-modal sleep-modal">
+    <h1 class="head">测试界面响应时间<i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <form tb-form-validator novalidate name="form">
+        <div class="modal-content">
+            <div class="form-group clearfix row">
+                <label class="col-sm-2 control-label">名称:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="measure-name" data-bv-notempty ng-change="vm.measureNameChange()"
+                           data-bv-notempty-message="名称不能为空!" ng-model="vm.measureName">
+                    <input type="text" class="form-control auto-change hide-input" name="captcha" data-bv-trigger="change" ng-model="vm.nameIsExist"
+                    ng-value="vm.nameIsExist" data-bv-notempty data-bv-notempty-message="名称重复" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+            <button class="btn btn-fix btn-primary" type="submit" data-form-submit="vm.close()">确定</button>
+        </div>
+    </form>
+</div>

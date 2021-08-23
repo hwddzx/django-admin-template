@@ -1,0 +1,5 @@
+<div class="rent-modal rio-modal">
+    <div ng-include="'components/rent-modal/testcase.step.html'" ng-controller="TestcaseStepCtrl as testcaseVm" ng-show="step==0"></div>
+    <div ng-include="'components/rent-modal/device.step.html'" ng-controller="DeviceStepCtrl as deviceVm" ng-show="step==1"></div>
+    <div ng-include="'components/rent-modal/duration.step.html'" ng-controller="DurationStepCtrl as timeVm" ng-show="step==2"></div>
+</div>

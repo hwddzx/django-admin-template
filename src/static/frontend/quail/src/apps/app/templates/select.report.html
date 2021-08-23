@@ -1,0 +1,21 @@
+<div class="performance-comparison-container select-report">
+    <h4>请选择测试报告</h4>
+    <div class="report-box">
+        <ul>
+            <li>
+                 <input type="checkbox" id="checkAll" ng-model="vm.appReportAllChecked" />
+                 <label for="checkAll">全选</label>
+            </li>
+            <li ng-repeat="report in vm.appCompareList.results">
+                <input type="checkbox" id="check[{{$index}}]" ng-model="report.checked" ng-disabled="{{report.is_compare}}"/>
+                <label for="check[{{$index}}]" ng-class="{'not-allowed-select': report.is_compare}">{{report.name}}</label>
+            </li>
+        </ul>
+        <p class="load-more-data" ng-if="vm.currentAppCompareList.next != null"><a href="" ng-click="vm.loadMore()">加载更多</a></p>
+        <p ng-if="vm.appCompareList.results.length == 0" class="no-data-tips">该应用暂无测试报告</p>
+    </div>
+    <div class="performance-btns">
+        <a href="javascript:void(0);" ng-click="vm.cancel()">取消</a>
+        <a href="javascript:void(0);" ng-click="vm.close()">确认</a>
+    </div>
+</div>

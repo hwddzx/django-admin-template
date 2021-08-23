@@ -1,0 +1,443 @@
+.body-overflow-hidden{
+    overflow: hidden!important;
+}
+.guide-overlay{
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+	z-index: 99;
+	background-color: rgba(0,0,0,0.5);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+.guide-helperLayer{
+	position: absolute;
+	z-index: 998;
+	background-color: #fff;
+	box-shadow: 0 2px 15px rgba(0,0,0,.4);
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+.guide-fixParent{
+	z-index: auto !important;
+	opacity: 1.0 !important;
+	position: absolute !important;
+	-webkit-transform: none !important;
+	-moz-transform: none !important;
+	-ms-transform: none !important;
+	-o-transform: none !important;
+	transform: none !important;
+}
+.introjs-showElement{
+	z-index: 999 !important;
+    .btn-debug{
+        color: #8792a3!important;
+        border-color: #8792a3;
+    }
+    .icon-debug{
+        background: url("img/icon-debug-gray.png");
+        background-size: 100%;
+    }
+}
+.tooltipReferenceLayer{
+	position: absolute;
+	z-index: 1000;
+	background-color: transparent;
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+.tootip-panel{
+    opacity: 0;
+	position: absolute;
+	top: 0;
+	right: 50px;
+	width: 100px;
+	height: 100px;
+	background-color: #fff;
+	border-radius: 5px;
+    .arrow{
+        position: absolute;
+        width: 0;
+        height: 0;
+        border:15px solid transparent;
+    }
+    .top{
+        border-top-color:#fff;
+    }
+    .right{
+        border-right-color: #fff;
+    }
+    .bottom{
+        border-bottom-color: #fff;
+    }
+    .left{
+        border-left-color: #fff;
+    }
+    h3{
+        margin: 0 0 30px 0;
+        font-size: 18px;
+        line-height: 1em;
+        color: #8792a3;
+    }
+}
+.spread-btn-parent{
+  position: absolute;
+  width:50px;
+  height:50px;
+  z-index: 1001;
+  .guide-icon-btn{
+      position:absolute;
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+  }
+}
+.spread-btn-pre{
+    border:5px solid #0070f0;
+    border-radius:50%;
+    opacity: 0;
+    position: absolute;left: 50%;top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-animation: waveRaidus 2s ease-out 0s infinite;
+    animation: waveRaidus 2s ease-out 0s infinite;
+}
+@keyframes waveRaidus {
+    0% {
+        width: 100%;height: 100%;
+        opacity: 0;
+    }
+    65% {
+        width: 100%;height: 100%;
+        opacity: 0;
+    }
+    66% {
+        width: 100%;height: 100%;
+        opacity: 0.8;
+    }
+    100% {
+        width: 130%;height: 130%;
+        opacity: 0;
+    }
+}
+@-webkit-keyframes waveRaidus {
+    0% {
+        width: 100%;height: 100%;
+        opacity: 0;
+    }
+    65% {
+        width: 100%;height: 100%;
+        opacity: 0;
+    }
+    66% {
+        width: 100%;height: 100%;
+        opacity: 0.8;
+    }
+    100% {
+        width: 130%;height: 130%;
+        opacity: 0;
+    }
+}
+.spread-btn{
+	position: absolute;
+    top: 10px;
+    left: 10px;
+	width: 30px;
+    height: 30px;
+    padding: 8px;
+    background-color: #0070f0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.click-show-panel{
+	background-color:#8793A3;
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    transform: rotate(135deg);
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -ms-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+}
+.click-hide-panel{
+	background-color:#8793A3;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -ms-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+}
+.close-guide{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+    display: inline-block;
+    width: 40px;
+    height: 41px;
+    overflow: hidden;
+    font-family: Helvetica, sans-serif;
+}
+.add-rent-btn,.add-rent-btn-guide{
+    position:absolute;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    top:4px;
+    right:4px;
+}
+.add-rent-btn{
+    top: 3px;
+}
+.close-guide::before{
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.close-guide::before,.close-guide::after,
+.guide-icon-btn::before,.guide-icon-btn::after,
+.add-rent-btn::before,.add-rent-btn::after,
+.add-rent-btn-guide::before,.add-rent-btn-guide::after{
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    margin-top: 0;
+    background: #fff;
+    border-radius: 5px;
+}
+.add-rent-btn::before,.add-rent-btn::after{
+    background: #8792a3;
+}
+.add-rent-btn-guide::before,.add-rent-btn-guide::after{
+    background: #fff;
+    top: 7px;
+}
+.guide-icon-btn::after,.add-rent-btn::after,.add-rent-btn-guide::after{
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.close-guide::after{
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.close-guide:hover::before, .close-guide:hover::after {
+    background: #0070f0;
+}
+.guide-helperLayer{
+    .panel-body{
+        padding: 30px;
+    }
+    .panel-row{
+        height: 80px;
+        line-height: 25px;
+    }
+}
+.panel1{
+	width: 260px;
+	height: 240px;
+    .panel-row{
+        line-height: normal;
+        height: auto;
+        &:nth-child(3){
+            margin-bottom: 25px;
+        }
+    }
+    h3.rent-time{
+        margin-bottom: 15px;
+    }
+}
+.panel2{
+    width: 280px;
+	height: 480px;
+	margin-top: 150px;
+    .arrow{
+        margin-top: -30px;
+    }
+    .panel-body{
+        padding-bottom: 0;
+    }
+    .icon{
+        display: block;
+        margin: 0 auto;
+    }
+    .icon-container{
+        float: left;
+        width: 30px;
+        height: 30px;
+        margin-top: 3px;
+        margin-right: 10px
+    }
+    .description-container{
+        float: left;
+        width: 180px;
+        line-height: 18px;
+    }
+
+}
+.panel3{
+    width: 500px;
+	height: 325px;
+    .panel-body{
+        padding-bottom: 10px;
+    }
+    .icon{
+        display: block;
+        margin: 0 auto;
+    }
+    .panel-left{
+        width: 50%;
+	    float: left;
+    }
+    .panel-right{
+        width: 50%;
+	    float: left;
+        padding-left: 20px;
+    }
+    .icon-container{
+        float: left;
+        width: 30px;
+        height: 30px;
+        margin-top: 3px;
+        margin-right: 10px
+    }
+    .description-container{
+        float: left;
+        width: 160px;
+        line-height: 18px;
+    }
+    .icon-home{
+        margin-top: 3px;
+    }
+    .icon-back{
+        margin-top: 5px;
+    }
+    .icon-list{
+        margin-top: 7px;
+    }
+    .icon-unlock{
+        margin-top: 3px;
+    }
+    .icon-photocam-gray{
+        margin-top: 3px;
+    }
+    .icon-hd{
+        margin-top: 5px;
+    }
+}
+.panel4 {
+    width: 260px;
+    height: 260px;
+    margin-left: -60px;
+    .arrow{
+        margin-left: 60px;
+    }
+    .panel-body{
+        .panel-row{
+            height: auto;
+        }
+    }
+}
+#guideWorkingStand{
+    height: auto;
+}
+.guide-scroll-model{
+    .helperLayer2, .tootip2{
+        width: 65px!important;
+        margin-left: -10px;
+    }
+    .spreadBtnParent2{
+        margin-left: -10px;
+    }
+}
+.spreadBtnParent2{
+    margin-top: 120px;
+}
+.panel-body{
+    .panel-right{
+        span{
+            float: left;
+            width: 180px;
+            display: inline-block;
+        }
+    }
+
+}
+.icon.icon-photocam-gray {
+    width: 22px;
+    height: 24px;
+    background: url("img/photocam-icon.png") no-repeat;
+    background-size: 100%;
+}
+.controls-group-include{
+    width: 460px;
+    height: 60px;
+    position: relative;
+    padding: 5px;
+    bottom: 30px;
+    margin: 0 auto;
+}
+.controls-group-include .controls-group{
+    bottom: 5px;
+}
+.icon-add-rent-time{
+    float: left;
+    position: relative;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin:5px;
+    line-height: 27px;
+    border: 1px solid #8792a3;
+    text-align: center;
+    border-radius: 2px;
+}
+.add-rent-time-text{
+    float: left;
+    width: 160px;
+    margin-left: 5px;
+    margin-top: -3px;
+}
+.rent-time{
+    margin-bottom: 5px;
+    font-size: 20px;
+    letter-spacing: 3px;
+}
+.guide-rent-time .times{
+    color: #8792a3!important;
+    background-color: #fff;
+}
+.guide-rent-time .plus-btn{
+    border-color:#8792a3!important;
+}
+.guide-rent-time .add-rent-btn-guide::before,
+.guide-rent-time .add-rent-btn-guide::after{
+    background-color: #8792a3!important;
+}

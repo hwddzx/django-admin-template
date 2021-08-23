@@ -1,0 +1,45 @@
+<span class="dropdown lab-dropdown" uib-dropdown>
+    <a class="icon icon_product" ng-href="{{ dtUrl }}"></a>
+    <a class="dropdown-btn" id="apps-dropdown" uib-dropdown-toggle>
+      <span>{{ app.name }}</span>
+      <i class="fa fa-sort-desc"></i>
+    </a>
+    <div class="dropdown-menu apps-menu" uib-dropdown-menu aria-labelledby="apps-dropdown">
+        <div class="menu">
+            <p class="title">我参加的应用</p>
+            <ul>
+                <li class="horizontal-divider" ng-if="apps.invited.length>model.disableSearchThreshold"></li>
+                <li class="search-app" ng-if="apps.invited.length>model.disableSearchThreshold">
+                    <i class='icon icon-search'></i>
+                    <input type="text" maxlength="128" placeholder="请输入应用名称" ng-model="model.searchJoinName" ng-click="stopPropagation($event)">
+                </li>
+                <li class="horizontal-divider" ng-if="apps.invited.length>model.disableSearchThreshold"></li>
+                <li ng-repeat="item in apps.invited | filter:filterJoinApp" ng-click="toState({key:item.key, role:'tester'})" ng-class="{true: 'active'}[item.key==app.key&&!isOwner]">
+                    <i class="icon os-icon" ng-class="{true:'icon-ios',false:'icon-android'}[item.type=='ios']"></i>
+                    <img ng-src="{{ item.icon_url }}"/>
+                    <a>{{ item.name }}</a>
+                    <i class="icon progress-icon" ng-class="{'icon-completed':item.task_state==completionStatus.completed, 'icon-uncompleted': item.task_state==completionStatus.uncompleted}"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="spliter-bar"></div>
+        <div class="menu">
+            <p class="title">我创建的应用</p>
+            <ul>
+                <li class="horizontal-divider" ng-if="apps.mine.length>model.disableSearchThreshold"></li>
+                <li class="search-app" ng-if="apps.mine.length>model.disableSearchThreshold">
+                    <i class='icon icon-search'></i>
+                    <input type="text" maxlength="128" placeholder="请输入应用名称" ng-model="model.searchCreateName" ng-click="stopPropagation($event)">
+                </li>
+                <li class="horizontal-divider" ng-if="apps.mine.length>model.disableSearchThreshold"></li>
+                <li ng-repeat="item in apps.mine | filter:filterCreateApp" ng-click="toState({key:item.key, role:'owner'})" ng-class="{true: 'active'}[item.key==app.key&&isOwner]">
+                    <i class="icon os-icon" ng-class="{true:'icon-ios',false:'icon-android'}[item.type=='ios']"></i>
+                    <img ng-src="{{ item.icon_url }}"/>
+                    <!--i class="icon icon-bell"></i -->
+                    <a>{{ item.name }}</a>
+                    <i class="icon progress-icon" ng-class="{'icon-completed':item.task_state==completionStatus.completed, 'icon-uncompleted': item.task_state==completionStatus.uncompleted}"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+</span>

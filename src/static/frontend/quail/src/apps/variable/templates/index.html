@@ -1,0 +1,42 @@
+<div class="variable-container">
+    <h3>全局参数管理</h3>
+    <div class="btn-group">
+        <button class="btn btn-fix btn-danger" ng-click="vm.deleteVariables()" ng-disabled="!vm.hasCheckedVariable()">删除</button>
+        <button class="btn btn-fix btn-default" ng-click="vm.addVariable()">新增</button>
+        <button class="btn btn-fix btn-primary" ng-click="vm.saveVariables()">保存</button>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th width="5%"><input type="checkbox" id="checkAll" tb-select-all models="vm.variables" ng-model="vm.variables.allChecked"/>
+                <label for="checkAll"></label></th>
+            <th width="15%">参数名</th>
+            <th width="50%">可选值(蓝色背景表示当前值)</th>
+            <th width="20%">备注</th>
+            <th width="10%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="variable in vm.variables">
+            <td><input type="checkbox" ng-model="variable.checked"/></td>
+            <td>
+                <input type="text" title="{{ variable.name }}" maxlength="32" ng-model="variable.name"/>
+            </td>
+            <td>
+                <div class="value-item" ng-repeat="value in variable.values_json track by $index">
+                    <i class="icon icon-delete" ng-click="vm.deleteValue($parent.$index, $index)"></i>
+                    <input title="{{ variable.values_json[$index] }}" type="text" maxlength="128" ng-model="variable.values_json[$index]" ng-class="{true:'checked'}[variable.values_json[$index]&&(value==variable.value)]" ng-change="variable.values_json[$index]&&(variable.value=variable.values_json[$index])"
+                           ng-click="variable.values_json[$index]&&(variable.value=variable.values_json[$index])"/>
+                </div>
+            </td>
+            <td>
+                <input type="text" title="{{ variable.remark }}" maxlength="128" ng-model="variable.remark"/>
+            </td>
+            <td>
+                <a class="link" ng-click="vm.addValue($index)">增加值</a>
+                <a class="link" ng-click="vm.deleteVariables($index)">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

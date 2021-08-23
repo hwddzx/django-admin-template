@@ -1,0 +1,68 @@
+<div id="report-compatibility-v2">
+    <!-- 问题统计 -->
+    <div class="problemStatistics">
+        <span title="{{ '问题机型总览' | translate }}">
+            <span class="big">
+                {{ '问题统计' | translate }}
+                <span>
+                    {{ vm.compatibility.result_json2.types.t_r_exception.count }}
+                </span>
+        </span>
+        </span>
+        <span class="small tb-change-app-type">
+                {{ '问题最多为:' | translate}} {{ vm.theTopOne.name|translate }}
+                <span>
+                    {{ vm.theTopOne.count}}
+                </span>
+        </span>
+    </div>
+
+    <!-- 不兼容终端分布 -->
+    <div class="distribution col-md-12">
+        <h1>
+            {{ '不兼容终端分布' | translate }}
+        </h1>
+        <div ng-repeat="device_distribution in vm.device_distributions">
+            <div class="col-md-5">
+                <img ng-src="assets/img/report/compatibility/{{ device_distribution.key }}.png" />
+                <div class="text">
+                    <span>
+                        {{ device_distribution.title | translate }}
+                    </span>
+                    <br />
+                    <span class="small">{{ vm.searchTheTopName(device_distribution) }}{{ '机型问题更为突出' | translate }}</span>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                {{ '机型' | translate }}
+                            </th>
+                            <th>
+                                {{ '未通过|总台数' | translate }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(key,value) in device_distribution | limitTo: vm.device_distributionsPageSizes[device_distribution.key]" ng-class-even="'tr-bg-even'">
+                            <td>
+                                {{ value.name }}
+                            </td>
+                            <td  ng-class="{ true:'canClick' }[value.types[3].count>0]" ng-click="open(value.name, device_distribution, key)">
+                                <span>{{ value.types[3].count }}</span>|{{ value.count }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="more" href="" ng-if="device_distribution.length > vm.device_distributionsPageSizes[device_distribution.key]" ng-click="vm.load(device_distribution)">
+                    {{ '还有' | translate }}{{  vm.num[device_distribution.key] }}{{ '台' | translate }}
+                </a>
+                <a class="more" href="" ng-if="device_distribution.length === vm.device_distributionsPageSizes[device_distribution.key] && device_distribution.length > 6" ng-click="vm.load(device_distribution, 5)">
+                    {{ '收起' | translate }}
+                </a>
+            </div>
+            <div class="col-md-2" ng-if="!($index%2)">&nbsp</div>
+            <div class="col-md-12" ng-if="$index%2"></div>
+        </div>
+    </div>
+</div>

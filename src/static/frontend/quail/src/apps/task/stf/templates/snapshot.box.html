@@ -1,0 +1,9 @@
+<div class='image-popup'>
+    <div class='popup-backdrop'></div>
+    <div class='image-wrap'>
+        <i class="icon icon-popup-close image-box-close" ng-click="close()" />
+        <div class='image-wrap-inner'>
+            <div ng-if="!snapshot.patch" class="image-editor-wrap" tb-image-annotate snapshot="snapshot" execution="execution"></div>
+        </div>
+    </div>
+</div>

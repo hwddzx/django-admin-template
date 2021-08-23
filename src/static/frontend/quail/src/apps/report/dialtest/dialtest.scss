@@ -1,0 +1,247 @@
+.dialtest-detail-container {
+    .current-app-container {
+        margin: 30px 0;
+        img {
+            width: 100px;
+            height: 100px;
+            float: left;
+            border-radius: 5px;
+        }
+        .info {
+            margin-left: 20px;
+            float: left;
+            .app-name {
+                display: block;
+                margin: 0;
+                font-size: 18px;
+            }
+            .priority {
+                @include priority-style;
+                margin-top: 5px;
+            }
+            .share-link {
+                display: inline-block;
+                margin-top: 5px;
+                padding: 0 10px;
+                height: 20px;
+                line-height: 20px;
+                background-color: #edf2f7;
+                border-radius: 20px;
+                color: #8e9194;
+                font-size: 12px;
+            }
+        }
+        .btn-export-excel {
+            float: right;
+        }
+    }
+    .dialtest-report-head {
+        clear: both;
+    }
+    .detail-table {
+        position: relative;
+        word-wrap: break-word;
+        word-break: break-all;
+        table-layout: fixed;
+        td {
+            width: 20%;
+            pre {
+                overflow: hidden;
+                width: auto;
+                max-width: 130px;
+                text-overflow: ellipsis;
+                display: inline-block;
+                vertical-align: middle;
+                white-space: nowrap;
+                &.show-all {
+                    max-width: 100%;
+                    white-space: pre-wrap;
+                }
+                &.overflowed + .show-desc {
+                    display: inline-block;
+                }
+            }
+            .show-desc {
+                color: $blue;
+                cursor: pointer;
+                display: none;
+            }
+            .log {
+                line-height: 15px;
+            }
+            .red {
+                color: red;
+            }
+        }
+        .break-all {
+            word-break: break-all;
+        }
+    }
+    .overview-table {
+        .td-releases {
+            width: 15%;
+        }
+        .td-date {
+            width: 15%;
+        }
+        .td-statistics {
+            width: 35%;
+        }
+    }
+    .margin-bottom-30 {
+        margin-bottom: 30px;
+    }
+    .dialtest-report-head {
+        //position: relative;
+        //width: 100%;
+        //height: 100px;
+        //background-color: $blue-bg-light;
+        //border-bottom: 1px solid $gray-border;
+        h3 {
+            float: left;
+            line-height: 50px;
+            display: inline-block;
+            margin: 0 0 0 15px;
+            font-size: 20px;
+        }
+    }
+    .dialtest-chart-head {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        background-color: $blue-bg-light;
+        border-bottom: 1px solid $gray-border;
+        h3 {
+            float: left;
+            line-height: 50px;
+            display: inline-block;
+            margin: 0 0 0 15px;
+            font-size: 20px;
+        }
+    }
+    .head-form {
+        float: right;
+        margin-top: 8px;
+        label {
+            margin-left: 20px;
+        }
+        .form-group {
+            margin-left: 20px;
+            select {
+                width: 140px;
+                height: 34px;
+            }
+        }
+        .date-pick {
+            position: relative;
+            width: 180px;
+            input {
+                width: 140px;
+            }
+            .form-group-btn {
+                position: absolute;
+                top: 0px;
+                right: 0;
+            }
+        }
+    }
+    .table-container {
+        width: 100%;
+        height: auto;
+        margin-bottom: 40px;
+        overflow-y: hidden;
+        table {
+            transition: height 0.1s linear;
+            tbody tr {
+                height: 35px;
+                .td-btn-collapse {
+                    .fa {
+                        color: $blue;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        .filter th {
+            height: 35px;
+            padding: 5px !important;
+            input {
+                width: 100%;
+            }
+        }
+        .fix-fa {
+            position: relative;
+            .fa {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+        .dropdown-toggle {
+            cursor: pointer;
+            .fa-sort-down {
+                margin-left: 5px;
+                color: $black;
+            }
+            a {
+                margin: 0;
+                padding: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+    .min-height-table {
+        min-height: 400px;
+    }
+    .head-container {
+        width: 100%;
+        height: 40px;
+        h3 {
+            float: left;
+        }
+        h4 {
+            float: left;
+        }
+    }
+    .chart-half-width-left {
+        position: relative;
+        float: left;
+        width: 550px;
+        height: 340px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        .dialtest-chart {
+            width: 100%;
+            height: 305px;
+        }
+    }
+    .chart-half-width-right {
+        position: relative;
+        float: left;
+        width: 550px;
+        height: 340px;
+        margin-bottom: 20px;
+        .dialtest-chart {
+            width: 100%;
+            height: 305px;
+        }
+    }
+    .dialtest-title-bg {
+        width: 100%;
+        height: 35px;
+        background-color: $gray-title-bg;
+        padding: 5px 10px;
+        font-size: 18px;
+    }
+    .chart-all-width {
+        clear: both;
+        position: relative;
+        width: 100%;
+        height: 340px;
+        margin-bottom: 20px;
+        .dialtest-chart {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

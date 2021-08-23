@@ -1,0 +1,48 @@
+<div class="regexp-configuration"  ng-controller="RegexpsTemplateCtrl as vm">
+    <h1>模板配置</h1>
+    <form  name="form" novalidate tb-form-validator data-bv-excluded class="left">
+        <div class="title">添加模板</div>
+        <div class="form-group">
+            <label>示例：</label>
+            <span>从模板串中提取出子串</span>
+        </div>
+        <div class="form-group">
+            <label>模板串：</label>
+            <input type="text" maxlength="128" name="template" ng-change="vm.getSubString()" ng-model="vm.regexp.parent_string" class="form-control"
+                data-bv-notempty
+                data-bv-notempty-message="模板串不能为空！"/>
+        </div>
+        <div class="form-group">
+            <label>正则表达式：</label>
+            <input type="text" maxlength="128" name="regular" ng-change="vm.getSubString()" ng-model="vm.regexp.reg_exp" class="form-control"
+                data-bv-notempty
+                data-bv-notempty-message="表达式不能为空！"/>
+        </div>
+        <div class="form-group">
+            <label>子串：</label>
+            <span>{{ vm.regexp.sub_string }}</span>
+        </div>
+            <button type="submit" class="btn btn-fix btn-primary" ng-class="{true: 'disabled'}[!vm.regexp.sub_string]" data-form-submit="vm.addRegexp()">添加</button>
+    </form>
+    <div class="right">
+        <div class="title">已添加模板</div>
+        <a ng-repeat="regexp in vm.regexps" class="regexp-list" ng-class="{true: 'active'}[regexp==vm.currentRegexp]">
+            <i class="icon icon-regexp" ng-click="vm.choose(regexp)" ></i>
+            <div regexp-format-text data-regexp="regexp"></div>
+            <i class="icon icon-delete" ng-click="vm.deleteRegexp(regexp.id)">x</i>
+        </a>
+        <div class="title">模板详情</div>
+        <div class="form-group">
+            <label>正则表达式：</label>
+            <span>{{ vm.currentRegexp.reg_exp }}</span>
+        </div>
+        <div class="form-group">
+            <label>模板串：</label>
+            <span>{{ vm.currentRegexp.parent_string }}</span>
+        </div>
+        <div class="form-group">
+            <label>子串：</label>
+            <span>{{ vm.currentRegexp.sub_string }}</span>
+        </div>
+    </div>
+</div>

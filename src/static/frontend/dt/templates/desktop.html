@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Welcome to TestBird Desktop - 首页 </title>
+    <base href="/static/frontend/dt/static/">
+    <link rel="stylesheet" type="text/css" href="css/desktop.css" />
+</head>
+
+<body>
+    <div id="navbar" class="navbar navbar-default">
+        <header>
+            <div class="nav">
+                <div class="logo">
+                    <a href="/desktop/" id="homePage" data-delegate="id_menu_home">
+                        <img id="logo-img" src="/static/img/favicons/favicon-96x96.png" alt="">
+                    </a>
+                    <div class="divider"></div>
+                    <div>
+                        <span class="header-page-title">产品首页</span>
+                        <div class="header-page-breadcrumb" style="display: none;">
+                            <a href="#" data-delegate="id_menu_home">产品首页</a>
+                            <span class="slash">/</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="link userinfo">
+                    <a class="dropdown-toggle js-dropdown-toggle">
+                        <i class="head-icon"></i>
+                        <i class="head-username" title=""></i>
+                        <i class="icon icon-arrow"></i>
+                    </a>
+                    <ul class="user-menu dropdown-menu js-dropdown-menu">
+                        <li>
+                            <a class="js-change-password">
+                                修改密码
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="logout">退出</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+    <div class="row no-rio" style="display: none;" id="id_landing_page">
+        <div class="landing-container">
+            <p class="title" id="name">TestBird 云测平台</p>
+            <div class="product-box">
+                <div class="product app-url quail" data-url="/home/">
+                    <img class="product-img" src="img/test.png">
+                    <h2>测试</h2>
+                    <p>多手机兼容性测试并统计日志性能数据</p>
+                    <p>一键生成功能测试报告</p>
+                    <ul id="module-list">
+                        <li>自动回归测试</li>
+                    </ul>
+                    <a class="button">进入产品
+                        <i class="icon icon-into"></i>
+                    </a>
+                </div>
+
+                <div class="product app-url rio"  data-url="/rio/">
+                    <img class="product-img" src="img/dev.png">
+                    <h2>开发</h2>
+                    <p>真机7×24小时在线，自由选择调试机型</p>
+                    <p>丰富日志、截图及视频</p>
+                    <ul>
+                        <li>远程真机调试</li>
+                    </ul>
+                    <a class="button">进入产品
+                        <i class="icon icon-into"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layer-modal">
+        <div class="modal-content">
+            <img src="../static/img/icon-close.png" alt="" class="icon-close js-password-cancel">
+            <div class="show-message"></div>
+            <h2 class="modal-head">修改密码</h2>
+            <div class="modal-body">
+                <form action="" autocomplete="off">
+
+                      <div class="placeholder-shifting">
+                            <input id="old-password" data-placeholder="旧密码不能为空" placeholder="旧密码" name="oldPassword" class="old-password text-input js-input-validation" type="password" autocomplete="off"
+                        required>
+                            <div class="bar-box"><div class="right-bar bar"></div></div>
+                            <div class="bar-box"><div class="left-bar bar"></div></div>
+
+                      </div>
+
+                     <div class="placeholder-shifting">
+                           <input id="new-password" data-placeholder="新密码不能为空" placeholder="新密码" name="newPassword" class="new-password text-input js-input-validation" type="password" autocomplete="off"
+                            required>
+                            <div class="bar-box"><div class="right-bar bar"></div></div>
+                            <div class="bar-box"><div class="left-bar bar"></div></div>
+
+                      </div>
+
+                      <div class="placeholder-shifting">
+                            <input id="confirm-password" data-placeholder="确认密码不能为空" placeholder="确认密码" name="confirmPassword" class="confirm-password text-input js-input-validation" type="password" autocomplete="off"
+                            required>
+                            <div class="bar-box"><div class="right-bar bar"></div></div>
+                            <div class="bar-box"><div class="left-bar bar"></div></div>
+
+                      </div>
+
+                </form>
+                <br>
+                <small class="error-mssage"></small>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-save js-password-save">确定</a>
+            </div>
+        </div>
+    </div>
+    <script src="/dt/config.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/validate.min.js"></script>
+    <script type="text/javascript" src="lib/md5.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.cookie.1.4.1.js"></script>
+    <script>
+        // 处理IE不支持Array includes方法
+        if (!Array.prototype.includes) {
+            Object.defineProperty(Array.prototype, "includes", {
+                enumerable: false,
+                value: function(item) {
+                    var newArr = this.filter(function(el) {
+                        return el == item;
+                    });
+                    return newArr.length > 0;
+                }
+            });
+        }
+
+        $(function () {
+            function _md5(module) {
+                return config.features.includes(md5(config.features[0] + "__" + md5(module).substr(8, 16)))
+            }
+            if(config.features){
+                var $module_list = $("#module-list");
+                if (_md5("rio")) {
+                    $("#id_landing_page").removeClass("no-rio")
+                }
+                if(_md5("task.manual")){
+                    $module_list.append("<li>自助功能测试</li>")
+                }
+                if(_md5("task.comptest")){
+                    $module_list.append("<li>兼容性测试</li>")
+                }
+            }else{
+                $(".rio").remove();
+            }
+
+
+
+            //判断cookie不存在则退出
+            var reg = new RegExp("(^| )dt_session=([^;]*)(;|$)");
+
+            !(document.cookie.match(reg) && document.cookie.match(reg)[2]) && logout();
+
+            $(".logout").click(logout);
+
+            $(".product.app-url").click(function() {
+                window.open($(this).data("url"));
+            });
+
+            $('.head-username').html(config.nick_name);
+
+
+            $('.head-username').attr("title",config.nick_name);
+
+            $.ajax({
+                url: "/companyconfig/list/",
+            }).done(function(data) {
+                data.name && $("#name").text(data.name + "云测平台");
+                data.logo_url && $("#logo-img").attr("src", data.logo_url);
+            });
+
+            var $dropdownMenu = $(".js-dropdown-menu");
+            $(".js-dropdown-toggle").click(function (e) {
+                e.stopPropagation();
+                $(".icon-arrow").toggleClass("icon-arrow-up")
+                $dropdownMenu.fadeToggle();
+            });
+            $(document).click(function () {
+                $(".icon-arrow").removeClass("icon-arrow-up")
+                $dropdownMenu.fadeOut();
+            });
+
+            var $layer = $(".layer-modal"),
+                validator = $("form").validate({
+                    showErrors: function () {}
+                }),
+                $validation = $(".js-input-validation"),
+                $oldPassword = $("#old-password"),
+                $newPassword = $("#new-password"),
+                $confirmPassword = $("#confirm-password");
+
+            $(".js-change-password").click(function() {
+                $layer.fadeIn();
+            });
+            $(".js-password-cancel").click(function() {
+                $layer.fadeOut();
+                $validation.val("");
+                _showError("");
+            })
+
+            $(".js-password-save").click(function(){
+                if (!$("form").valid()) {
+                    _showError("请填写完整信息");
+                } else if (_isDifferentPassword()) {
+                    _showError("新密码与确认密码不一致");
+                } else {
+                    $.ajax({
+                        url:"/user/change_password/",
+                        method: "post",
+                        data: {
+                            old_password: $oldPassword.val(),
+                            password: $newPassword.val()
+                        }
+                    }).done(function(data) {
+                        if (data.result) {
+                            $layer.fadeOut();
+                        } else {
+                            $('.show-message').html(data.detail+'！请重新登录！')
+                            $('.show-message').css({
+                                "opacity":'1',
+                                "transform":'scale(1.1)',
+                                "top":'-15%'
+                            })
+                            setTimeout(function () {  window.location.href='/login/' }, 2000 );
+                        }
+                    }).fail(function(xhr, status) {
+                        if (xhr.status == 403) {
+                            logout()
+                        } else {
+                            _showError(xhr.responseJSON.detail);
+                        }
+                    });
+                }
+            });
+
+            $validation.on("change blur", function () {
+                var $this = $(this);
+                !validator.element("#" + $this.prop("id")) && _showError($this.data("placeholder"));
+                $this.prop("id") != "old-password" && _isDifferentPassword() && _showError("新密码与确认密码不一致");
+            });
+            $validation.on("focus", function () {
+                _showError("");
+            });
+
+            function _isDifferentPassword() {
+                var confirmVal = $confirmPassword.val(),
+                    newVal = $newPassword.val();
+                return confirmVal && newVal ? confirmVal !== newVal : false;
+            }
+
+            function _showError(msg) {
+                $(".error-mssage").html(msg);
+            }
+
+            function logout() {
+                document.cookie = "dt_session=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                location.href = "/login/";
+            }
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<div class="rent-modal rio-modal">
+<div class="testcase-step">
+    <h1 class="head">批量设置标签<i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <div class="form-group release-item row">
+        <span uib-dropdown uib-dropdown-toggle>
+            <label id="button-template-url">标签<i class="fa fa-sort-desc"></i></label>
+            <div class="dropdown-menu tags-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url" ng-show="vm.tags.length">
+                <ul>
+                    <li role="menuitem" ng-repeat="tag in vm.tags" ng-click="vm.stopPropagation($event)">
+                        <label for="tag-{{ $index }}">
+                            <input type="checkbox" id="tag-{{ $index }}" ng-model="tag.checked"/>
+                            <span title="{{ tag.name }}">{{ tag.name }}</span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="memu-foot">
+                    <a>选好了</a>
+                </div>
+            </div>
+        </span>
+    </div>
+    <div class="testcase-tree-wrap">
+        <ul class="testcase-tree ztree" id="testcases-modal-tree" tb-tree setting="vm.setting" nodes="vm.nodes"></ul>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-click="vm.close()">确定</button>
+    </div>
+</div>
+</div>

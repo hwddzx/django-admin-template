@@ -1,0 +1,44 @@
+<div class="image-editor-container">
+    <canvas id="dash-canvas"></canvas>
+    <canvas id="brush-canvas"></canvas>
+    <div class="element-container">
+    </div>
+    <div class="draw-board">
+    </div>
+</div>
+<div class="tools-style" ng-hide="model.currentChooseTool == 'none'">
+    <i class="tool-style-arrow"></i>
+    <div class="tool-item" ng-if="model.currentChooseTool == 'other'" ng-class="{true:'active'}[item == currentWidth]" ng-repeat="item in toolStyleWidths" ng-click="chooseToolStyleWidth(item)">
+        <i class="tool-style-{{ item }}"></i>
+    </div>
+    <div class="font-size" ng-if="model.currentChooseTool == 'text'">
+        <div class="font-size-container" ng-click="model.currentFontSizeIsShow = true">
+            <div class="current-font-size" ng-bind="currentFontSize"></div>
+            <div class="font-size-item-container" ng-if="model.currentFontSizeIsShow">
+                <div class="font-size-item" ng-repeat="item in fontSizeItems" ng-click="chooseFontSize(item, $event);">
+                    <div class="">{{ item }}</div>
+                </div>
+            </div>
+            <i class="fa fa-sort dropdown-btn"></i>
+        </div>
+    </div>
+    <div class="tool-color">
+        <div class="tool-color-container" ng-click="model.currentColorPanelIsShow = true">
+            <div class="current-tool-color" ng-style="{ 'background-color': currentColor }"></div>
+            <div class="tool-color-item-container" ng-if="model.currentColorPanelIsShow">
+                <div class="tool-color-item" ng-repeat="item in colorItems" ng-click="chooseToolColor(item, $event)">
+                    <div class="" ng-style="{ 'background-color': item }"></div>
+                </div>
+            </div>
+            <i class="fa fa-sort dropdown-btn"></i>
+        </div>
+    </div>
+</div>
+<div class="tools">
+    <div class="tool-item" ng-class="{'active':tool.active}" ng-click="onToolClicked(tool, $event)" ng-repeat="tool in tools" data-tool-key="{{tool.key}}">
+        <i class="icon {{tool.icon}}" />
+    </div>
+    <div class="tool-item" ng-click="btn.click($event)" ng-repeat="btn in btns">
+        <i class="icon {{btn.icon}}" />
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="rent-records">
+    <!-- <h2>使用记录</h2> -->
+    <div style="margin-top: 20px;margin-bottom: 20px; width: 1120px;" class="gray margin_auto font_size_15">
+        您一共有 <span style="color: skyblue;">{{count}}</span> 条信息
+    </div>
+    <!-- zanshi  -->
+    <!-- <table scroll-load-table style="display: none;" data-ctrl="tableCtrl" class="table table-devices table-odd-color">
+        <thead>
+            <tr>
+                <th width="440px" colspan="2" class="text-left">设备</th>
+                <th width="180px">开始时间</th>
+                <th width="240px">结束时间</th>
+                <th wdith="210px">状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="device-row" ng-repeat="record in records">
+                <td class="device-manufacturer-col" width="120px" ng-mouseenter="setCurrentDevice(record.device)">
+                    <a href="" class="manufacturer-icon-link" ng-if="!isDeviceOutStock(record.device)" popover-template="'app/device-list/templates/device-modal.html'" popover-placement="right" popover-trigger="mouseenter"><img class="manufacturer-icon" ng-src="{{record.device.manufacturer_icon}}" /></a>
+                </td>
+                <td>{{record.device_name}}</td>
+                <td>{{record.begin*1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{(record.stop||record.end)*1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td class="">
+                    <a href="" ng-if="record.artifact_url" class="log-download-link" ng-click="download(record.artifact_url)"><i class="icon icon-log-download"></i></a>
+                    <a href="" class="btn btn-light" ng-if="!isDeviceAvailable(record.device)">{{ record.device | rioDeviceStatus}}</span><a href="" ng-click="showRentModal(record.device)" ng-if="isDeviceAvailable(record.device)" class="btn green-btn rent-btn">再次租用</a>
+                </td>
+            </tr>
+        </tbody>
+    </table> -->
+    <div class="boxx_list margin_auto" scroll-load-table data-ctrl="tableCtrl" style="width: 1120px;">
+        <div>
+          <div class="display_flex padding_10 text_center litbox gray_head width_100">
+            <div class="flex_2">
+              设备
+            </div>
+            <div class="flex_1">
+              应用名称
+            </div>
+            <div class="flex_1">
+              开始时间
+            </div>
+            <div class="flex_1">
+              结束时间
+            </div>
+            <div class="flex_1">
+              状态
+            </div>
+          </div>
+          <div class="bjfw">
+            <div class="display_flex padding_20 text_center lit_bottom_box width_100" ng-repeat="item in records">
+              <div class="flex_2">
+                {{item.device_name}}
+              </div>
+              <div class="flex_1">
+                {{item.test_app[0]?item.test_app[0]:"无"}} <br/> {{item.test_app[1]}}
+              </div>
+              <div class="flex_1">
+                {{item.begin*1000 | date:'yyyy-MM-dd HH:mm:ss'}}
+              </div>
+              <div class="flex_1">
+                {{item.end*1000 | date:'yyyy-MM-dd HH:mm:ss'}}
+
+              </div>
+              <div class="flex_1">
+                <a href="" ng-if="item.artifact_url" class="log-download-link" ng-click="download(item.artifact_url)"><i class="icon icon-log-download"></i></a>
+                <a href="" class="btn btn-light" ng-if="!isDeviceAvailable(item.device)">
+                  {{ item.device|rioDeviceStatus}}
+                </a>
+                <a href="" ng-click="showRentModal(item.device)" ng-if="isDeviceAvailable(item.device)" class="btn green-btn rent-btn">{{item.device|rioDeviceStatus}}</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+</div>

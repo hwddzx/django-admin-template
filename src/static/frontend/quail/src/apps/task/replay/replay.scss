@@ -1,0 +1,393 @@
+.replay {
+    .progress-wrap {
+        position: relative;
+    }
+    .progress {
+        width: 80px;
+        height: 4px;
+        position: absolute;
+        display: inline-block;
+        line-height: 16px;
+        margin-top: 5px;
+        margin-left: -25px;
+    }
+    .progress-bar {
+        background: $green;
+        width: 0;
+        .progress-number {
+            display: none;
+        }
+    }
+}
+
+.replay-detail {
+    .result {
+        width: 100px;
+        display: inline-block;
+    }
+    .show-progress {
+        position: relative;
+        height: 20px;
+        margin-bottom: 20px;
+        .progress {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+        }
+        .progress-bar {
+            background: $green;
+            width: 0;
+            .progress-number {
+                position: absolute;
+                right: 5px;
+            }
+        }
+    }
+    .issue-devices-link {
+        a {
+            margin-left: 5px;
+            color: $red;
+            text-decoration: underline;
+            &:hover {
+                color: darken($red, 20%);
+            }
+        }
+    }
+    table {
+        thead tr th {
+            width: auto;
+            min-width: 0;
+        }
+        tbody tr td {
+            height: 40px;
+        }
+        .align-left {
+            text-align: left;
+            font-size: 12px;
+        }
+        .dropdown-menu {
+            a {
+                display: block;
+                @include text-overflow;
+            }
+        }
+        .execution-name {
+            max-width: 200px;
+            word-break: break-all;
+        }
+    }
+}
+
+.replay-loading {
+    text-align: center;
+    h3 {
+        font-size: 20px;
+        margin-top: 100px;
+        color: $blue;
+    }
+}
+
+.rent-failed-devices {
+    height: 350px;
+    overflow-y: auto;
+    border: 1px solid $gray-border;
+    @include table-class;
+    table {
+        margin: 0;
+        border-width: 1px;
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+        tbody tr >:first-child {
+            padding: 0 10px!important;
+        }
+        td {
+            height: 40px!important;
+            line-height: 40px!important;
+            padding: 0 10px;
+        }
+    }
+}
+
+.comptest-report-link {
+    left: auto;
+    height: 20px;
+    vertical-align: middle;
+}
+
+.comptest-report-excel-link {
+    margin-left: 8px;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+.execution-result-update-modal {
+    .execution-result-wrap{
+        padding: 20px;
+    }
+    .execution-result {
+        display: inline-block;
+        width: 150px;
+    }
+    .desc-wrap {
+        padding: 20px;
+        label {
+            position: relative;
+            top: 25px;
+            left: -20px;
+        }
+        textarea {
+            width: calc(100% - 50px);
+            margin-left: 50px;
+        }
+    }
+}
+
+.snapshot-modal-bigger {
+    .modal-dialog {
+        width: 95%;
+        margin: 40px auto !important;
+        height: calc(100% - 80px);
+        .modal-content {
+            height: 100%;
+            .tb-modal {
+                height: 100%;
+                .tb-modal-content {
+                    height: calc(100% - 150px);
+                    overflow-y: auto;
+                }
+                .image-box-container {
+                    overflow: hidden;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
+
+.execution-snapshot-modal {
+    .comptest-modal-content {
+        overflow-y: hidden;
+        height: calc(100% - 150px);
+        display: inline-block;
+        width: 100%;
+    }
+    .allHeight-modal-content {
+        height: calc(100% - 70px);
+    }
+    .images-container {
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: auto;
+        min-height: 239px;
+        max-height: 435px;
+        padding: 10px;
+        .overlay {
+            display: block;
+            position: absolute;
+            background: rgba(0, 124, 240, .9);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: pointer;
+            @include transition(all 0.25s linear);
+        }
+    }
+    .allHeight-Container {
+        max-height: 100%;
+    }
+    .new-procedure-container {
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 159px;
+        padding: 10px;
+        border-top: 1px solid $gray-border;
+        margin-top: 5px;
+        .add-new {
+            width: 68px;
+            height: 68px;
+            border: 1px solid $black;
+            padding: 14px 0 0 16px;
+            cursor: pointer;
+        }
+        .add-confirm {
+            width: 68px;
+            height: 68px;
+            color: $green;
+            border: 1px solid $green;
+            padding: 12px 0 0 14px;
+            cursor: pointer;
+        }
+        .add-cancel {
+            width: 68px;
+            height: 68px;
+            color: $red;
+            border: 1px solid $red;
+            padding: 12px 0 0 17px;
+            cursor: pointer;
+        }
+    }
+    .snapshot-box-item {
+        .trash-wrap {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+        .snapshot-icon {
+            float: right;
+            background-image: url("img/snapshot-icon.png");
+            background-size: 40px 40px;
+            width: 20px;
+            height: 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .icon-trash {
+            background-position: 0 0;
+            &:hover {
+                background-position: 0 -20px;
+            }
+        }
+        .icon-modify {
+            background-position: -20px 0;
+            &:hover {
+                background-position: -20px -20px;
+            }
+        }
+        &:hover {
+            .trash-wrap {
+                display: block;
+            }
+        }
+        .meta {
+            .number {
+                display: block;
+                width: 68px;
+                line-height: 25px;
+                text-align: center;
+                @include text-overflow;
+            }
+        }
+    }
+}
+
+.step-modal {
+    table tr td {
+        border:1px solid $gray-border;
+    }
+    .table-group {
+        max-height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .form-group label {
+        font-size: 16px;
+    }
+    .form-group input {
+        border: 1px solid $gray-border;
+        border-radius: 3px;
+    }
+}
+
+.app-queue-modal {
+    .divider-line {
+        height: 1px;
+        background-color: $gray-border;
+        margin: 10px 0;
+    }
+    .table-content {
+        max-height: 230px;
+        overflow: auto;
+        .table thead, .table tbody {
+            padding: 6px 6px 6px 0;
+        }
+    }
+}
+
+.sortable-row:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.as-sortable-item, .as-sortable-placeholder {
+    display: inline-block;
+    width: 68px;
+    height: 68px;
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    img {
+        width: 68px;
+        height: 68px;
+    }
+    .snapshot-box-item {
+        position: relative;
+        .trash-wrap {
+            display: none;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+        }
+    }
+    .meta {
+        .number {
+            display: block;
+            line-height: 25px;
+            text-align: center;
+        }
+    }
+}
+
+.as-sortable-placeholder {
+    border: 1px dashed darkgrey;
+    box-sizing: border-box;
+    background-color: #dbdbdb;
+    border-radius: 10px;
+}
+
+.play-video-modal {
+    width: 600px;
+    .video-modal-content {
+        overflow-y: hidden;
+        height: 500px;
+        display: inline-block;
+        width: 100%;
+        cursor: not-allowed;
+        pointer-events: none;
+        .ios_video {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            img {
+                width: auto;
+                height: auto;
+                max-width: 500px;
+                max-height: 500px;
+            }
+        }
+        video {
+            margin: 5px;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            min-height: 490px;
+        }
+    }
+    .video-h5-content {
+        overflow-y: hidden;
+        height: 500px;
+        display: inline-block;
+        width: 100%;
+        video {
+            margin: 5px;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            min-height: 490px;
+        }
+    }
+}

@@ -1,0 +1,50 @@
+.variable-container {
+    position: relative;
+    padding: 20px;
+    .btn-group {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        .btn {
+            margin-left: 5px;
+        }
+    }
+    .table {
+        border-top: 1px solid $border-gray;
+        border-left: 1px solid $border-gray;
+        background-color: $white;
+        th, td {
+            text-align: center;
+            font-weight: normal;
+            border-right: 1px solid $border-gray;
+            border-bottom: 1px solid $border-gray;
+        }
+        td {
+            &:nth-child(2),
+            &:nth-child(3) {
+                text-align: left;
+            }
+        }
+    }
+    .value-item {
+        position: relative;
+        float: left;
+        width: 150px;
+        margin: 5px;
+        .icon-delete {
+            display: none;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        &:hover {
+            .icon-delete {
+                display: inline-block;
+            }
+        }
+        input.checked {
+            border-color: $selected-bg;
+            background: $selected-bg;
+        }
+    }
+}

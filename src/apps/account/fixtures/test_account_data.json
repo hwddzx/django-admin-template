@@ -1,0 +1,48 @@
+[
+  {
+    "pk": 2,
+    "model": "account.user",
+    "comment": "testbird操作员1",
+    "password": "123456",
+    "fields": {
+      "email": "staff1@testbird.com",
+      "name": "staff1",
+      "phone": "91111",
+      "gender": "M",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": true,
+      "last_login": "2013-12-27T10:15:29.729",
+      "groups": [3],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$JcIDIVlij6lL$96WrdBIgwjQYbXs7hOPEwUGwhrR+6g2Ur5oaBMHlX4I=",
+      "date_joined": "2013-12-27T10:09:15.020",
+      "created": "2014-05-1T00:00:00.000",
+      "updated": "2014-05-1T00:00:00.000"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "account.user",
+    "comment": "testbird操作员2",
+    "password": "123456",
+    "fields": {
+      "email": "staff2@testbird.com",
+      "name": "staff2",
+      "phone": "91112",
+      "gender": "M",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": true,
+      "last_login": "2013-12-27T10:15:29.729",
+      "groups": [1,2],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$JcIDIVlij6lL$96WrdBIgwjQYbXs7hOPEwUGwhrR+6g2Ur5oaBMHlX4I=",
+      "date_joined": "2013-12-27T10:09:15.020",
+      "created": "2014-05-1T00:00:00.000",
+      "updated": "2014-05-1T00:00:00.000"
+    }
+  }
+]
+
+

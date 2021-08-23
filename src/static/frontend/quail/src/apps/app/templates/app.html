@@ -1,0 +1,28 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/head.html'" class="lab-header"></ng-include>
+<!-- /头部 -->
+
+<div class="app-container">
+    <div class="tab-container">
+        <ul class="nav left-tab" role="tablist">
+            <li role="presentation" ng-class="{ 'active':isActiveTab('testcases') }"><a href="" ui-sref=".testcases" ui-sref-opts="{reload:true}"><i class="icon tab-icon testcases-tab"></i>用例管理</a></li>
+            <li ng-if="featureEnabled('permission')" role="presentation" ng-class="{ 'active':isActiveTab('permission') }"><a href="" ui-sref=".permission" ui-sref-opts="{reload:true}"><i class="icon tab-icon permission-tab"></i>权限管理</a></li>
+            <li ng-if="featureEnabled('distribute')" role="presentation" ng-class="{ 'active':isActiveTab('distribute') }"><a href="" ui-sref=".distribute" ui-sref-opts="{reload:true}"><i class="icon tab-icon distribution-tab"></i>任务分发</a></li>
+            <li ng-if="featureEnabled('task.manual')" role="presentation" ng-class="{ 'active':isActiveTab('task') }"><a href="" ui-sref=".tasks({clearFilter:true})" ui-sref-opts="{reload:true}"><i class="icon tab-icon tasks-tab"></i>自助功能测试</a></li>
+            <li role="presentation" ng-class="{ 'active':isActiveTab('replay') }"><a href="" ui-sref=".replaytasks({clearFilter:true})" ui-sref-opts="{reload:true}"><i class="icon tab-icon replay-tab"></i>自动回归测试</a></li>
+            <li ng-if="featureEnabled('task.comptest')" role="presentation" ng-class="{ 'active':isActiveTab('comptest') }"><a href="" ui-sref=".comptesttasks" ui-sref-opts="{reload:true}"><i class="icon tab-icon comptest-tab"></i>兼容性测试</a></li>
+            <li ng-if="featureEnabled('dialtesttasks')" role="presentation" ng-class="{ 'active':isActiveTab('dialtesttask') }"><a href="" ui-sref=".dialtesttasks" ui-sref-opts="{reload:true}"><i class="icon tab-icon timed-replay-tab"></i>拨测监控</a></li>
+            <li ng-if="featureEnabled('timedReplaytasks')" role="presentation" ng-class="{ 'active':isActiveTab('timedReplaytask') }"><a href="" ui-sref=".timedReplaytasks" ui-sref-opts="{reload:true}"><i class="icon tab-icon timed-replay-tab"></i>定时自动回归</a></li>
+            <li ng-if="featureEnabled('timedComptesttasks')" role="presentation" ng-class="{ 'active':isActiveTab('timedComptesttask') }"><a href="" ui-sref=".timedComptesttasks" ui-sref-opts="{reload:true}"><i class="icon tab-icon timed-comptest-tab"></i>定时兼容性</a></li>
+            <li ng-if="featureEnabled('statistics')" role="presentation" ng-class="{ 'active':isActiveTab('statistics') }"><a href="" ui-sref=".statistics" ui-sref-opts="{reload:true}"><i class="icon tab-icon distribution-tab"></i>redmine数据统计</a></li>
+            <li role="presentation" ng-class="{ 'active':isActiveTab('report') }"><a href="" ui-sref=".reports" ui-sref-opts="{reload:true}"><i class="icon tab-icon reports-tab"></i>测试报告</a></li>
+            <li role="presentation" ng-class="{ 'active':isActiveTab('component') }"><a href="" ui-sref=".component" ui-sref-opts="{reload:true}"><i class="icon tab-icon component-tab"></i>模块管理</a></li>
+            <li role="presentation" ng-class="{ 'active':isActiveTab('release') }"><a href="" ui-sref=".releases" ui-sref-opts="{reload:true}"><i class="icon tab-icon releases-tab"></i>版本管理</a></li>
+            <li role="presentation" ng-class="{ 'active':isActiveTab('plugin') }"><a href="" ui-sref=".plugin" ui-sref-opts="{reload:true}"><i class="icon tab-icon plugin-tab"></i>插件管理</a></li>
+            <li role="presentation" ng-class="{ 'active':isActiveTab('variable') }"><a href="" ui-sref=".variable" ui-sref-opts="{reload:true}"><i class="icon tab-icon variable-tab"></i>全局参数管理</a></li>
+            <li ng-if="featureEnabled('scan')" role="presentation" ng-class="{ 'active':isActiveTab('scan') }"><a href="" ui-sref=".scantasks" ui-sref-opts="{reload:true}"><i class="icon tab-icon variable-tab"></i>敏感词扫描</a></li>
+            <li ng-if="featureEnabled('charts')" role="presentation" ng-class="{ 'active':isActiveTab('charts') }"><a href="" ui-sref=".charts({appKey:app.key})" ui-sref-opts="{reload:true}"><i class="icon tab-icon variable-tab"></i>报表系统</a></li>
+        </ul>
+    </div>
+    <div ui-view class="product-container"></div>
+</div>

@@ -1,0 +1,241 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/report.head.html'"></ng-include>
+<!-- /头部 -->
+<div class="btn-export-pdf">
+    <a href="" class="btn btn-sm btn-primary" ng-click="vm.exportBasic()">导出概要</a>
+    <a href="" class="btn btn-sm btn-primary" ng-click="vm.exportAll()">导出全部(Excel)</a>
+</div>
+<div id="scanDetail" class="scan-detail-container content-container">
+    <div id="detail-base">
+    <h3>{{vm.scanDetail.scan_task_name}}扫描概况</h3>
+    <table class="tb-no-head-border-table tb-no-head-table-title margin-bottom-30 detail-table">
+        <tr>
+            <td colspan="5">
+                <div>svn地址</div>
+                <div class="break-all" ng-bind="vm.scanDetail.repertory"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>versionID</div>
+                <div ng-show="vm.scanDetail.revision" ng-bind="vm.scanDetail.revision"></div>
+                <div ng-show="!vm.scanDetail.revision" ng-bind="vm.scanDetail.safe_scan_result.summary.svn_version"></div>
+            </td>
+            <td>
+                <div>代码提交时间</div>
+                <div ng-show="vm.sensitiveResult.lastChangeTime" ng-bind="vm.sensitiveResult.lastChangeTime/1000 | dateFilter"></div>
+                <div ng-show="!vm.sensitiveResult.lastChangeTime" ng-bind="vm.scanDetail.safe_scan_result.summary.last_change_time/1000 | dateFilter"></div>
+            </td>
+            <td>
+                <div>代码行数</div>
+                <div ng-bind="(vm.scanDetail.measures.totalLineCount || 0)/1000 + 'k'"></div>
+            </td>
+            <td>
+                <div>发起扫描时间</div>
+                <div ng-bind="vm.scanDetail.created | dateFilter"></div>
+            </td>
+            <td>
+                <div>耗时</div>
+                <div ng-show="!vm.isShowSafeTime()" ng-bind="(vm.scanDetail.measures.downloadTime + vm.scanDetail.measures.searchTime)/1000 | secondFilter"></div>
+                <div ng-show="vm.isShowSafeTime()" ng-bind="vm.scanDetail.safe_scan_result.summary.total_time_cost/1000 | secondFilter"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <div>log</div>
+                <div ng-if="vm.sensitiveResult.versionLogs" class="log" ng-bind-html="vm.sensitiveResult.versionLogs"></div>
+                <div ng-if="!vm.sensitiveResult.versionLogs" class="log" ng-bind-html="vm.scanDetail.safe_scan_result.summary.svn_log"></div>
+            </td>
+        </tr>
+    </table>
+    <h3>扫描结果</h3>
+    <table class="tb-no-head-border-table tb-no-head-table-title margin-bottom-30 detail-table">
+        <tr>
+            <td>
+                <div>敏感词</div>
+            </td>
+            <td>
+                <div ng-show="vm.scanDetail.result_file">
+                    <span ng-if="vm.isLoadAllSensitive()&&vm.isGotResultfile" class="link" ng-click="vm.goExceptions('sensitive_exceptions')">{{(vm.sensitiveExceptions.length || 0) + '条'}}</span>
+                    <span ng-if="!vm.isLoadAllSensitive()&&vm.isGotResultfile" class="link" ng-click="vm.goExceptions('sensitive_exceptions')">{{(vm.sensitiveExceptions.length || 0) + '条+'}}</span>
+                    <span ng-if="!vm.isLoadAllSensitive()&&vm.isGotResultfile">(尚未加载完全，全部数量以导出Excel为准)</span>
+                    <span ng-if="!vm.isGotResultfile">获取结果中...</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>三方库安全</div>
+            </td>
+            <td>
+                <div ng-show="vm.scanDetail.safe_scan_result.summary"><span class="link" ng-click="vm.goExceptions('safe_exceptions')">{{(vm.safeFilteredExceptions.length || 0) + '条'}}</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>扫描结果：</span>
+                <span>
+                    <input type="radio" id="pass" name="result" ng-model="vm.scanResult" value="1">
+                    <label for="pass">扫描通过 </label>
+                </span>
+                <span>
+                    <input type="radio" id="notpass" name="result" ng-model="vm.scanResult" value="0">
+                    <label for="notpass">扫描未通过 </label>
+                </span>
+            </td>
+            <td>
+                <span> 核查人：</span>
+                <span class="scan-underline">{{vm.username}}</span>
+            </td>
+        </tr>
+    </table>
+    </div>
+    <div ng-show="vm.isShowDetail">
+        <h3 id="sensitive_exceptions">敏感词扫描</h3>
+        <p class="warning" ng-show="vm.isShowDescSensitive()">{{vm.scanDetail.desc}}</p>
+        <table ng-show="vm.scanDetail.result_file" class="tb-no-head-border-table tb-no-head-table-title margin-bottom-30 detail-table">
+            <tr>
+                <td>
+                    <div>扫描策略</div>
+                    <div ng-repeat="sensitive in vm.scanDetail.sensitives">{{sensitive}}</div>
+                </td>
+                <td>
+                    <div>总结果</div>
+                    <div ng-bind="(vm.scanDetail.sensitive_numbers || 0) + '条'"></div>
+                </td>
+                <td>
+                    <div>违规</div>
+                    <div>
+                        <span ng-if="vm.isLoadAllSensitive()" ng-click="vm.goExceptions('sensitive_exceptions')">{{(vm.sensitiveExceptions.length || 0) + '条'}}</span>
+                        <span ng-if="!vm.isLoadAllSensitive()" ng-click="vm.goExceptions('sensitive_exceptions')">{{(vm.sensitiveExceptions.length || 0) + '条+'}} (尚未加载完全，全部数量以导出Excel为准)</span>
+                    </div>
+                </td>
+                <td>
+                    <div>例外</div>
+                    <div><span class="link" ng-click="vm.isShowIgnoredSensitive=true">{{(vm.ignoredSensitiveExceptions.length || 0) + '条'}}</span></div>
+                    <div ng-show="vm.isShowIgnoredSensitive&&vm.ignoredSensitiveExceptions.length > 0"><span class="link" ng-click="vm.isShowIgnoredSensitive=false&&vm.ignoredSensitiveExceptions.length>0">收起</span></div>
+                </td>
+            </tr>
+        </table>
+        <div id="ignored_sensitive_exceptions" ng-show="vm.isShowIgnoredSensitive">
+            <h3>例外异常-敏感词扫描</h3>
+            <table class="exceptions-list">
+                <tr ng-repeat="exception in vm.ignoredSensitiveExceptions">
+                    <td class="exception-num">{{$index + 1}}</td>
+                    <td>
+                        <p>文件：{{exception.file}}&nbsp;&nbsp;{{exception.lineNumber}}&nbsp;&nbsp;等级：{{exception.keywordLevel}} 匹配规则：{{exception.keyword}}
+                            <span class="link" ng-show="!exception.showCode" ng-click="exception.showCode=true">详情</span>
+                            <span class="link" ng-show="exception.showCode" ng-click="exception.showCode=false">收起</span>
+                        </p>
+                        <p>忽略原因：{{exception.desc}}</p>
+                        <pre ng-if="exception.beforeLines && exception.showCode" ng-repeat="line in exception.beforeLines track by $index">{{line}}</pre>
+                        <div class="line-code" ng-if="exception.showCode">
+                            <pre>{{exception.lineStart}}</pre>
+                            <pre ng-bind-html="exception.html"></pre>
+                            <pre>{{exception.lineEnd}}</pre>
+                        </div>
+                        <pre class="afterLine" ng-if="exception.afterLines && exception.showCode" ng-repeat="line in exception.afterLines track by $index">{{line}}</pre>
+                    </td>
+                    <td class="exception-ignore">
+                        <span class="link" ng-click="vm.deleteIgnoredException(exception, 0)">取消忽略</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <h3 ng-show="vm.scanDetail.result_file">扫描详情</h3>
+        <table ng-show="vm.scanDetail.result_file" class="exceptions-list">
+            <tr ng-repeat="exception in vm.sensitiveExceptions">
+                <td class="exception-num">{{$index + 1}}</td>
+                <td>
+                    <p>文件：{{exception.file}}&nbsp;&nbsp;{{exception.lineNumber}}行&nbsp;&nbsp;等级：{{exception.keywordLevel}} 匹配规则：{{exception.keyword}}
+                        <span class="link" ng-show="!exception.showCode" ng-click="exception.showCode=true">详情</span>
+                        <span class="link" ng-show="exception.showCode" ng-click="exception.showCode=false">收起</span>
+                    </p>
+                    <pre ng-if="exception.beforeLines && exception.showCode" ng-repeat="line in exception.beforeLines track by $index">{{line}}</pre>
+                    <div class="line-code" ng-if="exception.showCode">
+                        <pre>{{exception.lineStart}}</pre>
+                        <pre ng-bind-html="exception.html"></pre>
+                        <pre>{{exception.lineEnd}}</pre>
+                    </div>
+                    <pre class="afterLine" ng-if="exception.afterLines && exception.showCode" ng-repeat="line in exception.afterLines track by $index">{{line}}</pre>
+                </td>
+                <td class="exception-ignore">
+                    <span class="link" ng-click="vm.ignoreException(exception, 'ignore', 0)">忽略此项</span>
+                </td>
+            </tr>
+        </table>
+        <div class="scan-load-more" ng-if="!vm.isLoadAllSensitive()"><span class="link" ng-click="vm.changePageNum()">加载更多</span></div>
+        <h3 id="safe_exceptions">三方库安全扫描</h3>
+        <p class="warning" ng-show="!vm.isShowDescSensitive() && vm.isShowDescSafe">{{vm.scanDetail.desc}}</p>
+        <table ng-show="vm.scanDetail.safe_scan_result.summary" class="tb-no-head-border-table tb-no-head-table-title margin-bottom-30 detail-table">
+            <tr>
+                <td>
+                    <div>扫描策略</div>
+                    <div>扫描插件</div>
+                </td>
+                <td>
+                    <div>违规</div>
+                    <div ng-bind="'违规项' + vm.safeExceptions.length + '条'"></div>
+                </td>
+                <td>
+                    <div>例外</div>
+                    <div><span class="link" ng-click="vm.isShowIgnoredSafe=true">{{vm.ignoredSafeExceptions.length + '条'}}</span></div>
+                    <div ng-show="vm.isShowIgnoredSafe"><span class="link" ng-click="vm.isShowIgnoredSafe=false">收起</span></div>
+                </td>
+            </tr>
+        </table>
+        <div id="ignored_safe_exceptions" ng-show="vm.isShowIgnoredSafe">
+            <h3>例外异常-三方库安全扫描</h3>
+            <table class="exceptions-list">
+                <tr ng-repeat="exception in vm.ignoredSafeExceptions">
+                    <td class="exception-num">{{$index + 1}}</td>
+                    <td>
+                        <p>lib目录：{{exception.file}}&nbsp;&nbsp;等级：{{exception.severity}}</p>
+                        <p>忽略原因：{{exception.desc}}</p>
+                        <p>漏洞：{{exception.vulnerability}}</p>
+                        <p>解决方案：{{exception.CWE}}</p>
+                    </td>
+                    <td class="exception-ignore">
+                        <span class="link" ng-click="vm.deleteIgnoredException(exception, 1)">取消忽略</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="vm.scanDetail.safe_scan_result.summary">
+            <h3>扫描详情</h3>
+            <form class="form-inline">
+                <div class="form-group">
+                    <span>等级：</span>
+                    <span>
+                        <input type="checkbox" id="low" ng-model="vm.safeFilters.low.value" ng-click="vm.filterSafeExceptions()">
+                        <label for="low">Low</label>
+                    </span>
+                    <span>
+                        <input type="checkbox" id="medium" ng-model="vm.safeFilters.medium.value" ng-click="vm.filterSafeExceptions()">
+                        <label for="medium">Medium</label>
+                    </span>
+                    <span>
+                        <input type="checkbox" id="high" ng-model="vm.safeFilters.high.value" ng-click="vm.filterSafeExceptions()">
+                        <label for="high">High</label>
+                    </span>
+                </div>
+            </form>
+            <table class="exceptions-list">
+                <tr ng-repeat="exception in vm.safeFilteredExceptions">
+                    <td class="exception-num">{{$index + 1}}</td>
+                    <td>
+                        <p>lib目录：{{exception.file}}&nbsp;&nbsp;等级：{{exception.severity}}</p>
+                        <p>漏洞：{{exception.vulnerability}}</p>
+                        <p>解决方案：{{exception.CWE}}</p>
+                    </td>
+                    <td class="exception-ignore">
+                        <span class="link" ng-click="vm.ignoreException(exception, 'ignore', 1)">忽略此项</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

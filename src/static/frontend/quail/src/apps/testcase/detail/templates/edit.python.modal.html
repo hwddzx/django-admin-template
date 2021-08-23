@@ -1,0 +1,18 @@
+<div class="tb-modal edit-python-modal">
+    <form tb-form-validator class="form-horizontal">
+        <i class="icon icon-popup-close" ng-click="vm.cancel()"></i>
+        <h1>编辑参数检查脚本</h1>
+        <textarea class="file-name" ng-model="vm.model.script" contenteditable="true"></textarea>
+        <div class="form-group">
+            <input type="text" class="form-control" ng-change="vm.checkSameAlias()" name="file-alias"
+                   data-bv-notempty data-bv-notempty-message="脚本名称不能为空"
+                   id="fileAlias" ng-model="vm.model.fileAlias">
+            <input type="text" class="form-control auto-change hide-input" name="captcha" data-bv-trigger="change" ng-model="vm.nameExist"
+                   ng-value="vm.nameExist" data-bv-notempty data-bv-notempty-message="脚本名称重复"/>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-fix btn-primary" ng-disabled="!vm.model.fileAlias" type="submit" data-form-submit="vm.close()">确定</button>
+            <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+        </div>
+    </form>
+</div>

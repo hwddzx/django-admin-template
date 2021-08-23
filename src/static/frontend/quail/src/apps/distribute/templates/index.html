@@ -1,0 +1,71 @@
+<div class="task-distribute-container">
+    <div class="app-info">
+        <img class="app-icon" ng-src="{{ vm.appInfo.icon_url }}" />
+        <div class="info">
+            <div>
+                <span class="name" ng-bind="vm.appInfo.name"></span>
+                <span class="release-dropdown" uib-dropdown uib-dropdown-toggle>
+                      <a class="dropdown-btn" id="release-dropdown">
+                          {{ vm.release.version }}({{ vm.release.build }})
+                          <i class="fa fa-sort-desc"></i>
+                      </a>
+                      <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="release-dropdown">
+                          <li ng-repeat="release in vm.releases">
+                              <a href="" ng-click="vm.chooseRelease(release)">{{ release.version }}({{ release.build }})</a>
+                          </li>
+                      </ul>
+                </span>
+            </div>
+            <div><span>创建者</span><span ng-bind="vm.appInfo.owner"></span></div>
+            <div class="member-group"><span>参与者</span><span ng-repeat="member in vm.appInfo.members" ng-bind="member+($last?'':',')"></span></div>
+            <div class="member-count" ng-bind="'(共'+vm.appInfo.members.length+'人)'"></div>
+        </div>
+        <a class="btn btn-default btn-member" ng-if="vm.isOwner" ui-sref="app.distribute-member-manage">
+            <i class="icon icon-member-manage"></i>人员管理
+        </a>
+    </div>
+    <div class="create-gather-btn" ng-show="vm.isOwner&&vm.gathers.length==0" ng-click="vm.gatherModal(true)">
+        <i class="icon icon-create-gather"></i>
+        <div>选择一个或多个用例创建用例集</div>
+    </div>
+    <div class="no-gathers" ng-show="!vm.isOwner&&vm.gathers.length==0">
+        <div>创建者还未给您分配任务</div>
+    </div>
+    <div ng-show="vm.gathers.length>0">
+        <div class="case-gather-wrap">
+            <div>
+                <div class="case-gather-add" ng-if="vm.isOwner" ng-click="vm.gatherModal(true)"><i class="icon"></i></div>
+                <div class="case-gather-edit" ng-if="vm.isOwner" ng-click="vm.editGather()"><i class="icon"></i></div>
+            </div>
+            <div class="case-gather-item" ng-repeat="gather in vm.gathers" ng-bind="gather.name" ng-class="{true:'active'}[gather.selected]" ng-click="vm.selectedGather(gather)"></div>
+        </div>
+        <ul class="nav tb-nav-no-border">
+            <li ng-class="{true:'active'}[vm.type==1]" ng-click="vm.switchType(1)"><a>脚本录制</a></li>
+            <li ng-class="{true:'active'}[vm.type==0]" ng-click="vm.switchType(0)"><a>自助功能测试任务</a></li>
+        </ul>
+        <div class="right-btn-group">
+            <button class="btn btn-sm btn-primary" ng-if="vm.isOwner" ng-click="vm.gatherModal()">分配任务</button>
+            <button class="btn btn-sm btn-default" ng-if="vm.isOwner" ng-disabled="vm.selectedExecutionIds.length==0" ng-click="vm.redistribute()"><i class="icon"></i>重新分配</button>
+            <button class="btn btn-sm btn-default" ng-if="vm.isOwner&&vm.type==0" ng-disabled="vm.selectedExecutionIds.length==0" ng-click="vm.createReport()">生成报告</button>
+            <button class="btn btn-sm btn-default" ng-if="!vm.isOwner&&vm.type==0" ng-disabled="vm.selectedExecutionIds.length==0" ng-click="vm.execute()">批量执行</button>
+        </div>
+        <div class="ztree-column-head">
+            <ul class="list-unstyled list-inline">
+                <li class="node_name">用例名称</li>
+                <li class="tree-column-wrap">
+                    <span class="tree-column">分配对象</span>
+                    <span class="tree-column">分配时间</span>
+                    <span class="tree-column">完成时间</span>
+                    <span class="tree-column">状态</span>
+                    <span class="tree-column" ng-if="vm.type == 0">查看</span>
+                    <span class="tree-column" ng-if="!vm.isOwner">执行</span>
+                </li>
+            </ul>
+        </div>
+        <div  ng-class="{true:'ztree-no-checkbox'}[!vm.isOwner && vm.type == 1]">
+           <ul class="ztree" id="testcase-tree1" tree-table></ul>
+            <div class="text-center gray" ng-if="vm.isOwner&&vm.nodes==0">请点击"分配任务"按钮,进行分配!</div>
+            <div class="text-center gray" ng-if="!vm.isOwner&&vm.nodes==0">没有分配的任务</div>
+        </div>
+    </div>
+</div>

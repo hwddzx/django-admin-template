@@ -1,0 +1,191 @@
+<div class="tab-modal tb-modal-info">
+    <div class="modal-head">
+        设备信息
+        <i class="icon icon-sidebar-close" />
+    </div>
+    <div class="modal-content">
+        <div ng-controller="InfoCtrl" ng-show="deviceType!='ios'" angular-packery="{draggable: true, draggableHandle: &quot;.heading i&quot;}" class="row stf-info selectable">
+            <div class="col-md-6-x">
+                <div class="col-md-4-x packery-item">
+                    <div class="widget-container fluid-height">
+                        <i class="icon icon-info-hardware"></i>
+                        <div class="heading">
+                            <stacked-icon icon="fa-phone" color="color-green"></stacked-icon><span translate="translate">Hardware</span></div>
+                        <div class="widget-content padded-small">
+                            <table class="table table-condensed table-infocard">
+                                <tbody>
+                                    <tr>
+                                        <td translate="translate">Manufacturer</td>
+                                        <td>{{device.manufacturer}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Product</td>
+                                        <td>{{device.name ? device.name : '-'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Model</td>
+                                        <td>{{device.model}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">CPU</td>
+                                        <td>{{device.runtime.adb.cpu}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">GPU</td>
+                                        <td>{{device.runtime.adb.gpu_model}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Released</td>
+                                        <td>{{device.releasedAt ? (device.releasedAt | date:longDate) : '-'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4-x packery-item">
+                    <div class="widget-container fluid-height">
+                        <i class="icon icon-info-network"></i>
+                        <div class="heading">
+                            <stacked-icon icon="fa-signal" color="color-brown"></stacked-icon><span translate="translate">Network</span></div>
+                        <div class="widget-content padded-small">
+                            <table class="table table-condensed table-infocard">
+                                <tbody>
+                                    <tr>
+                                        <td translate="translate">Connected</td>
+                                        <td>{{device.runtime.network.connected | humanizedBool}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Airplane Mode</td>
+                                        <td>{{device.runtime.network.airplane_mode | humanizedBool}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Type</td>
+                                        <td>{{device.runtime.network.network_type | networkType | translate}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4-x packery-item">
+                    <div class="widget-container fluid-height">
+                        <i class="icon icon-info-sim"></i>
+                        <div class="heading">
+                            <stacked-icon icon="fa-credit-card" color="color-lila"></stacked-icon><span translate="translate">SIM</span></div>
+                        <div class="widget-content padded-small">
+                            <table class="table table-condensed table-infocard">
+                                <tbody>
+                                    <tr>
+                                        <td translate="translate">无</td>
+                                        <td>{{device.operator}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6-x">
+                <div class="col-md-4-x packery-item">
+                    <div class="widget-container fluid-height">
+                        <i class="icon icon-info-battery"></i>
+                        <div class="heading">
+                            <stacked-icon icon="fa-bolt" color="color-yellow"></stacked-icon><span translate="translate">Battery</span></div>
+                        <div class="widget-content padded-small">
+                            <table class="table table-condensed table-infocard">
+                                <tbody>
+                                    <tr>
+                                        <td translate="translate">Health</td>
+                                        <td>{{device.runtime.power.health | translate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Power Source</td>
+                                        <td>{{device.runtime.power.source | translate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Status</td>
+                                        <td>{{device.runtime.power.status | translate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Temperature</td>
+                                        <td>{{device.runtime.power.temperature}} °C</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Voltage</td>
+                                        <td>{{device.runtime.power.voltage}} v</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4-x packery-item">
+                    <div class="widget-container fluid-height">
+                        <i class="icon icon-info-platform"></i>
+                        <div class="heading">
+                            <stacked-icon icon="fa-mobile" color="color-skyblue"></stacked-icon><span translate="translate">Platform</span></div>
+                        <div class="widget-content padded-small">
+                            <table class="table table-condensed table-infocard">
+                                <tbody>
+                                    <tr>
+                                        <td translate="translate">OS</td>
+                                        <td>Android</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Version</td>
+                                        <td>{{device.runtime.adb.os}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">SDK</td>
+                                        <td>{{device.runtime.adb.os_api_level}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">ABI</td>
+                                        <td>{{device.runtime.adb.abi}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4-x packery-item">
+                    <div class="widget-container fluid-height">
+                        <i class="icon icon-info-display"></i>
+                        <div class="heading">
+                            <stacked-icon icon="fa-tablet" color="color-blue"></stacked-icon><span translate="translate">Display</span></div>
+                        <div class="widget-content padded-small">
+                            <table class="table table-condensed table-infocard">
+                                <tbody>
+                                    <tr>
+                                        <td translate="translate">Density</td>
+                                        <td>{{device.runtime.adb.density}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Width</td>
+                                        <td>{{device.runtime.adb.width}} px</td>
+                                    </tr>
+                                    <tr>
+                                        <td translate="translate">Height</td>
+                                        <td>{{device.runtime.adb.height}} px</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-controller="InfoCtrl" ng-show="deviceType=='ios'" class="gray stf-info-ios">
+            <div class="title">UUID:</div>
+            <p ng-bind="device.serial"></p>
+            <div class="title">使用说明</div>
+            <p>上传ipa的前提条件：</p>
+            <p>1.打开苹果官方开发者网站。</p>
+            <p>2.将上面的设备UUID加入到对应的"Devices"列表中。</p>
+            <p>3.打开本地Xcode使用同一个账号密码登录。</p>
+            <p>4.检查重新生成的ipa文件。</p>
+            <p>5.登录TestBird打开远程真机，上传并安装应用，开始测试。</p>
+        </div>
+    </div>
+</div>

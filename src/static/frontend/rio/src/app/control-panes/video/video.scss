@@ -1,0 +1,48 @@
+$imageBgColor:#383d45;
+.stf-screenshots {
+    .modal-content {
+        overflow-y: auto;
+        .screenshots-icon-view {
+            margin: 0;
+            padding-left: 0;
+            overflow: hidden;
+            .screenshots-icon-item {
+                margin: 20px 30px 0 0;
+                .screenshot-image {
+                    padding: 3px;
+                    border-radius: 3px;
+                }
+                h6 {
+                    margin: 10px 0 0 0;
+                    color: $gray;
+                    font-size: 12px;
+                    font-weight: normal;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+.stf-screenshots .screenshot-image {
+    display: block !important;
+}
+
+.stf-screenshots .screenshot-image {
+    -webkit-transition: 1000ms;
+    transition: 1000ms;
+    max-height: 150px;
+}
+
+.stf-screenshots .screenshot-image.ng-image-not-loaded {
+    opacity: 0;
+}
+
+.stf-screenshots .screenshot-image {
+    opacity: 1;
+}
+
+.stf-screenshots .zoom-range {
+    width: 180px;
+    margin-right: 5px;
+}

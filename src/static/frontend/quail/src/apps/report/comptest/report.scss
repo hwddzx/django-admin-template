@@ -1,0 +1,602 @@
+//*********以下为report项目可用的样式变量***********
+$tb-blue: #0070f0;
+$tb-blue-light: #0097ff;
+$tb-black: #191e25;
+$tb-black-light: #212730;
+$tb-red: #fa575f;
+$tb-red-dark: #f6444d;
+$tb-yellow: #ff7e00;
+$tb-gray: #8e9194;
+$tb-gray-light: #edf2f7;
+$tb-green: #27a907;
+$tb-table-bg: #fafcff;
+.report-body-v2 {
+    font-family: 'Lantinghei SC', 'Helvetica Neue', Arial, 'Microsoft Yahei', sans-serif;
+    font-size: 14px;
+    color: $tb-black;
+}
+h1 {
+    line-height: 1.1;
+}
+
+@mixin box-shadow-none {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+@mixin table-class {
+    .align-center {
+        thead tr th {
+            text-align: center;
+            width: 5%;
+        }
+        tbody tr td {
+            text-align: center;
+        }
+    }
+    table {
+        width: 100%;
+        margin-top: 40px;
+        .gotoIssues {
+            cursor: pointer;
+            color: $tb-blue-light;
+            text-decoration: underline;
+        }
+        .gray {
+            color: $tb-gray;
+        }
+        thead {
+            * {
+                font-size: 12px;
+                color: $tb-gray;
+            }
+            tr {
+                border-bottom: solid 2px $tb-gray-light;
+                > :first-child {
+                    text-align: left !important;
+                    padding-left: 10px;
+                }
+                > :last-child {
+                    text-align: right !important;
+                    padding-right: 10px;
+                }
+                th, td {
+                    text-align: left;
+                    padding: 15px 2px 15px;
+                    background-color: #fff;
+                    font-weight: normal;
+                }
+            }
+            background-color: #fff;
+            .fixed {
+                display: table;
+                width: 1120px;
+                background-color: #fff;
+                position: fixed;
+                top: 0;
+            }
+        }
+        tbody {
+            tr {
+                &:nth-child(even) {
+                    background-color: $tb-table-bg;
+                }
+                > :first-child {
+                    text-align: left !important;
+                    padding-left: 10px;
+                }
+                > :last-child {
+                    text-align: right !important;
+                    padding-right: 10px;
+                }
+                border-bottom: solid 1px $tb-gray-light;
+                td {
+                    text-align: left;
+                    padding: 15px 5px;
+                    vertical-align: inherit;
+                    a {
+                        color: $tb-black;
+                    }
+                }
+            }
+        }
+    }
+    table + a.more {
+        padding-right: 10px;
+        color: $tb-blue-light;
+        float: right;
+        text-decoration: underline;
+    }
+}
+
+@mixin col-md-padding {
+    .col-md-1,
+    .col-md-2,
+    .col-md-3,
+    .col-md-4,
+    .col-md-5,
+    .col-md-6,
+    .col-md-7,
+    .col-md-8,
+    .col-md-8,
+    .col-md-10,
+    .col-md-11,
+    .col-md-12 {
+        padding: 0;
+    }
+}
+
+@mixin link-color($color, $size) {
+    color: $color;
+    margin-left: 15px;
+    font-size: $size;
+}
+
+.icon-popup-close {
+    position: absolute;
+    right: -25px;
+    top: -25px;
+    width: 23px;
+    height: 23px;
+    cursor: pointer;
+}
+
+.icon.icon-popup-close {
+    width: 32px;
+    height: 32px;
+    background: url('img/report/icon-popup-close.png');
+    background-size: 100%;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+    font-family: 'Lantinghei SC', 'Helvetica Neue', Arial, 'Microsoft Yahei', sans-serif;
+}
+
+.unstyled {
+    font-style: normal;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+.clearfix:after {
+    content: "\200B";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.tb-red {
+    color: $tb-red;
+}
+
+.tb-green {
+    color: $tb-green;
+}
+
+a.link {
+    cursor: pointer;
+    color: $tb-blue;
+    text-decoration: underline;
+}
+//模板
+// <table class="issues-state">
+//     <thead>
+//         <tr>
+//             <td class="thead-head">问题终端</td>
+//             <td>安装</td>
+//                 ...
+//         </tr>
+//     </thead>
+//     <tbody>
+//         <tr ng-repeat>
+//             <td class="tbody-head">华为</td>
+//             <td ng-repeat>
+//                 <div class="state-container">
+//                 //state-0 state-1 state-2 state-3分别表示绿色 黄色 红色 灰色
+//                     <span class="state state-0"></span>
+//                 </div>
+//             </td>
+//             <td></td>
+//         </tr>
+//     </tbody>
+// </table>
+//
+table.issues-state {
+    $state-green: #28a909;
+    $state-yellow: #ffb513;
+    $state-red: #fe0100;
+    $state-gray: #e5e5e5;
+    width: 100%;
+    text-align: center;
+    thead {
+        color: $tb-gray;
+        tr {
+            border-bottom: 2px solid $tb-gray-light;
+            td {
+                padding: 20px 2px;
+            }
+            td.thead-head {
+                padding-left: 20px;
+                text-align: left;
+            }
+        }
+    }
+    tbody {
+        tr {
+            td {
+                width: 7%;
+                padding: 20px 2px;
+                .state-container {
+                    .state {
+                        height: 6px;
+                        display: inline-block;
+                        width: 100%;
+                        background-color: $state-green;
+                        border-radius: 3px;
+                        border: none;
+                        padding: 0;
+                        &:hover {
+                            position: relative;
+                            top: 1px;
+                            cursor: pointer;
+                            height: 8px;
+                            border-radius: 4px;
+                        }
+                    }
+                    .state-untested {
+                        height: 2px;
+                        background-color: $state-gray;
+                        border-radius: 1px;
+                        &:hover {
+                            position: static;
+                            cursor: default;
+                            background: none;
+                            background-color: $state-gray;
+                            height: 2px;
+                        }
+                    }
+                    .state-exception {
+                        height: 6px;
+                        background-color: $state-red;
+                        border-radius: 3px;
+                        &:hover {
+                            position: relative;
+                            top: 1px;
+                            cursor: pointer;
+                            height: 8px;
+                            border-radius: 4px;
+                        }
+                    }
+                    .state-warning {
+                        height: 6px;
+                        background-color: $state-yellow;
+                        border-radius: 3px;
+                        &:hover {
+                            position: relative;
+                            top: 1px;
+                            cursor: pointer;
+                            height: 8px;
+                            border-radius: 4px;
+                        }
+                    }
+                }
+            }
+            td.tbody-head {
+                width: 10%;
+                padding-left: 20px;
+                text-align: left;
+            }
+            td.tbody-foot {
+                width: 5%;
+                text-align: right;
+            }
+        }
+    }
+}
+
+i.word-help-icon {
+    display: inline-block;
+    background-size: 100% 100% !important;
+    height: 15px !important;
+    width: 10px !important;
+    background: url(img/report/overview/light.png);
+}
+
+.help {
+    .word-help-right {
+        position: absolute;
+        background: url(img/report/overview/bubble-right.png);
+        background-size: 100% 100%;
+        padding: 8px 12px;
+        color: $tb-black;
+        text-align: left;
+        width: 300px;
+    }
+    a {
+        color: $tb-blue;
+        position: relative;
+        &:hover {
+            cursor: help;
+        }
+    }
+    .help-prompt {
+        position: absolute;
+        i {
+            margin-left: 5px;
+        }
+    }
+    .word-help {
+        position: absolute;
+        background: url(img/report/overview/bubble.png);
+        background-size: 100% 100%;
+        padding: 8px 12px;
+        color: $tb-black;
+        text-align: left;
+        width: 300px;
+    }
+    th, td {
+        position: relative;
+    }
+}
+
+.tb-nav-tabs.width-full-screen {
+    padding: 0;
+    margin: 0;
+    li {
+        float: left;
+        width: 20%;
+        text-align: center;
+        &:first-child {
+            text-align: left;
+        }
+        &:last-child {
+            text-align: right;
+        }
+    }
+    a {
+        display: inline-block!important;
+        font-size: 16px;
+        padding: 20px 0;
+        .number {
+            position: relative;
+            top: -2px;
+            display: inline-block;
+            margin-left: 5px;
+            background-color: $tb-red;
+            border-radius: 10px;
+            i {
+                font-size: 16px;
+                line-height: 1;
+                color: white;
+                vertical-align: middle;
+                font-style: normal;
+            }
+        }
+    }
+}
+
+//*********以上为report项目可用的样式变量***********
+@import "./compatibility/style.scss";
+@import "./exceptions/style.scss";
+@import "./performance/style.scss";
+@import "./subtasks/style.scss";
+@import "./subtask_detail/style.scss";
+.report-body-v2 {
+    background-color: #fff;
+}
+
+@media (max-width: 992px) {
+    .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+
+.report-v2 {
+    @include table-class;
+    width: 1120px;
+    margin: 0 auto;
+    padding-top: 25px;
+    background: white;
+    a {
+        text-decoration: none;
+    }
+    i.icon {
+        width: 16px;
+    }
+    div.head {
+        .content-header {
+            text-align: center;
+            margin: 0 0 25px 0;
+            position: relative;
+            overflow: hidden;
+            img {
+                padding: 0;
+                float: left;
+                width: 100px;
+                height: 100px;
+                border-radius: 15px;
+                -moz-border-radius: 15px;
+                -webkit-border-radius: 15px;
+            }
+            .simple-info {
+                text-align: left;
+                float: left;
+                margin-top: 6px;
+                padding-left: 40px;
+                h4 {
+                    line-height: 2;
+                    font-family: inherit;
+                }
+                p {
+                    color: $tb-gray;
+                    margin: 0;
+                    span {
+                        color: $tb-black;
+                    }
+                }
+            }
+            .btns {
+                position: absolute;
+                top: 40px;
+                right: 0;
+                .btn {
+                    margin-left: 30px;
+                }
+            }
+        }
+    }
+    .body {
+        margin: 0;
+        .content {
+            .content-body {
+                margin-top: 60px;
+                padding: 0;
+            }
+        }
+    }
+    .tb-nav-tabs {
+        li {
+            &:nth-child(2){
+                position: relative;
+                left: -55px;
+            }
+            &:nth-child(4){
+                position: relative;
+                left: 55px;
+            }
+        }
+    }
+    footer {
+        height: 200px;
+    }
+}
+
+#report-overview-v2 {
+    .up {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background: url(img/report/overview/up.png);
+        background-size: 100% 100%;
+        margin-left: 5px;
+    }
+    .down {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background: url(img/report/overview/down.png);
+        background-size: 100% 100%;
+        margin-left: 5px;
+    }
+
+    .basic-info {
+        margin-top: 50px;
+        .hr-split-line {
+            width: 2px;
+            height: 170px;
+            margin: 0 auto;
+            background-color: #edf2f7;
+        }
+        .left {
+            padding-right: 0;
+            .left-head {
+                padding: 0;
+                float: right;
+                position: relative;
+                left: -20px;
+                div {
+                    margin: 0;
+                    padding: 0;
+                    line-height: 30px;
+                    div {
+                        font-size: 14px;
+                        width: 90px;
+                        display: inline-block;
+                    }
+                    > :last-child {
+                        padding-left: 5px;
+                        font-size: 18px;
+                    }
+                    .big {
+                        position: relative;
+                        top: 3px;
+                        font-size: 24px;
+                    }
+                }
+            }
+            #pie-chart {
+                float: left;
+                position: relative;
+                top: -20px;
+                left: 20px;
+                width: 220px;
+                height: 220px;
+                .chart-count {
+                    display: inline-block;
+                    width: 80px;
+                    font-size: 20px;
+                    text-align: center;
+                }
+                .chart-name {
+                    display: inline-block;
+                    width: 80px;
+                    font-size: 12px;
+                    text-align: center;
+                }
+            }
+        }
+        .right {
+            margin-top: -10px;
+            font-size: 14px;
+            line-height: 45px;
+            .data-unit {
+                margin-left: 20px;
+            }
+        }
+    }
+    .issues {
+        margin-top: 30px;
+        table {
+            width: 100%;
+            margin-top: 40px;
+            font-size: 12px;
+            .align-left {
+                text-align: left;
+            }
+            a {
+                color: #8e9194;
+            }
+            text-align: right;
+            thead {
+                tr {
+                    border-bottom: solid 2px $tb-gray-light;
+                    td {
+                        color: $tb-gray;
+                        padding: 0 5px 15px;
+                        width: 5%;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    border-bottom: solid 1px $tb-gray-light;
+                    td {
+                        padding: 15px 5px;
+                    }
+                }
+            }
+        }
+    }
+    .industry-target {
+        margin-top: 60px;
+    }
+}

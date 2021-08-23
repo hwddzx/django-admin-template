@@ -1,0 +1,17 @@
+<div class="tb-layout" ng-controller="layoutCtrl as ctrl" tb-layout-area>
+    <div class="btns">
+        <a ng-click="ctrl.switchLayout()" class="btn btn-primary">布局</a>
+    </div>
+    <div class="tree-container" ng-class="{false: 'hide-layout'}[ctrl.isShowLayout]">
+        <a ng-show="!ctrl.isIos" ng-click="ctrl.refreshLayout()" class="btn btn-primary refresh-btn">刷新</a>
+        <span ng-show="ctrl.isIos">
+        <a ng-click="ctrl.refreshLayout()" class="btn btn-primary refresh-btn-small">刷新</a>
+        <input class="dump-checkbox" type="checkbox" id="is-dump" ng-model="ctrl.isDump" ng-click="ctrl.changeIsDump()">
+        <label for="is-dump">是否dump</label>
+        <input class="dump-checkbox" type="checkbox" id="dump-mode" ng-model="ctrl.isFastMode" ng-click="ctrl.changeDumpMode()">
+        <label for="dump-mode">快速dump</label>
+        </span>
+        <ul class="ztree" layout-tree ng-show="ctrl.xml"></ul>
+        <div ng-show="!ctrl.xml">xml为空或者还未取到xml</div>
+    </div>
+</div>

@@ -1,0 +1,1048 @@
+.apps {
+    position: relative;
+    margin: 20px 0;
+    .prompt {
+        position: absolute;
+        right: 22px;
+        color: $gray;
+        font-size: 12px;
+        .icon {
+            margin: 0 5px 0 15px;
+        }
+    }
+    h5 {
+        margin: 20px 0 0 18px;
+        color: $black;
+        font-size: 18px;
+        text-align: left;
+    }
+
+    ul.app-list {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        list-style: none;
+        li {
+            float: left;
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 20px 18px;
+            border: 2px dotted #fff;
+            cursor: pointer;
+            img {
+                width: 70px;
+                height: 70px;
+                margin: 15px 0 10px;
+                border-radius: 10px;
+            }
+            p {
+                margin-bottom: 5px;
+                color: $gray;
+                font-size: 14px;
+                word-break: break-all;
+            }
+            .icon-bell {
+                position: absolute;
+                right: 28px;
+                top: 5px;
+            }
+            &:hover {
+                box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.08);
+                border-color: $gray-border;
+                background-color: $blue-bg-light;
+                @include transition(all .2s linear);
+                .icon-delete {
+                    display: block;
+                }
+                .app-id {
+                    display: inline-block;
+                }
+            }
+            .icon-delete {
+                display: none;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                width: 16px;
+                height: 16px;
+                background-image: url(img/apps/icon-delete.png) !important;
+                background-size: 16px 37px;
+                background-position: 0 0;
+                background-repeat: no-repeat;
+                &:hover {
+                    background-position: 0 -21px;
+                }
+            }
+        }
+        .uploadContainer {
+            position: relative;
+            color: #8e9194;
+            border-color: $gray-border;
+            background-color: $blue-bg;
+            &:hover {
+                color: $blue;
+                border-color: $blue;
+                background-color: $blue-bg-light;
+            }
+            .icon-new-build {
+                margin: 50px 0 10px;
+            }
+            .app-file-input {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                opacity: 0;
+                cursor: pointer;
+            }
+        }
+    }
+    .icon-group {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        .icon {
+            float: left;
+            width: 16px;
+            height: 16px;
+            background-size: 100% 100%;
+        }
+        .icon-android {
+            background-image: url(./img/icon-android.png);
+        }
+        .icon-ios {
+            background-image: url(./img/icon-ios.png);
+        }
+        .icon-h5 {
+            background-image: url(./img/icon-h5.png);
+        }
+        .app-id {
+            display: none;
+            position: relative;
+            top: -5px;
+            left: 5px;
+            font-size: 12px;
+            color: $gray;
+        }
+    }
+    .signing-overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .3);
+        z-index: 1;
+        .tips {
+            width: 300px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -150px;
+            line-height: 100px;
+            text-align: center;
+            background: $white;
+            border-radius: 4px;
+            .loading {
+                display: inline-block;
+                position: relative;
+                width: 20px;
+                height: 20px;
+                margin-right: 15px;
+            }
+        }
+    }
+    .apps-nav-header {
+        overflow-y: hidden;
+        margin: 10px;
+        padding: 0;
+        border-bottom: 1px solid $border-gray;
+        li {
+            float: left;
+            display: inline-block;
+            margin: 0 5px;
+            padding: 5px;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            &.active {
+                border-bottom: 2px solid $blue;
+            }
+        }
+    }
+    .app-progress-container {
+        form {
+            margin: 5px;
+            label {
+                width: 80px;
+                padding-left: 10px
+            }
+        }
+        .form-inline {
+            input {
+                width: 186px;
+            }
+        }
+        .form-horizontal {
+            input {
+                width: calc(100% - 103px);
+            }
+        }
+        .app-progress-item {
+            position: relative;
+            float: left;
+            width: 360px;
+            margin: 0px 6px;
+            padding: 15px;
+            border: 1px solid $border-gray;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.08);
+            .link {
+                font-size: 12px;
+            }
+            .app-info {
+                overflow: hidden;
+                .app-icon {
+                    float: left;
+                    width: 50px;
+                    height: 50px;
+                    margin: 15px 0 10px;
+                    border-radius: 10px;
+                }
+                .info {
+                    float: left;
+                    padding: 0px 15px;
+                    line-height: 25px;
+                    > div {
+                        height: 25px;
+                        line-height: 25px;
+                    }
+                    .text {
+                        display: inline-block;
+                        width: 240px;
+                        @include text-overflow;
+                    }
+                }
+                .set-top {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                }
+            }
+            .statistics {
+                overflow: hidden;
+                .item {
+                    float: left;
+                    width: 50%;
+                    line-height: 30px;
+                }
+                .icon {
+                    width: 20px;
+                    height: 20px;
+                    background: url(img/apps/icons.png);
+                    background-size: 20px 70px;
+                }
+                .icon-build {
+                    background-position: 0 0;
+                }
+                .icon-replay-statistics {
+                    background-position: 0 -25px;
+                }
+                .icon-patch {
+                    background-position: 0 -50px;
+                }
+            }
+            .execution-build {
+                position: relative;
+                .total-testcases {
+                    position: absolute;
+                    top: 30px;
+                    left: 207px;
+                }
+                .link {
+                    position: absolute;
+                    top: 50px;
+                    left: 207px;
+                    font-size: 12px;
+                }
+            }
+            .replay-statistics {
+                line-height: 25px;
+                .legend-container {
+                    overflow: hidden;
+                    margin: 5px 0;
+                    .legend {
+                        float: left;
+                        margin-right: 15px;
+                        .icon {
+                            position: relative;
+                            top: -1px;
+                            width: 12px;
+                            height: 12px;
+                            margin-right: 5px;
+                        }
+                        .success {
+                            background: $green;
+                        }
+                        .blocked {
+                            background: $orange-lighter;
+                        }
+                        .failed {
+                            background: $red;
+                        }
+                    }
+                }
+            }
+        }
+        fieldset {
+            margin-top: 10px;
+            padding: 0 10px 0 10px;
+            border: 1px solid $border-gray;
+            legend {
+                width: auto;
+                margin: 0 0 0 -4px;
+                padding: 5px 5px 0 5px;
+                border: 0;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.app-progress-chart {
+    overflow: hidden;
+    height: 150px;
+    .success {
+        float: left;
+        background: $green;
+    }
+    .blocked {
+        float: left;
+        background: $orange-lighter;
+    }
+    .failed {
+        float: left;
+        background: $red;
+    }
+}
+
+.execution-progress-chart {
+    overflow: hidden;
+    height: 15px;
+    margin: 10px 0;
+    &.progress-no-data {
+        border: 1px solid $border-gray;
+    }
+    .progress-item {
+        float: left;
+        height: 20px;
+    }
+    .success {
+        background: $green;
+    }
+    .blocked {
+        background: $orange-lighter;
+    }
+    .failed {
+        background: $red;
+    }
+}
+
+.date-dropdown {
+    display: inline-block;
+    position: absolute;
+    top: 2px;
+    right: 500px;
+    cursor: pointer;
+    .dropdown-menu {
+        min-width: 0!important;
+        margin-left: 60px;
+    }
+    li {
+        padding: 5px 10px;
+    }
+    .fa {
+        position: relative;
+        top: -2px;
+        left: 5px;
+        color: $gray;
+    }
+}
+
+.app-container {
+    min-width: 1300px;
+    height: calc(100% - 100px);
+    min-height: 500px;
+    .patched-img {
+        cursor: pointer;
+    }
+    .tab-container {
+        float: left;
+        width: calc((100% - 1300px) / 2 + 149px);
+        height: 100%;
+        background: $blue-bg;
+        border-right: 1px solid $gray-border;
+        .nav.left-tab {
+            float: right;
+            width: 135px;
+            font-size: 14px;
+
+            li {
+                height: 18px;
+                margin: 30px 0;
+                cursor: pointer;
+                a {
+                    color: $black;
+                    padding: 0;
+                }
+                .tab-icon {
+                    width: 25px;
+                    height: 20px;
+                    background-image: url(img/tab.png?ts=imageTimeStamp);
+                    background-size: 62px 476px;
+                    &.distribution-tab {
+                        background-position: -5px -18px;
+                    }
+                    &.testcases-tab {
+                        background-position: -5px -53px;
+                    }
+                    &.tasks-tab {
+                        background-position: -5px -86px;
+                    }
+                    &.replay-tab {
+                        background-position: -5px -120px;
+                    }
+                    &.comptest-tab {
+                        background-position: -5px -153px;
+                    }
+                    &.reports-tab {
+                        background-position: -5px -188px;
+                    }
+                    &.releases-tab {
+                        background-position: -5px -221px;
+                    }
+                    &.plugin-tab {
+                        background-position: -5px -258px;
+                    }
+                    &.component-tab {
+                        background-position: -5px -292px;
+                    }
+                    &.variable-tab {
+                        background-position: -5px -327px;
+                    }
+                    &.permission-tab {
+                        background-position: -5px -362px;
+                    }
+                    &.timed-replay-tab {
+                        background-position: -5px -400px;
+                    }
+                    &.timed-comptest-tab {
+                        background-position: -5px -438px;
+                    }
+
+                }
+                &.active, &:hover {
+                    a {
+                        background: $blue-bg;
+                        color: $blue;
+                    }
+                    .distribution-tab {
+                        background-position: -34px -18px;
+                    }
+                    .testcases-tab {
+                        background-position: -34px -53px;
+                    }
+                    .tasks-tab {
+                        background-position: -34px -86px;
+                    }
+                    .replay-tab {
+                        background-position: -34px -120px;
+                    }
+                    .comptest-tab {
+                        background-position: -34px -153px;
+                    }
+                    .reports-tab {
+                        background-position: -34px -188px;
+                    }
+                    .releases-tab {
+                        background-position: -34px -221px;
+                    }
+                    .plugin-tab {
+                        background-position: -34px -258px;
+                    }
+                    .component-tab {
+                        background-position: -34px -292px;
+                    }
+                    .variable-tab {
+                        background-position: -34px -327px;
+                    }
+                    .permission-tab {
+                        background-position: -34px -362px;
+                    }
+                    .timed-replay-tab {
+                        background-position: -34px -400px;
+                    }
+                    .timed-comptest-tab {
+                        background-position: -34px -438px;
+                    }
+                }
+            }
+        }
+
+    }
+    .product-container {
+        float: left;
+        width: calc((100% - 1300px) / 2 + 1150px);
+        height: 100%;
+        padding: 0;
+    }
+}
+
+.main {
+    width: 1120px;
+    margin: auto;
+}
+.allWidthMain {
+    width: 100%;
+}
+
+.app-create-modal {
+    padding: 30px 20px;
+    .modal-content {
+        h1 {
+            color: $black;
+            font-size: 18px;
+        }
+        img {
+            width: 75px;
+        }
+        label {
+            margin: 20px 0;
+            padding: 0 20px;
+            color: $gray;
+            font-size: 12px;
+        }
+        input {
+            margin: 0 auto;
+            width: 400px;
+            height: 35px;
+            color: #8e9194;
+            background: #fff;
+        }
+        .loading {
+            height: 80px;
+        }
+        .app-info {
+            .parsing {
+                position: relative;
+                height: 100%;
+            }
+            .error-helper {
+                line-height: 100px;
+            }
+        }
+        .error-helper {
+            font-size: 14px;
+            color: $red;
+        }
+        .uploading {
+            .progress {
+                width: 400px;
+                height: 10px;
+                margin: 100px auto 35px;
+                color: $gray-dark;
+            }
+            .progress-bar {
+                background-color: #27ab07;
+                text-align: right;
+                line-height: 12px;
+            }
+            .text-center {
+                margin-bottom: 60px;
+                font-size: 18px;
+                color: $gray;
+            }
+        }
+    }
+    .modal-foot {
+        margin-top: 15px !important;
+        text-align: center !important;
+        button {
+            width: 130px;
+            height: 40px;
+        }
+    }
+}
+
+.tb-prompt-modal.tb-modal {
+    h1 {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+    .modal-foot {
+        margin-top: 40px;
+    }
+    .btn {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+    .btn-primary {
+        margin-right: 10px;
+    }
+}
+
+.lab-header {
+    .tb-header, .tb-nav {
+        min-width: 1300px;
+    }
+
+}
+
+.time-group {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    > div {
+        float: left;
+        margin: 0 5px;
+        &:nth-child(2) {
+            line-height: 35px;
+        }
+        &.input-group {
+            width: 180px;
+        }
+    }
+    .dropdown-menu {
+        li:hover {
+            background: transparent;
+        }
+    }
+}
+
+.customer-manage-container {
+    .group {
+        position: relative;
+        height: 35px;
+        .form-control {
+            float: right;
+            width: 260px;
+            margin: 0 20px;
+        }
+        .btn-add {
+            float: right;
+        }
+        .search-panel {
+            position: absolute;
+            top: 34px;
+            right: 73px;
+            width: 260px;
+            border: 1px solid $gray-border;
+            background: $white;
+            z-index: 1;
+            li {
+                margin: 0;
+                padding: 0 15px;
+                line-height: 30px;
+                text-align: left;
+                &:hover {
+                    background: $blue-bg;
+                }
+            }
+        }
+    }
+    .table {
+        @include input-checkbox-class;
+    }
+}
+
+.device-monitor-container {
+    .info-header {
+        width: 100%;
+        height: 50px;
+        padding-top: 10px;
+        padding-left: 30px;
+        margin-bottom: 30px;
+        .device-num {
+            margin: 0 5px;
+            color: $blue-link;
+            font-weight: bold;
+        }
+        form {
+            float: right;
+            margin-right: 10px;
+            .form-group {
+                margin-left: 20px;
+                select {
+                    width: 140px;
+                    height: 34px;
+                }
+            }
+        }
+    }
+    .monitor-container {
+        width: 100%;
+        height: auto;
+        .device-container {
+            float: left;
+            width: 373px;
+            height: 650px;
+            .video-container {
+                display: inline-block;
+                width: 100%;
+                height: 500px;
+                cursor: not-allowed;
+                pointer-events: none;
+                .ios_video {
+                    width: 100%;
+                    height: 100%;
+                    text-align: center;
+                    img {
+                        width: auto;
+                        height: auto;
+                        max-width: 500px;
+                        max-height: 500px;
+                    }
+                }
+            }
+            .device-ios-bg {
+                position: relative;
+                margin: 0;
+                top: 0;
+                left: 0;
+                height: 500px;
+                background-image: url(img/apps/device-ios.png);
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            .device-android-bg {
+                position: relative;
+                margin: 0;
+                top: 0;
+                left: 0;
+                height: 500px;
+                background-image: url(img/apps/device-android.png);
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            .device-info {
+                margin-top: 5px;
+                margin-left: 80px;
+                height: 145px;
+            }
+        }
+    }
+}
+.tasks-gather-container {
+    .form-inline {
+        margin-left: 7px;
+        margin-bottom: 10px;
+        .device-type-select {
+            width: 225px;
+            .ul-dropdown {
+                display: block;
+                width: 100%;
+                border: 1px solid $gray-border;
+                color: $gray;
+                height: 34px;
+                line-height: 34px;
+                padding: 0 10px;
+                text-overflow: ellipsis;
+                //white-space: nowrap;
+                overflow: hidden;
+                &:hover {
+                    color: $gray;
+                }
+                .fa-sort-desc {
+                    position: absolute;
+                    top: 8px;
+                    left: 210px;
+                    color: $gray;
+                }
+            }
+            .dropdown-menu {
+                width: 100%;
+                min-width: 300px;
+                max-width: 100%;
+                max-height: 300px;
+                min-height: 100px;
+                overflow: auto;
+                margin-top: 34px;
+                li {
+                    position: relative;
+                    margin: 0;
+                    a {
+                        margin: 0;
+                        padding: 5px 20px;
+                    }
+                }
+            }
+            .icon-chosen {
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                background-image: url("img/icon-chosen.png");
+                background-size: 100% 100%;
+            }
+        }
+        .form-group {
+            margin-right: 13px;
+            select {
+                height: 34px;
+            }
+        }
+        .btn-group {
+            margin-right: 0;
+        }
+        .date-pick {
+            position: relative;
+            width: 180px;
+            input {
+                width: 140px;
+            }
+            .form-group-btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+        }
+    }
+}
+.performance-comparison-container {
+    .title-header {
+        clear: both;
+        margin: 25px 0;
+        padding: 0 10px;
+        font-size: 18px;
+        border-left: 5px solid $blue;
+        font-weight: normal;
+    }
+    .app-icons {
+        div {
+            width: 100px;
+            height: 100px;
+            float: left;
+            margin: 20px 40px 30px 0;
+            padding: 2px;
+            text-align: center;
+            img {
+                width: 70px;
+                height: 70px;
+                border-radius: 10px;
+                cursor: pointer;
+                &:hover {
+                    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.08);
+                    border-color: $gray-border;
+                    background-color: $blue-bg-light;
+                    @include transition(all .2s linear);
+                }
+            }
+            p {
+                margin-top: 5px;
+                width: 100px;
+                text-align: center;
+            }
+        }
+    }
+    .performance-table {
+        width: 100%;
+        margin-bottom: 15px;
+        thead {
+            tr {
+                border-bottom: 2px dashed $gray-border;
+            }
+            th {
+                color: $text-gray;
+                font-weight: normal;
+                text-align: left !important;
+                padding: 10px !important;
+                &.text-left {
+                    text-align: left !important;
+                }
+            }
+        }
+        tbody {
+            tr {
+                border-bottom: 1px dashed $gray-border;
+                height: 40px;
+                &:hover {
+                    background-color: darken($blue-bg, 5%);
+                }
+            }
+            td {
+                text-align: left;
+                padding: 10px;
+                &.text-left {
+                    text-align: left !important;
+                }
+            }
+        }
+        .test-sorting {
+            cursor: pointer;
+        }
+    }
+    .performance-btns {
+        width: 500px;
+        float: right;
+        margin: 20px;
+        a {
+            width: 120px;
+            height: 30px;
+            float: right;
+            border: 1px solid $gray-border;
+            text-align: center;
+            line-height: 30px;
+            color: $black;
+            &:nth-child(2){
+                color: $white;
+                background-color: $blue;
+                border: none;
+                margin-right: 30px;
+            }
+        }
+    }
+    .report-box {
+        width: 500px;
+        height: 300px;
+        margin: 0 auto;
+        border: 1px solid $gray-border;
+        overflow-y: scroll;
+        border-radius: 5px;
+        ul {
+            margin-top: 10px;
+            li {
+                width: 450px;
+                float: left;
+                margin: 5px auto;
+                list-style: none;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                white-space:nowrap;
+            }
+        }
+    }
+}
+.select-report {
+    padding-bottom: 60px;
+    h4 {
+        padding: 20px 0 0 45px;
+    }
+    .performance-btns {
+        a {
+            width: 80px;
+            &:nth-child(1){
+                margin-right: 45px;
+            }
+        }
+    }
+    .not-allowed-select {
+        color: $gray;
+    }
+}
+.detail-container {
+    table {
+        margin-bottom: 60px;
+        thead {
+            th {
+                color: $white!important;
+                background-color: #6C9BF4;
+                border: 1px solid $white!important;
+            }
+        }
+        tr {
+            border: none!important;
+        }
+        td {
+            border: 1px solid $white!important;
+        }
+        tbody {
+            td {
+                &:nth-of-type(even) {
+                    background-color: #F4F8FE;
+                }
+                &:nth-of-type(odd) {
+                    background-color: #E9F1FE;
+                }
+                &:hover {
+                    background-color: darken($blue-bg, 5%);
+                }
+            }
+        }
+    }
+    .performance-btns {
+        a {
+            width: 80px;
+        }
+    }
+    .form-group {
+        float: right;
+        margin-left: 40px;
+        select {
+            width: 140px;
+            height: 25px;
+        }
+    }
+}
+.report-info {
+    width: 500px;
+    margin: auto;
+    padding-top: 40px;
+}
+.no-data-tips {
+    clear: both;
+    width: 100%;
+    color: $gray;
+    text-align: center;
+}
+.load-more-data {
+    text-align: center;
+    a {
+        padding: 3px 10px;
+        border: 1px solid $blue;
+        color: $blue;
+        &:hover {
+            background: $blue;
+            color: $white;
+        }
+    }
+}
+.pagination {
+    float: left;
+    width: 500px;
+    margin: 10px 0 30px 0 !important;
+    position: relative;
+    left: -40px;
+    ul {
+        li {
+          list-style: none;
+          float: left;
+          width: 55px;
+          height: 38px;
+          text-align: center;
+          line-height: 38px;
+          font-size: 12px;
+          border: 1px solid $gray-border;
+          border-left: none;
+          background: $white;
+          cursor: pointer;
+          &:first-child {
+            border-left: 1px solid $gray-border;
+          }
+          p {
+            line-height: 38px;
+          }
+        }
+        .not-allowed-click {
+            cursor: not-allowed;
+            background: $gray-bg;
+            color: $gray;
+        }
+    }
+    .current-page {
+        background: $blue;
+        color: $white;
+        margin-top: -1px;
+    }
+}

@@ -1,0 +1,59 @@
+<div class="report-container">
+    <div class="head">
+        <div class="text-right" tb-search data-keywords="keywords">
+            <h3>选择用例</h3>
+            <input  type="text" maxlength="128" class="search keyword" ng-model="keywords">
+            <a href="javascript:void(0);" onClick="javascript :history.back(-1);" class="btn btn-sm btn-default btn-self-md">返回</a>
+            <a href="" class="btn btn-sm btn-primary btn-self-md  is-disabled" ng-click="save()">提交</a>
+        </div>
+    </div>
+    <table tb-sorting>
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th class="fix-fa">
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    {{ filters.resultChooses.data[ filters.resultChooses.selected || 'all'].text }}<i class="light fa fa-sort-down"></i>
+                    <ul class="unstyle-list vertical-group-list dropdown-menu short-menu" uib-dropdown-menu>
+                        <li ng-repeat="(key, value) in filters.resultChooses.data"><a ng-click="chooseFilter(key, 'resultChooses')">{{ value.text }}</a><li>
+                    </ul>
+                </span>
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                <input type="checkbox" id="checkAll" tb-select-all data-models="filteredExecutions" data-checked="true" ng-model="filteredExecutions.allChecked"/>
+                <label for="checkAll"></label>
+            </th>
+            <th orderBy="name" class="test-sorting">用例</th>
+            <th orderBy="task_name" class="test-sorting">任务名</th>
+            <th>问题截图</th>
+            <th orderBy="launch_time" class="test-sorting">开始时间</th>
+            <th orderBy="result" class="test-sorting">结果</th>
+            <th>备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="execution in filteredExecutions | orderBy:order:direction | filter:keywords">
+            <td>
+                <input type="checkbox" id="check[{{$index}}]"  ng-model="execution.checked"/>
+                <label for="check[{{$index}}]"></label>
+            </td>
+            <td>{{ execution.name }}</td>
+            <td>{{ execution.task_name }}</td>
+            <td>
+                <img class="patched-img" ng-if="execution.head_image_url" ng-src="{{ execution.head_image_url }}" ng-click="snapshotController.patchedSnapshots(execution.id)" />
+                <i ng-if="!execution.head_image_url">-</i>
+            </td>
+            <td>{{ execution.launch_time | dateFilter }}</td>
+            <td ng-style="{ 'color':(execution.result | executionResultTextColor) }">{{ execution.result }}</td>
+            <td>{{ execution.desc }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,66 @@
+<div ng-controller="HeadCtrl">
+    <header class="tb-header">
+        <div class="head-container">
+            <tb-logo config="config"></tb-logo>
+            <div class="divider"></div>
+            <h1>云手机<button class="btn btn-xs btn-app-upload" tb-lab-hide ng-click="createApp()" id="app-upload">添加应用</button></h1>
+            <div class="help-icon" uib-dropdown uib-dropdown-toggle ng-show="config.company_config.user_guide_documents[0] || config.company_config.user_guide_documents[1]">
+                <i class="fa fa-sort-desc" />
+                <ul class="dropdown-menu" aria-labelledby="profile-dropdown">
+                    <li ng-show="config.company_config.user_guide_documents[0]">
+                        <a href="javascript:;" ng-click="download(config.company_config.user_guide_documents[0], '帮助文档')">
+                            帮助文档
+                        </a>
+                    </li>
+                    <li ng-show="config.company_config.user_guide_documents[1]">
+                        <a href="javascript:;" ng-click="download(config.company_config.user_guide_documents[1], 'FAQ')">
+                            FAQ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="user text-unselect" uib-dropdown uib-dropdown-toggle>
+                <i class="icon icon-avatar-default nickNameAvatar" />
+                <span ng-bind="nickName" class="nickName" title="{{nickName}}"></span>
+                <i class="fa fa-sort-desc nickNamefa" />
+                <ul class="dropdown-menu" aria-labelledby="profile-dropdown">
+                    <li tb-lab-hide>
+                        <a href="javascript:;" ng-click="redirect('/home/profile')">
+                            <i class="icon icon_profile"></i>我的资料
+                        </a>
+                    </li>
+                    <li tb-lab-hide>
+                        <a href="javascript:;" ng-click="redirect('/home/fund/records')">
+                            <i class="icon icon_bill"></i>我的账户
+                        </a>
+                    </li>
+                    <li class="divider-line" tb-lab-hide></li>
+                    <li tb-lab-hide>
+                        <a href="javascript:;" ng-click="redirect()">
+                            <i class="icon icon_product"></i>我的面板
+                        </a>
+                    </li>
+                    <li class="divider-line" tb-lab-hide></li>
+                    <li tb-lab-hide>
+                        <a href="javascript:;" ng-click="redirect('/home/order')">
+                            <i class="icon icon_redeem"></i>充值
+                        </a>
+                    </li>
+                    <li tb-lab-hide>
+                        <a href="javascript:;" ng-click="redirect('/home/vouchers')">
+                            <i class="icon icon_coupons"></i>优惠券账户
+                        </a>
+                    </li>
+                    <li class="divider-line" tb-lab-hide></li>
+                    <li>
+                        <a href="" ng-click="logout()">退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <nav class="tb-nav">
+        <a tb-lab-show class="nav-link" href="" ui-sref="apps">测试</a><span tb-lab-show ng-show="app">/</span>
+        <span lab-apps-drop-down dt-url="dtUrl"  app="app" apps="apps" to-state="toState(key, role)" ng-show="app"></span>
+    </nav>
+</div>

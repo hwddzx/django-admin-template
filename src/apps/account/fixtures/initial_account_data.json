@@ -1,0 +1,24 @@
+[
+  {
+    "pk": 1,
+    "model": "account.user",
+    "password": "testbird@123",
+    "fields": {
+      "name": "admin",
+      "email": "admin",
+      "nick_name": "管理员",
+      "phone": "0000",
+      "gender": "M",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2013-12-24T13:08:16.579",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$dYATA1owl9a9$7zdC5SOnT+DdPtwNN7kvHQIXMFpYQ763fQDtJTBQZ9s=",
+      "date_joined": "2014-05-1T00:00:00.000",
+      "created": "2014-05-1T00:00:00.000",
+      "updated": "2014-05-1T00:00:00.000"
+    }
+  }
+]

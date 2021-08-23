@@ -1,0 +1,13 @@
+<div class="redistribute-modal">
+    <h1>重新分配任务<i class="icon icon-popup-close" ng-click="vm.cancel()"></i></h1>
+    <div class="search-panel">
+        <input type="text" maxlength="128" class="member" ng-model="vm.member" ng-change="vm.change()" placeholder="请输入重新分配的成员邮箱"/>
+        <ul class="list-unstyled" ng-hide="!vm.member||vm.isHidePanel || result.length==0">
+            <li ng-repeat="member in (vm.members|filter:vm.member) as result" ng-bind="member" ng-click="vm.selectedMember(member)"></li>
+        </ul>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary" ng-disabled="!vm.member" ng-click="vm.save()">分配</button>
+    </div>
+</div>

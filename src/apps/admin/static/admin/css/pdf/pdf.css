@@ -1,0 +1,550 @@
+/* this stylesheet is used when generating a PDF with PrinceXML or any other tool that understands the CSS used. */
+@import "fonts.css";
+/* define a page */
+@page {
+  size: A4 landscape;
+  /*size: A4;*/
+  margin: 10pt 60pt 10pt;
+}
+
+@page :first {
+  /*size: A4;*/
+  size: A4 landscape;
+  margin: 0;
+}
+
+.page-title-container {
+  background-color: #1D8BD8;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 28px;
+  font-weight:bold;
+  color: #FFFFFF;
+}
+
+.page-title-container img {
+  vertical-align:middle;
+  width: 52px;
+  height: 52px;
+}
+
+img {
+  max-width: 100%;
+}
+
+img.title{
+  display: block;
+  width: 360px;
+  height: 50px;
+  margin: 10pt auto;
+}
+
+.apk-icon {
+  text-align: center;
+  width: 42px;
+  height: 42px;
+}
+
+.apk-icon img{
+  width: 40px;
+  height: 40px;
+}
+
+div.first-page .table{
+  font-size: 9pt;
+  margin: 10pt 20pt 10pt 20pt;
+}
+
+div.first-page .knob {
+  height:180px;
+  width:180px;
+  margin:0 auto;
+}
+
+div.first-page .pie-with-legend {
+  height:300px;
+  width:180px;
+  margin:0 auto;
+}
+
+div.first-page table>thead>tr>th {
+  font-weight: normal;
+}
+/* styles for the right hand spread
+Bottom left we display the title of the book, bottom right the page using a CSS counter, top right the content of the current chapter */
+@page {
+  @bottom-right {
+    /*border-bottom: .25pt solid #666;*/
+    content: counter(page) "/" counter(pages);
+    margin: 10pt 0 30pt 0;
+    font-size: 9pt;
+    color: #333;
+  }
+
+  /*@bottom-center {*/
+    /*margin: 10pt 0 30pt 0;*/
+    /*border-top: .25pt solid #666;*/
+    /*content: "Copyright © by Testbird all rights reserved";*/
+    /*font-size: 8pt;*/
+    /*color: #333;*/
+  /*}*/
+
+  /*@top-center {*/
+    /*border-bottom: .25pt solid #666;*/
+    /*font-family: Arial, sans-serif;*/
+    /*content: string(docname);*/
+    /*content: string(doctitle);*/
+    /*content: "Testbird真实玩家游戏品质评估报告";*/
+    /*margin: 30pt 0 10pt 0;*/
+    /*font-size: 9pt;*/
+    /*color: #333;*/
+  /*}*/
+
+
+  /*@top-left {*/
+    /*border-bottom: .25pt solid #666;*/
+    /*FIXME: need a better logo*/
+    /*content: url('../img/pdf-header-logo.png');*/
+    /*margin: 30pt 0 10pt 0;*/
+  /*}*/
+
+  /*@top-left {*/
+    /*border-bottom: .25pt solid #666;*/
+    /*width:100px;*/
+    /*height:30px;*/
+    /*background: url('../../img/pdf/pdf-header-logo.png') no-repeat left center;*/
+    /*background-size: 50% 50%;*/
+    /*content: '';*/
+    /*margin: 30pt 0 10pt 0;*/
+  /*}*/
+
+  /*@top-right {*/
+    /*border-bottom: .25pt solid #666;*/
+    /*content: counter(page) "/" counter(pages);*/
+    /*margin: 30pt 0pt 10pt 0pt;*/
+    /*font-size: 9pt;*/
+    /*color: #333;*/
+  /*}*/
+}
+
+/*first page*/
+@page :first {
+  @bottom-right {
+    content: '';
+  }
+
+  @top-center {
+    content: normal;
+    margin: 0;
+  }
+
+
+  @top-left {
+    content: normal;
+    margin: 0;
+  }
+
+  @top-right {
+    content: normal;
+    margin: 0;
+  }
+}
+
+/* reset chapter and figure counters on the body */
+body {
+  counter-reset: chapternum figurenum;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 0.8em;
+}
+
+/* get the title of the current chapter - this will be the content of the h1
+reset figure counter as figures start from 1 in each chapter */
+h1 {
+  string-set: doctitle content();
+  /*page-break-before: always;*/
+  counter-reset: figurenum;
+  counter-reset: footnote;
+  line-height: 1.3;
+  margin: 20px 0;
+}
+
+/* increment chapter counter */
+h1.chapter:before {
+    counter-increment: chapternum;
+  /*content: counter(chapternum) ". ";*/
+}
+h1.chapter {
+    page-break-before: always;
+  /*content: counter(chapternum) ". ";*/
+}
+/* increment and display figure counter */
+figcaption {
+  text-align: right;
+  font-size: 0.7em;
+}
+figcaption:before {
+  counter-increment: figurenum;
+  content: counter(chapternum) "章 - 图" counter(figurenum) ". ";
+}
+
+/* footnotes */
+.fn {
+  float: footnote;
+}
+
+.fn {
+  counter-increment: footnote;
+}
+
+.fn::footnote-call {
+  content: counter(footnote);
+  font-size: 9pt;
+  vertical-align: super;
+  line-height: none;
+}
+
+.fn::footnote-marker {
+  font-weight: bold;
+}
+
+@page {
+  @footnotes {
+    border-top: 0.6pt solid black;
+    padding-top: 8pt;
+  }
+}
+
+h1 {
+  color: #1996FA;
+  font-size: 1.2em;
+}
+
+h2 {
+  font-size: 1.0em;
+}
+
+h3 {
+  font-size: 0.9em;
+}
+
+h4 {
+  font-size: 0.8em;
+}
+
+p {
+  font-size: 0.8em;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: bold;
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+
+h1 + p, h2 + p, h3 + p {
+  page-break-before: avoid;
+}
+
+.page-break {
+  page-break-after: always;
+}
+table, figure {
+
+  font-size: 8pt;
+}
+
+table.long-table {
+  page-break-inside: auto;
+}
+
+ul.toc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* create page numbers using target-counter in the TOC */
+ul.toc a::after {
+  content: leader('.') target-counter(attr(href), page);
+}
+
+ul.toc li {
+  line-height: 2;
+}
+
+ul.toc li a {
+  text-decoration: none;
+}
+
+a {
+  color: #000;
+}
+
+/* add page number to cross references */
+a.xref:after {
+  content: " (page " target-counter(attr(href, url), page) ")";
+}
+
+.game-rank {
+  font-size: 90pt;
+  font-weight: bold;
+  color: #0D99FC;
+  text-align: center;
+  font-family: Verdana, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding-bottom: 5pt;
+}
+
+.game-rank-desc {
+  text-align: left;
+  font-size: 9pt;
+}
+
+.game-rank-desc p{
+  line-height:10pt;
+  font-size: 6pt;
+}
+
+.game-rank-desc p.current{
+  font-size: 7pt;
+  color: red;
+}
+
+.table-center-text tr th, .table-center-text tr td {
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+
+.row-span {
+  vertical-align: middle !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  transform: rotate(90deg) !important;
+}
+
+.column-span {
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+
+.row-size-2 { table-row-span: 2 }
+.row-size-3 { table-row-span: 3 }
+.row-size-4 { table-row-span: 4 }
+.row-size-5 { table-row-span: 5 }
+.row-size-6 { table-row-span: 6 }
+.row-size-7 { table-row-span: 7 }
+.row-size-8 { table-row-span: 8 }
+.row-size-9 { table-row-span: 9 }
+.row-size-10 { table-row-span: 10 }
+.row-size-11 { table-row-span: 11 }
+.row-size-12 { table-row-span: 12 }
+
+.column-size-2 { table-column-span: 2 }
+.column-size-3 { table-column-span: 3 }
+.column-size-4 { table-column-span: 4 }
+.column-size-5 { table-column-span: 5 }
+.column-size-6 { table-column-span: 6 }
+.column-size-7 { table-column-span: 7 }
+.column-size-8 { table-column-span: 8 }
+.column-size-9 { table-column-span: 9 }
+.column-size-10 { table-column-span: 10 }
+.column-size-11 { table-column-span: 11 }
+.column-size-12 { table-column-span: 12 }
+
+
+.bg-color-1 {
+  background-color: #EBF1DF;
+}
+.bg-color-2 {
+  background-color: #C4D69E;
+}
+.bg-color-3 {
+  background-color: #9CBA5F;
+}
+.bg-color-4 {
+  background-color: #FFFFFF !important;
+}
+.bg-color-5 {
+  background-color: #EFF6FF;
+}
+.bg-sum-color {
+  background-color: #3993AA;
+}
+
+.bg-meta-item-color {
+  background-color: #F5F5F5;
+}
+
+.tb-comment {
+  background-color: #D7F8FF;
+  height: 250px;
+  width: 300px;
+  padding: 5px 5px;
+}
+
+.table-sum {
+  font-size: 14px !important;
+  text-align: left !important;
+  color: #FFFFFF !important;
+}
+
+ul.para-list {
+  margin-bottom: 10px;
+}
+
+ul.para-list li{
+  font-size: 1em;
+  line-height: 1em;
+  display: inline;
+  list-style-type: none;
+  padding: 2px 5px 2px;
+}
+
+.font-18 {
+  font-size: 18px;
+}
+
+.top-10 {
+  margin-top:10px;
+}
+
+.top-20 {
+  margin-top:20px;
+}
+
+.top-40 {
+  margin-top:40px;
+}
+
+.top-80 {
+  margin-top:80px;
+}
+
+.top-200 {
+  margin-top:200px;
+}
+
+.para-list li span.success{
+  padding: 4px;
+  background-color: #8EE57D;
+}
+.para-list li span.warning{
+  padding: 4px;
+  background-color: #f9ba85;
+}
+.para-list li span.danger{
+  padding: 4px;
+  background-color: #C8554F;
+}
+
+a {
+  text-decoration: underline;
+  color: #0075BF;
+}
+
+cite {
+  display: block;
+  position: relative;
+  margin-left: 2.5em;
+  -webkit-column-break-inside: avoid;
+  column-break-inside: avoid;
+  break-inside: avoid;
+  font-style: normal;
+  text-align: left;
+}
+cite:before {
+  position: absolute;
+  display: inline-block;
+  margin-left: -2.5em;
+}
+cite a {
+  text-decoration: none;
+}
+sup a[href^="#"] {
+  text-decoration: none;
+  position: relative;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+  /*color: #777;*/
+  color: #FFF;
+  /*background-color: #E3E3E3;*/
+  background-color: #1996FA;
+  border-radius: 50%;
+  padding: 0.2em 0.5em 0.2em;
+}
+
+sup {
+top: -0.5em;
+}
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+a.reference {
+  position: relative;
+  top: -0.2em;
+  font-weight: bold;
+  color: #777;
+  background-color: #E3E3E3;
+  font-size: 0.8em;
+  border-radius: 0.4em;
+  padding: 0.2em 0.4em 0;
+  border: none;
+  text-decoration: none;
+}
+.font-12 {
+  font-size: 12px;
+}
+
+.add-text-align{
+  text-align: center;
+}
+.add-header{
+    height: 60px;
+    width: 200px;
+    background: #1B8BD9;
+    margin-bottom: 20px;
+    text-align: center;
+    padding-top: 1mm;
+}
+.add-header .chapter {
+    color: #fff;
+}
+.add-table-font{
+    font-size: 14px; color: #1B8BD9;
+}
+.add-table-font a{
+    font-size: 12px; color: #1006F1;
+}
+.add-table-content{
+    width: 100%;height: 300px; background: #D7F8FF; line-height: 20px; margin-top: -20px;padding-left: 20px;padding-right: 20px;padding-top: 20px;
+}
+.font-size-14 {
+    font-size: 14px;
+}
+.color-blue{
+    text-align: right; color: #1B8BD9;
+}
+.height-250{
+    height: 250px; width: 100%;
+}
+.height-600{
+    height: 600px;
+}
+.padding-left-30{
+    padding-left: 30px;
+}
+.ch-chart{
+    height:300px;width:110mm;
+}
+.ch-chart-long{
+    height:280px;width:240mm;
+}
+.add-a{
+    color: #f21c30; float: right; font-size: 9pt; font-family: "宋体";
+}

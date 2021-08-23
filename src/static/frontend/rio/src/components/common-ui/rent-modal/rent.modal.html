@@ -1,0 +1,70 @@
+<div class="rent-modal rio-modal">
+    <h1 class="head">请选择租用时间<i class="icon icon-popup-close" ng-click="cancel()" ></i></h1>
+    <ul class="time-select clearfix text-unselect">
+        <li class="{{hour==0.16&&!customMode?'selected':''}}" ng-click="setHour(0.16)">
+            <span class="times">10</span>
+            <span class="unit">分钟</span>
+            <i class="icon icon-check"></i>
+        </li>
+        <li class="{{hour==0.5&&!customMode?'selected':''}}" ng-click="setHour(0.5)">
+            <span class="times">30</span>
+            <span class="unit">分钟</span>
+            <i class="icon icon-check"></i>
+        </li>
+        <li class="{{hour==1&&!customMode?'selected':''}}" ng-click="setHour(1)">
+            <span class="times">1</span>
+            <span class="unit">小时</span>
+            <i class="icon icon-check"></i>
+        </li>
+        <li class="{{hour==2&&!customMode?'selected':''}}" ng-click="setHour(2)">
+            <span class="times">2</span>
+            <span class="unit">小时</span>
+            <i class="icon icon-check"></i>
+        </li>
+        <li class="{{hour==4&&!customMode?'selected':''}}" ng-click="setHour(4)">
+            <span class="times">4</span>
+            <span class="unit">小时</span>
+            <i class="icon icon-check"></i>
+        </li>
+        <li class="{{hour==8&&!customMode?'selected':''}}" ng-click="setHour(8)">
+            <span class="times">8</span>
+            <span class="unit">小时</span>
+            <i class="icon icon-check"></i>
+        </li>
+        <li class="{{hour==12&&!customMode?'selected':''}}" ng-click="setHour(12)">
+            <span class="times">12</span>
+            <span class="unit">小时</span>
+            <i class="icon icon-check"></i>
+        </li>
+        <li class="{{hour==24&&!customMode?'selected':''}}" ng-click="setHour(24)">
+            <span class="times">24</span>
+            <span class="unit">小时</span>
+            <i class="icon icon-check"></i>
+        </li>
+        <li ng-class="{selected:customMode}" class="custom-time" ng-click="setCustomMode()">
+            <span class="times"><input class="custom-hour-ipt" name="times" type="number" ng-model="customHour" /></span>
+            <span class="unit">自定义/小时</span>
+            <i class="icon icon-check"></i>
+        </li>
+    </ul>
+    <div>
+        <div class="help" ng-hide="isTimesValid()">请输入有效的自定义时间(半小时为最小单位)</div>
+        <p><i class="icon icon-checkbox-disable"/>抵扣券剩余时间 <span class="orange">{{ customerDuration.voucher|secondFilter:'true':'0'}}</span>，此次消费将优先扣除抵扣券时间
+        </p>
+        <p class="remain-time">账户剩余时间 <span class="orange">{{ customerDuration.fund|secondFilter:'true':'0分'}}</span> ，计费单价：<span
+            class="orange">{{ customerDuration.price }}</span>元/1分钟(以1分钟为最小扣费时间)</p>
+            <div>云手机作为共享服务,请勿做以下操作:</div>
+            <div>1. 设置锁屏密码。
+            2. 绑定个人手机账号。
+            3. root手机。
+            4. 执行关机, 重置操作。
+            5. 下载恶意软件。
+            6. 修改USB调试等操作。
+            </div>
+            <div>否则,一经发现，Testbird将关闭该账号!</div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-long btn-default" ng-click="cancel()">取消</button>
+        <button class="btn btn-long btn-primary" ng-click="close()">租用</button>
+    </div>
+</div>

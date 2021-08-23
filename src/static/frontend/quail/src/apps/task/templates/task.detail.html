@@ -1,0 +1,53 @@
+<div class="task-container">
+    <div class="head" tb-fix-button>
+        <div class="text-right">
+            <h3>任务详情</h3>
+            <p class="explain">当前{{ pagination.data.length }} 项，总计{{ vm.executions.length }} 项</p>
+            <a href="" class="btn btn-sm btn-default"  ui-sref="app.tasks">返回</a>
+            <a href="" class="btn btn-sm btn-default is-disabled" ng-click="vm.exportExcel(app)">导出excel</a>
+            <a href="" class="btn btn-sm btn-danger is-disabled" ng-click="deleteExecutions()">删除</a>
+        </div>
+    </div>
+    <table tb-sorting tb-paging-table data-table-ctrl="pagination">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="checkAll" tb-select-all data-models="pagination.data" ng-model="pagination.data.allChecked"/>
+                    <label for="checkAll"></label>
+                </th>
+                <th orderBy="name" class="test-sorting fix-fa">用例</th>
+                <th orderBy="device.name" class="test-sorting fix-fa">机型</th>
+                <th orderBy="refer_key" class="test-sorting fix-fa">参考ID</th>
+                <th orderBy="launch_time" class="test-sorting fix-fa">开始时间</th>
+                <th>问题截图</th>
+                <th orderBy="result" class="test-sorting fix-fa">结果</th>
+                <th>备注</th>
+                <th>用例详情</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="execution in pagination.data | orderBy:order:direction " ng-class="{'has-click': vm.clickedId == execution.id}" ng-click="vm.recordClickId(execution.id)">
+                <td>
+                    <input type="checkbox" id="check[{{$index}}]" ng-model="execution.checked" />
+                    <label for="check[{{$index}}]"></label>
+                </td>
+                <td>{{execution.name}}</td>
+                <td>{{execution.device.name}}</td>
+                <td>{{execution.refer_key}}</td>
+                <td class="date">{{execution.launch_time  | dateFilter}}</td>
+                <td>
+                    <img class="patched-img" ng-if="execution.head_image_url" ng-src="{{ execution.head_image_url }}" ng-click="vm.snapshotController.patchedSnapshots(execution.id)" />
+                    <i ng-if="!execution.head_image_url">-</i>
+                </td>
+                <td ng-style="{ 'color':(execution.result | executionResultTextColor) }">
+                    {{execution.result}}
+                </td>
+                <td>{{execution.desc | ellipsisText: '20' }}</td>
+                <td>
+                    <span ng-if="execution.status != 20">生成中</span>
+                    <a ng-if="execution.status == 20" ng-click="vm.goExecutionDetail(execution)" class="link">查看</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

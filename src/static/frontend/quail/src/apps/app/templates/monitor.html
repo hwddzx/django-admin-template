@@ -1,0 +1,42 @@
+<div ng-controller="MonitorCtrl as vm" class="device-monitor-container">
+    <div class="info-header">
+        <span>当前可用手机<span class="device-num">{{vm.freeDeviceNum}}</span>台，正在运行手机<span class="device-num">{{vm.busyDeviceNum}}</span>台</span>
+        <form class="form-inline">
+            <div class="form-group">
+                <input type="text" name="keyWord" class="form-control" ng-model="vm.keyWord" placeholder="输入关键字查询">
+            </div>
+            <div class="form-group">
+                <label>手机状态</label>
+                <select ng-model="vm.device_status">
+                    <option value="all">全部</option>
+                    <option ng-repeat="status in vm.statusList" value="{{status.value}}">{{status.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <a href="" class="btn btn-sm btn-primary btn-fix" ng-click="vm.getFilterDevices()">查询</a>
+            </div>
+        </form>
+    </div>
+    <div class="monitor-container">
+        <div class="device-container" ng-repeat="device in vm.devices">
+            <div ng-if="device.isPlay" class="video-container" ng-controller="deviceStfCtrl">
+                <div ng-include="'apps/task/stf/device-control/templates/device-control.html'" class="fill-height"></div>
+                <!--<div ng-show="rioDevice.deviceType == 'ios'&& ios_video_src" class="ios_video">-->
+                    <!--<img ng-src="{{ios_video_src}}">-->
+                <!--</div>-->
+            </div>
+            <div ng-if="device.deviceType=='ios'&&!device.isPlay" class="device-ios-bg"></div>
+            <div ng-if="device.deviceType=='android'&&!device.isPlay" class="device-android-bg"></div>
+            <div class="device-info">
+                <p>手机名称：<span>{{device.name}}</span>
+                    <span>
+                        <a href="" ng-if="!device.isPlay && vm.isIosNumBig(device)" ng-click="vm.playVideo(device, $index)">查看监控</a>
+                        <a href="" ng-if="device.isPlay" ng-click="vm.stopVideo(device, $index)">停止播放</a>
+                    </span>
+                </p>
+                <p>使用人员：<span>{{device.locker}}</span></p>
+                <p>app名称：<span>{{device.app_name}}</span></p>
+            </div>
+        </div>
+    </div>
+</div>

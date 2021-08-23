@@ -1,0 +1,103 @@
+$highlightTextColor:#8e9194;
+$darkenTextColor:#5a6168;
+$packeryItemBorderColor:#2b313a;
+.stf-info{
+    margin-top: 20px;
+}
+.stf-info .table.table-infocard thead > tr > th,
+.stf-info .table.table-infocard tbody > tr > th,
+.stf-info .table.table-infocard tfoot > tr > th,
+.stf-info .table.table-infocard thead > tr > td,
+.stf-info .table.table-infocard tbody > tr > td,
+.stf-info .table.table-infocard tfoot > tr > td {
+    border-top: 0;
+    font-size: 12px;
+    height: 20px;
+    padding: 0 5px;
+    color: $highlightTextColor;
+}
+
+.stf-info .table-infocard tbody > tr > td:first-child {
+    text-align: left;
+    margin-right: 20px;
+    font-weight: normal;
+    white-space: nowrap;
+    width: 30%;
+}
+
+.stf-info .table-infocard tbody > tr > td:last-child {
+    color: $darkenTextColor;
+}
+
+.stf-info .progress {
+    margin-bottom: 0;
+    height: 15px;
+}
+
+div[angular-packery] {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+div[angular-packery]:after {
+    content: ' ';
+    display: block;
+    clear: both;
+}
+
+.col-md-4-x.packery-item {
+    float: left;
+    border: 0;
+}
+
+.col-md-4-x.packery-item {
+    width: 100%;
+}
+
+.col-md-6-x {
+    width: 50%;
+    float: left;
+}
+
+.tb-modal-info {
+    overflow-y: auto;
+}
+
+.packery-item {
+    .widget-container {
+        position: relative;
+        padding-left: 30px;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+        .icon {
+            position: absolute;
+            left: 0;
+            top: 5px;
+        }
+    }
+    .heading {
+        background: transparent;
+        height: 30px;
+        padding: 5px;
+        font-size: 14px;
+        width: 100%;
+        font-weight: 400;
+        margin: 0;
+        color: $highlightTextColor;
+    }
+    .widget-content {
+        background-color: transparent;
+        min-height: 150px;
+        overflow-y: auto;
+    }
+}
+
+.stf-info-ios {
+    margin-top: 10px;
+    .title {
+        color: $black;
+        font-size: 18px;
+        margin: 10px 0;
+    }
+}

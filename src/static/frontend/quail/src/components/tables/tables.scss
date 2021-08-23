@@ -1,0 +1,22 @@
+.load-more {
+    text-align: center;
+    display: none;
+    margin-top: 20px;
+    .btn {
+        border-color: $blue;
+        color: $blue;
+        background-color: #ff;
+        &:hover {
+            color: #fff;
+            background-color: $blue;
+        }
+    }
+}
+
+.loading-spinner {
+    margin-top: 20px;
+    height: 20px;
+    background: url("./img/input-spinner.gif") no-repeat;
+    background-position: 50%;
+    display: none;
+}

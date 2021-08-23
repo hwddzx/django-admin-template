@@ -1,0 +1,223 @@
+.report-detail-container {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 40px 0;
+        color: #191e25;
+    }
+    .test-info {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid $gray-border;
+        border-left: 0;
+        li {
+            display: inline-block;
+            width: 25%;
+            float: left;
+            margin: 0;
+            padding: 10px 35px;
+            border: 0;
+            border-left: 1px solid $gray-border;
+            span:first-child {
+                line-height: 35px;
+                color: $text-gray;
+            }
+            span:last-child {
+                display: inline-block;
+                width: 205px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+    .test-overview {
+        padding-left: 10px;
+    }
+    .bar-data {
+        width: 420px;
+        overflow: hidden;
+        float: left;
+        font-size: 18px;
+        > div {
+            width: 50%;
+            float: left;
+        }
+        .big {
+            font-size: 36px;
+        }
+    }
+    .report-single-chart {
+        margin-top: 40px;
+        float: left;
+        .chart-count {
+            display: inline-block;
+            width: 170px;
+            margin-left: -80px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .chart-name {
+            font-size: 18px;
+            display: inline-block;
+            width: 180px;
+            margin-left: -65px;
+            text-align: center;
+            font-size: 18px;
+        }
+        svg {
+            width: 690px;
+        }
+    }
+    .double-chart-container {
+        margin: 60px 0;
+    }
+    .report-double-chart-left,
+    .report-double-chart-right {
+        position: relative;
+        width: 50%;
+        float: left;
+        padding-left: 35px;
+        .title {
+            position: absolute;
+            left: 350px;
+            font-size: 16px;
+        }
+        .bar-data {
+            position: absolute;
+            font-size: 14px;
+            top: 40px;
+            left: 350px;
+            width: 200px;
+            .big {
+                font-size: 24px;
+            }
+        }
+        svg {
+            width: 520px;
+        }
+    }
+    .report-double-chart-right {
+        border-left: 1px solid $gray-border;
+    }
+    .look-detail-link {
+        color: $orange;
+        text-decoration: underline;
+    }
+    .current-app-container {
+        overflow: hidden;
+        margin: 30px 0;
+        img {
+            width: 100px;
+            height: 100px;
+            float: left;
+            border-radius: 5px;
+        }
+        .info {
+            margin-left: 20px;
+            float: left;
+            .app-name {
+                display: block;
+                margin: 0;
+                font-size: 18px;
+            }
+            .priority {
+                @include priority-style;
+                margin-top: 5px;
+            }
+            .share-link {
+                display: inline-block;
+                margin-top: 5px;
+                padding: 0 10px;
+                height: 20px;
+                line-height: 20px;
+                background-color: #edf2f7;
+                border-radius: 20px;
+                color: #8e9194;
+                font-size: 12px;
+            }
+        }
+        .btn-export-excel {
+            float: right;
+        }
+    }
+    .show-scenario {
+        .strip {
+            float: right;
+            margin-left: 20px;
+            input {
+                display: none;
+            }
+            label {
+                cursor: pointer;
+                i {
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    margin-right: 12px;
+                    &.passed {
+                        background-color: #52bf8a;
+                    }
+                    &.blocked {
+                        background-color: #fcc24a;
+                    }
+                    &.failed {
+                        background-color: #fa575f;
+                    }
+                }
+            }
+            input:checked + label i {
+                background-color: $gray !important;
+            }
+        }
+    }
+    .scenario {
+        overflow: hidden;
+        padding-top: 35px;
+        width: 100%;
+        p {
+            width: 10%;
+            float: left;
+            margin: 0;
+        }
+        .histogram {
+            width: 90%;
+            float: left;
+            .strip {
+                float: left;
+                height: 15px;
+                border-radius: 15px;
+                position: relative;
+                margin-top: 2.5px;
+                .prompt-box {
+                    position: absolute;
+                    left: 50%;
+                    bottom: 20px;
+                    display: none;
+                }
+                &.passed {
+                    background-color: #52bf8a;
+                    z-index: 0;
+                }
+                &.blocked {
+                    background-color: #fcc24a;
+                    z-index: 1;
+                }
+                &.failed {
+                    background-color: #fa575f;
+                    z-index: 2;
+                }
+            }
+        }
+    }
+    table {
+        .execution-desc {
+            width: 120px;
+            @include text-overflow;
+        }
+    }
+}

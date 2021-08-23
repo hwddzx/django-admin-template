@@ -1,0 +1,9 @@
+<div ng-controller="DeviceControlCtrl" class="interact-control fill-height stf-device-control fill-height fill-width">
+    <div ng-controller="DeviceScreenCtrl" ng-if="device" class="fill-height fill-width">
+        <div ng-file-drop="installFile($files)" ng-file-drag-over-class="dragover" class="fill-height fill-width">
+            <device-context-menu device="device" control="control">
+                <device-screen device="device" control="control" class="fill-height fill-width"></device-screen>
+            </device-context-menu>
+        </div>
+    </div>
+</div>

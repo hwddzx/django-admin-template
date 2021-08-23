@@ -1,0 +1,215 @@
+.permission-container {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    height: 100%;
+    @include header-btn-position;
+    .test-case-head {
+        position: relative;
+        height: 50px;
+        background-color: $blue-bg-light;
+        border-bottom: 1px solid $gray-border;
+        h3 {
+            float: left;
+            line-height: 50px;
+            display: inline-block;
+            margin: 0 0 0 15px;
+            font-size: 20px;
+        }
+    }
+    .tb-spliter {
+        position: relative;
+        overflow: inherit;
+        width: 1150px;
+        height: calc(100% - 50px);
+        .spliter-bar {
+            position: absolute;
+            display: inline-block;
+            width: 10px;
+            height: 100%;
+            opacity: 0;
+            z-index: 1;
+            cursor: col-resize;
+            &.mouse-down,
+            &:hover {
+                opacity: 0.6;
+            }
+        }
+    }
+    .left {
+        float: left;
+        width: 290px;
+        height: 100%;
+        text-align: center;
+        border-right: 10px solid $blue-bg-light;
+        .title-wrap {
+            padding-right: 0;
+            text-align: left;
+        }
+        .group {
+            position: relative;
+            margin-bottom: 10px;
+            input[type=text] {
+                width: calc(100% - 60px);
+                height: 30px;
+                padding: 0 5px;
+                border: 1px solid $border-gray;
+            }
+            .btn {
+                height: 30px;
+                padding: 0 5px;
+                line-height: 30px;
+                vertical-align: top;
+            }
+            .search-panel {
+                position: absolute;
+                width: calc(100% - 17px);
+                margin-left: 8px;
+                border: 1px solid $border-gray;
+                background: $white;
+                z-index: 1;
+                li {
+                    margin: 0;
+                    padding: 0 15px;
+                    line-height: 30px;
+                    text-align: left;
+                    &:hover {
+                        background: $blue-bg;
+                    }
+                }
+            }
+        }
+        .user-list {
+            li {
+                position: relative;
+                height: 40px;
+                margin-bottom: 0;
+                line-height: 40px;
+                text-align: left;
+                &:hover {
+                    background: $blue-bg;
+                    cursor: pointer;
+                    .icon-delete {
+                        display: inline-block;
+                    }
+                }
+                &.active {
+                    background: $blue-bg;
+                    .icon-delete {
+                        display: inline-block;
+                    }
+                }
+                .icon-user {
+                    position: absolute;
+                    top: 50%;
+                    left: 10px;
+                    margin-top: -15px;
+                }
+                .icon-delete {
+                    position: absolute;
+                    top: 50%;
+                    right: 10px;
+                    margin-top: -8px;
+                }
+                .name {
+                    @include text-overflow;
+                    display: block;
+                    padding: 0 0 0 50px;
+                }
+            }
+        }
+    }
+    .right {
+        float: left;
+        width: 860px;
+        height: 100%;
+        border-left: 0;
+        overflow: auto;
+        .content {
+            width: 100%;
+            margin-top: 25px;
+            padding: 0 2%;
+            .checkbox-wrap {
+                @include input-alarm-class;
+                padding-left: 25px;
+            }
+        }
+        .scenarios-permission {
+            position: relative;
+            height: 40px;
+            line-height: 40px;
+            background: $blue-bg;
+            border-bottom: 1px solid $border-gray;
+            .title-left {
+                position: absolute;
+                left: 30px;
+            }
+            .title-right {
+                position: absolute;
+                right: 80px;
+            }
+        }
+        .ztree {
+            li {
+                line-height: 35px;
+                a {
+                    &.curSelectedNode {
+                        height: 35px;
+                    }
+                    width: calc(100% - 36px);
+                    padding: 0;
+                    cursor: default;
+                    z-index: 1;
+                }
+                .node_name {
+                    float: left;
+                    line-height: 35px;
+                }
+            }
+            .permission-wrap {
+                float: right;
+                margin-right: 50px;
+                cursor: pointer;
+                .fa {
+                    position: relative;
+                    top: -3px;
+                    left: 5px;
+                    color: $gray;
+                }
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    li {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+    .title-wrap {
+        position: relative;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 10px;
+        font-size: 18px;
+    }
+    .icon-user {
+        width: 30px;
+        height: 30px;
+        background-image: url(img/preview/icon-user.png);
+        background-size: 80px 80px;
+        background-position: 0 0;
+    }
+    .icon-delete {
+        display: none;
+        width: 16px;
+        height: 16px;
+        background-image: url(img/apps/icon-delete.png) !important;
+        background-size: 16px 37px;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+}

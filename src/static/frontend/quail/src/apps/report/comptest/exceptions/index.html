@@ -1,0 +1,105 @@
+<div class="exceptions-detail-v2" panel-switch data-ctrl="vm">
+    <div ng-if="vm.testSteps">
+        <h1>测试过程描述</h1>
+        <pre class="pre" ng-bind="vm.testSteps"></pre>
+    </div>
+    <h1>问题类型分布</h1>
+    <table class="table table-hover align-center">
+        <thead>
+            <tr>
+                <th></th>
+                <th ng-repeat="subtype in vm.subtypes">
+                    <a subtype-key="{{ subtype.key }}" ng-class="subtype.count ? 'target-link':''">{{ vm.sortedExceptionTypes[$index].name }}</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>终端数</td>
+                <td ng-repeat="subtype in vm.subtypes">{{ subtype.count }}</td>
+            </tr>
+            <tr class="tr-bg-even">
+                <td>覆盖人群</td>
+                <td ng-repeat="subtype in vm.subtypes">{{ subtype.coverage_count }}万</td>
+            </tr>
+            <tr>
+                <td>问题占比</td>
+                <!--避免浮点数运算出错 如0.333*100=33.300000000000004-->
+                <td ng-repeat="subtype in vm.subtypes">{{ subtype.rate*1000/10 }}%</td>
+            </tr>
+        </tbody>
+    </table>
+    <div ng-show="vm.exceptionLists.length">
+        <h1>问题摘要分布</h1>
+        <div class="col-md-12"  exception-log-chart data-ctrl="vm"></div>
+        <table class="table table-hover tb-paging-table">
+            <thead>
+                <th width="70%">问题摘要</th>
+                <th width="15%">终端数</th>
+                <th width="15%">影响用户数</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="list in vm.exceptionLists" ng-class-even="'tr-bg-even'">
+                    <td  class="desc"><a log-key="{{ list.name }}" ng-class="list.name!='null' ? 'target-link':''">{{ list.name }}</a></td>
+                    <td>{{ list.count }}台</td>
+                    <td>{{ list.coverage }}万</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h1 id="screen">问题筛选</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="label">问题摘要:</label>
+            <div class="select">
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    <span>{{ vm.filters.logFilter?vm.filters.logFilter:'全部问题摘要' }}</span><i class="fa fa-sort-desc"></i>
+                    <ul class="unstyle-list vertical-group-list dropdown-menu" uib-dropdown-menu>
+                        <li ng-click="vm.chooseFilter('logFilter')"><span>全部问题摘要</span></li>
+                        <li ng-repeat="exceptionDescFilter in vm.exceptionDescFilters" ng-click="vm.chooseFilter('logFilter', exceptionDescFilter)"><span class="break-all" ng-bind="exceptionDescFilter"></span></li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="label">问题类型:</label>
+            <div class="select">
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    <span>{{ vm.filters.subtasksFilter.name?vm.filters.subtasksFilter.name:'全部问题类型' }}</span><i class="fa fa-sort-desc"></i>
+                    <ul class="unstyle-list vertical-group-list dropdown-menu short-menu" uib-dropdown-menu>
+                        <li ng-click="vm.chooseFilter('subtasksFilter')"><span>全部问题类型</span></li>
+                        <li ng-repeat="subtype in vm.sortedExceptionTypes" ng-click="vm.chooseFilter('subtasksFilter', subtype)" ng-if="vm.subtypes[$index].count!=0"><span ng-bind="subtype.name"></span></li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+    </div>
+    <table tb-load-more data-table-list="vm.subtasks" filters="vm.filters" class="table table-hover tb-paging-table">
+        <thead>
+            <th width="15%">测试结果</th>
+            <th width="40%">问题摘要</th>
+            <th width="15%">问题终端</th>
+            <th width="10%">系统版本</th>
+            <th width="20%"></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="subtask in vm.subtasks track by $index " ng-class-even="'tr-bg-even'">
+                <td>
+                    <ul class="optimization">
+                        {{ subtask.result_subtype.name }}
+                    </ul>
+                </td>
+                <td class="desc">{{ subtask.exception_desc }}</td>
+                <td>{{ subtask.device_model.name }}</td>
+                <td>{{ subtask.device_model.os }}</td>
+                <td class="handle">
+                    <a class="link" target="_blank" ui-sref="subtaskDetail.performance({'taskKey':vm.taskKey, 'subtaskKey': subtask.key})">查看详情</a>
+                    <a class="link" target="_blank" ui-sref="subtaskDetail.logs({'taskKey':vm.taskKey, 'subtaskKey': subtask.key, 'scrollToLog': true})">日志</a>
+                    <a class="rent" pgyer-hide ng-disabled="!vm.rioEnabled" tb-rent-sure subtask-id="subtask.id" ng-if="subtask.device_model.rio && !vm.isOffline">
+                        租用
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,22 @@
+{% extends 'common/admin/generic.list.inc.html' %}
+{% load static %}
+
+{% block pagenav %}
+  {% if page_title %}
+    {{ page_title }}
+  {% else %}
+    {{ model_verbose_name }}列表
+  {% endif %}
+    <div class="pull-right">
+      <div class="content-toolbar btn-toolbar pull-right clearfix ">
+        <div class="btn-group">
+          <a class="btn btn-primary" href="#" data-modalurl="{% url 'admin:clientapp_create' 1 %}" data-backdrop="static">
+            <i class="fa fa-apple"></i> 新建iOS客户端
+          </a>
+          <a class="btn btn-primary" href="#" data-modalurl='{% url "admin:clientapp_create" 0  %}' data-backdrop="static">
+            <i class="fa fa-android"></i> 新建安卓客户端
+          </a>
+        </div>
+      </div>
+    </div>
+{% endblock pagenav %}

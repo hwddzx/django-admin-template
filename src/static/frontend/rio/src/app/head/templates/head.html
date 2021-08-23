@@ -1,0 +1,76 @@
+<div  ng-controller="HeadCtrl">
+    <header class="tb-header">
+        <div class="head-container " id="background_linear_blue">
+            <tb-logo config="config"></tb-logo>
+            <div class="divider"></div>
+            <h1>远程真机调试</h1>
+            <!-- 隐藏暂时 -->
+            <!-- <div class="user text-unselect" uib-dropdown uib-dropdown-toggle>
+                <i class="icon icon-avatar-default" />
+                <i class="fa fa-sort-desc" />
+                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="profile-dropdown">
+                    <li tb-lab-hide>
+                        <a href="javascript:;" ng-click="redirect('/home/profile')">
+                            <i class="icon icon_profile"></i>我的资料
+                        </a>
+                    </li>
+                    <li tb-lab-hide>
+                        <a href="javascript:;" ng-click="redirect('/home/fund/records')" >
+                            <i class="icon icon_bill"></i>我的账户
+                        </a>
+                    </li>
+                    <li class="divider-line" tb-lab-hide></li>
+                    <li tb-lab-hide>
+                        <a href="javascript:;"  ng-click="redirect()">
+                            <i class="icon icon_product"></i>我的面板
+                        </a>
+                    </li>
+                    <li class="divider-line" tb-lab-hide></li>
+                    <li tb-lab-hide>
+                        <a href="javascript:;"  ng-click="redirect('/home/order')">
+                            <i class="icon icon_redeem"></i>充值
+                        </a>
+                    </li>
+                    <li tb-lab-hide>
+                        <a href="javascript:;" ng-click="redirect('/home/vouchers')" >
+                            <i class="icon icon_coupons"></i>优惠券账户
+                        </a>
+                    </li>
+                    <li class="divider-line" tb-lab-hide></li>
+                    <li>
+                        <a href="" ng-click="logout()">退出</a>
+                    </li>
+                </ul>
+            </div> -->
+            <div class="upload text-unselect margin_right_12px">
+                <a href="" class="upload-link" ng-click="openUploadModal()">
+                    <i class="icon icon-upload-tip" />
+                    <span upload-badge></span>
+                </a>
+                <span style="color: white;" ng-click="openUploadModal()">上传安装包</span>
+            </div>
+            <div class="remain text-unselect" >
+                <img src="http://toolsforest.com/yuancheng_img/time.png" class="timess"> <span class="margin_right_12px">可用时间&nbsp;<span class="time">{{customer.total_time | tohhmmss}}</span></span>
+                <a href="" class="bill margin_right_12px text_decoration_underline" ui-sref="finance.rentrecords">使用明细</a>
+                <a class="chongzhi_anniu cursor white" ng-click="chongzhi()">
+                    充值
+                </a>
+            </div>
+        </div>
+    </header>
+    <!--远程调试线上版本，返回到官网-->
+    <div class="margin_auto margin_top_20" style="width: 1320px">
+        <img src="http://toolsforest.com/yuancheng_img/home.png" style="width: 25px;" alt="" />
+        <a onclick="history.back()" style="color: #888;">首页</a> > {{head_state}}
+    </div>
+    <!-- <nav>
+        <a class="nav-link" ng-href="https://www.testbird.com/">首页</a>/
+        <a class="nav-link" ng-href="{{ dtUrl }}">我的面板</a>/
+        <a class="nav-link" href="" ui-sref="devices">设备列表</a>
+    </nav> -->
+    <!--<nav ng-if="config.isLab()">-->
+    <!--<a class="nav-link" href="/desktop/">首页</a>/-->
+    <!--<a class="nav-link" href="" ui-sref="devices">设备列表</a>-->
+    <!--</nav>-->
+    <div rio-upload-progressbar></div>
+</div>

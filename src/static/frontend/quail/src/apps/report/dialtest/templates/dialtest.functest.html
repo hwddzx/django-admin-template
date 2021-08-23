@@ -1,0 +1,144 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/report.head.html'"></ng-include>
+<!-- /头部 -->
+<div class="dialtest-detail-container content-container">
+    <div class="current-app-container">
+        <img ng-src="{{ vm.app.icon_url }}"/>
+        <div class="info">
+            <div class="app-name" ng-bind="vm.app.name"></div>
+        </div>
+    </div>
+    <div class="dialtest-report-head">
+        <h3>功能测试结果概况</h3>
+    </div>
+    <table class="tb-no-head-border-table tb-no-head-table-title margin-bottom-30 detail-table">
+        <tr>
+            <td>
+                <div>用例条数</div>
+                <div ng-bind="vm.testcaseAll"></div>
+            </td>
+            <td>
+                <div>用例通过数</div>
+                <div ng-bind="vm.overview.testcase_result.success"></div>
+            </td>
+            <td>
+                <div>用例通过率</div>
+                <div ng-bind="vm.functestPassRate"></div>
+            </td>
+            <td>
+                <div>运行用例总数</div>
+                <div ng-bind="vm.testcaseRunAll"></div>
+            </td>
+            <td>
+                <div>运行失败总数</div>
+                <div ng-bind="vm.testcaseRunFailed"></div>
+            </td>
+        </tr>
+    </table>
+    <div class="head-container">
+        <h3>场景通过概况</h3>
+        <form class="form-inline head-form">
+            <div class="form-group">
+                <label>场景</label>
+                <select ng-model="vm.scenario" ng-change="vm.getFunctestReport('script')">
+                    <option ng-repeat="scenario in vm.scenarios" value="{{scenario[0]}}">{{scenario[1]}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-functest-report></div>
+    </div>
+    <div class="chart-all-width">
+        <div class="dialtest-chart" dialtest-functest-time></div>
+    </div>
+    <div class="head-container">
+        <h3>用例详情</h3>
+        <form class="form-inline head-form">
+            <div class="form-group">
+                <label>关键字</label>
+                <input type="text" class="form-control" ng-model="vm.keyword" ng-enter="vm.filterTableByKeyword()">
+            </div>
+        </form>
+    </div>
+    <div class="table-container min-height-table">
+        <table class="tb-table-striped">
+            <thead>
+            <tr class="filter">
+                <th class="fix-fa">
+                    <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                        {{ vm.filters.scenario == 'all' ? '全部' : vm.filters.scenario}}<i class="light fa fa-sort-down"></i>
+                        <ul class="dropdown-menu short-menu" uib-dropdown-menu>
+                            <li><a ng-click="vm.chooseFilter('all', 'scenario')">全部</a></li>
+                            <li ng-repeat="value in vm.scenarioCategories"><a ng-click="vm.chooseFilter(value, 'scenario')">{{ value }}</a><li>
+                        </ul>
+                    </span>
+                </th>
+                <th></th>
+                <th class="fix-fa">
+                    <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                        {{ vm.filters.deviceName == 'all' ? '全部' : vm.filters.deviceName}}<i class="light fa fa-sort-down"></i>
+                        <ul class="dropdown-menu short-menu" uib-dropdown-menu>
+                            <li><a ng-click="vm.chooseFilter('all', 'deviceName')">全部</a></li>
+                            <li ng-repeat="value in vm.deviceNames"><a ng-click="vm.chooseFilter(value, 'deviceName')">{{ value }}</a><li>
+                        </ul>
+                    </span>
+                </th>
+                <th class="fix-fa">
+                    <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                        {{ vm.filters.deviceOs == 'all' ? '全部' : vm.filters.deviceOs}}<i class="light fa fa-sort-down"></i>
+                        <ul class="dropdown-menu short-menu" uib-dropdown-menu>
+                            <li><a ng-click="vm.chooseFilter('all', 'deviceOs')">全部</a></li>
+                            <li ng-repeat="value in vm.deviceOses"><a ng-click="vm.chooseFilter(value, 'deviceOs')">{{ value }}</a><li>
+                        </ul>
+                    </span>
+                </th>
+                <th></th>
+                <th>
+                    <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                        {{ vm.filters.result == 'all' ? '全部' : vm.filters.result}}<i class="light fa fa-sort-down"></i>
+                        <ul class="dropdown-menu short-menu" uib-dropdown-menu>
+                            <li><a ng-click="vm.chooseFilter('all', 'result')">全部</a></li>
+                            <li ng-repeat="value in vm.results"><a ng-click="vm.chooseFilter(value, 'result')">{{ value }}</a><li>
+                        </ul>
+                    </span>
+                </th>
+                <th></th>
+                <!--<th></th>-->
+                <!--<th></th>-->
+                <!--<th></th>-->
+            </tr>
+            <tr>
+                <th>场景</th>
+                <th>用例名称</th>
+                <th>测试机型</th>
+                <th>机型版本</th>
+                <th>测试时间</th>
+                <th>测试结果</th>
+                <!--<th>运行次数</th>-->
+                <!--<th>通过率</th>-->
+                <th>查看详情</th>
+                <!--<th></th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="data in vm.pageList">
+                <td>{{data.scenario || '-'}}</td>
+                <td>{{data.name || '-'}}</td>
+                <td>{{data.device.name || '-'}}</td>
+                <td>{{data.device.os || '-'}}</td>
+                <td>{{data.created | dateFilter}}</td>
+                <td>{{data.result || '-'}}</td>
+                <!--<td>{{vm.testcase_running_obj[data.testcase_id].total}}</td>-->
+                <!--<td>{{vm.testcase_running_obj[data.testcase_id].rate}}</td>-->
+                <td><a class="link" ng-click="vm.openDetail(data.details_url)">查看</a></td>
+                <!--<td class="td-btn-collapse">-->
+                    <!--<i class="fa fa-chevron-circle-right" ng-show="data.isCollapsed" ng-click="vm.collapseByTestcase(data, 'down')"></i>-->
+                    <!--<i class="fa fa-chevron-circle-down" ng-show="!data.isCollapsed" ng-click="vm.collapseByTestcase(data, 'right')"></i>-->
+                <!--</td>-->
+            </tr>
+            </tbody>
+        </table>
+        <tb-pagination data-list="vm.filterTableData" data-page-list="vm.pageList" data-current-page-num="1"></tb-pagination>
+    </div>
+</div>

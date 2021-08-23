@@ -1,0 +1,135 @@
+<div>
+    <div class="crumb">
+        <!-- 隐藏 -->
+        <!-- <label ng-hide="hasItemSelected()">
+            <a href="" class="crumb-item placeholder-item">
+                <span>全部设备-</span>
+            </a>
+        </label> -->
+        <!-- <label ng-repeat="filter in filters">
+            <a href="" class="crumb-item" ng-repeat="selectedItem in filter.selected track by $index">
+                <span>{{selectedItem.value}}</span>
+                <i class="icon icon-close" ng-click="removeSelectedItem(selectedItem,filter,$event)" />
+            </a>
+        </label> -->
+    </div>
+    <!-- 筛选项 暂时隐藏-->
+    <!-- <div class="selector-group" ng-class="{'selector-mult-mode':filter.multMode}" ng-repeat="filter in filters">
+        <div class="selector-line">
+            <div class="selector-head">
+                {{filter.name}}:
+            </div>
+            <div class="selector-body clearfix" ng-class="{showmore:filter.showmore||filter.multMode}">
+                <a ng-repeat="item in filter.items" href="" class="item"
+                    ng-class="{selected:isItemSelected(item,filter)}"
+                    ng-click="toggleFilterItem(item,filter,$event)">{{item.value}}</a>
+            </div>
+            <div class="selector-btns" ng-hide="filter.multMode">
+                <a href="" class="btn" ng-click="toggleShowmore(filter)">更多</a>
+            </div>
+            <div class="mult-btns text-center">
+                <a href="" class="btn btn-xs btn-default" ng-click="cancelMultSelect(filter)">取消</a>
+                <a href="" class="btn btn-xs btn-primary" ng-click="submitMultSelect(filter)">确定</a>
+            </div>
+        </div>
+    </div> -->
+    <!-- 参照的筛选项 -->
+    <div class="all_pp">
+        <div class="display_flex width_100 littl_box" ng-repeat="filter in filters" ng-class="{'selector-mult-mode':filter.multMode}">
+            <div class="ping_pai">{{filter.name}}</div>
+            <!-- 系统版本下拉筛选
+            <div ng-if="filter.key == 'os'" class="ping_pai" style="padding: 0;">
+                <div class="btn-group" style="margin: 0;">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        style="width: 140px;height: 55px;border: 0px solid #f1eaea;border-right: 1px solid #f1eaea;color: rgb(37, 36, 36);background: rgba(247, 247, 247, 1.0);"
+                        aria-haspopup="true" aria-expanded="false">
+                        系统版本 
+                        <span class="caret" style="border-top-color:rgb(37, 36, 36)!important"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="background: rgba(255, 255, 255, 1);width: 140px;">
+                        <li><a ng-click="systemFilter(filter,true)" style="border-bottom: 0;">全部</a></li>
+                        <li role="separator" class="divider" style="margin:0;"></li>
+                        <li><a ng-click="systemFilter(filter,'Android')" style="border-bottom: 0;">Android</a></li>
+                        <li><a ng-click="systemFilter(filter,'ios')" style="border-bottom: 0;">ios</a></li>
+                        <li><a ng-click="systemFilter(filter,'Harmony')" style="border-bottom: 0;">HarmonyOS</a></li>
+                    </ul>
+                </div>
+            </div> -->
+            <div class="display_flex flex_1 wrop grs" ng-class="{showmore:filter.showmore||filter.multMode}" style="position: relative;height: 56px;overflow: hidden;">
+                <!-- <div class="margin_right_50px cursor" ng-class="{selectedblue: filter.showmore||filter.multMode}"
+                    @click="PingpaiChange('')">
+                    所有品牌
+                </div> -->
+                <div class="margin_right_50px margin_bottom_10 cursor" style="width: 120px;text-align: left;height: 25px;line-height: 22px;" 
+                    ng-if="filter.key!='status'" ng-click="toggleFilterItem(item,filter,$event)" 
+                    ng-class="{selectedblue: isItemSelected(item,filter)}"
+                    ng-repeat="item in filter.items">
+                    {{item.value}}
+                </div>
+                <!-- <div class="margin_right_50px margin_bottom_10 cursor " style="width: 120px;text-align: left;height: 25px;line-height: 22px;" 
+                    ng-if="filter.key =='os'" ng-click="toggleFilterItem(item,filter,$event)" 
+                    ng-class="{selectedblue: isItemSelected(item,filter)}"
+                    ng-repeat="item in filter.items | filter: filter.selectedSystem ">
+                    {{item.value}}
+                </div> -->
+                <div class="margin_right_50px margin_bottom_10 cursor" ng-if="filter.key=='status'" ng-click="toggleFilterItem(item,filter,$event)" ng-class="{selectedblue: isItemSelected(item,filter)}"
+                    ng-repeat="item in filter.items">
+                    {{item.value}}
+                </div>
+                <div class="selector-btns" ng-hide="filter.multMode" ng-if="filter.key != 'status' && filter.items.length > 5 ">
+                    <a href="" class="btn" ng-click="toggleShowmore(filter)">{{!filter.showmore?'更多':'收起'}}</a>
+                </div>
+            </div>
+        </div>
+        <!-- 状态 -->
+        <!-- <div class="display_flex width_100 littl_box">
+            <div class="ping_pai">状态</div>
+            <div class="display_flex flex_1 grs">
+                <div class="margin_right_50px cursor"  
+                    >
+                    空闲
+                </div>
+                <div class="margin_right_50px cursor"  
+                    >
+                    租用
+                </div>
+                <div class="margin_right_50px cursor"  
+                    >
+                    离线
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="display_flex width_100 littl_box">
+            <div class="ping_pai">系统版本</div>
+            <div class="display_flex flex_1 grs">
+                <div class="margin_right_50px cursor" :class="{selectedblue: osselected==''}" @click="OsChange('')">
+                    所有系统
+                </div>
+                <div class="margin_right_50px cursor" @click="OsChange(item)" :class="{selectedblue: osselected==item}"
+                    v-for="item in os.slice(0, 10)">
+                    {{item}}
+                </div>
+                <div class="margin_right_50px col_blue cursor" @click="showHover('os')" v-if="os.length>1">
+                    更多 v
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="display_flex width_100 littl_box">
+            <div class="ping_pai">分辨率</div>
+            <div class="display_flex flex_1 grs">
+                <div class="margin_right_50px cursor " :class="{selectedblue: screen_selected==''}"
+                    @click="ResolutionChange('')">
+                    所有分辨率
+                </div>
+                <div class="margin_right_50px cursor" @click="ResolutionChange(item)"
+                    :class="{selectedblue: screen_selected==item}" v-for="item in Resolution.slice(0, 10)">
+                    {{item}}
+                </div>
+                <div class="margin_right_50px col_blue cursor" @click="showHover('Resolution')"
+                    v-if="Resolution.length>1">
+                    更多 v
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="tab-modal tb-modal-info">
+    <div class="modal-head">
+        上传图片到手机相册
+    </div>
+    <div class="modal-content">
+        <div ng-controller="PhotoCtrl" ng-show="deviceType!='ios'" angular-packery="{draggable: true, draggableHandle: &quot;.heading i&quot;}" class="rio-upload">
+            <div class="upload-container">
+                <div class="widget-content">
+                    <div id="uploadContainer" class="upload-area" ng-show="!parse && !upload && !installation">
+                        <div id="pickPictures" class="upload-area drop-area btn-file">
+                            <i class="icon icon-upload drop-area-icon"></i>
+                            <div class="drop-area-text">点击或拖拽上传</div>
+                        </div>
+                    </div>
+                    <!--<div ng-if="upload" class="drop-area file-input btn-file installtion-status selectable">-->
+                        <!--<progressbar max="100" value="upload.progress" ng-if="!upload.settled" ng-class="{'active': !upload.settled}" class="progress-striped">-->
+                        <!--</progressbar>-->
+                        <!--<div ng-if="!upload.error" class="text-center">-->
+                            <!--<span ng-switch="upload.state">-->
+                                    <!--<strong ng-switch-when="uploading">-->
+                                        <!--<span translate="translate">Uploading...</span>-->
+                            <!--<span> ({{upload.progress}}%)</span>-->
+                            <!--</strong>-->
+                            <!--<strong ng-switch-when="processing">-->
+                                        <!--<span translate="translate">Processing...</span>-->
+                                        <!--<span> ({{upload.progress}}%)</span>-->
+                                    <!--</strong>-->
+                            <!--<strong ng-switch-when="pushing_app">-->
+                                        <!--<span translate="translate">Pushing app...</span>-->
+                                        <!--<span> ({{upload.progress}}%)</span>-->
+                                    <!--</strong>-->
+                            <!--<strong ng-switch-when="uploaded" class="install-done" ng-click="clear()">-->
+                                        <!--<div><i class="icon icon-done" /></div>-->
+                                        <!--<div class="package-info"><i class="icon icon-package"/>{{upload.manifest.package || "App" }}</div>-->
+                                    <!--</strong>-->
+                            <!--</span>-->
+                        <!--</div>-->
+                        <!--<alert type="danger" close="reset()" ng-if="upload.error">-->
+                            <!--<strong translate="translate">提示:</strong> &#x20;-->
+                            <!--<span>{{ upload.error | uploadError | translate }}</span>-->
+                        <!--</alert>-->
+                        <!--<div class="text-center">-->
+                            <!--<button class="btn btn-long btn-blue cancel-upload" ng-if="!dummyProgress" ng-click="cancelUpload()">取消上传</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

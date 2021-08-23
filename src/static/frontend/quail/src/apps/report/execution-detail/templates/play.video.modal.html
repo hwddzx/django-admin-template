@@ -1,0 +1,11 @@
+<div tb-modal class="tb-modal play-video-modal">
+    <h1 class="head">查看视频<i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <div class="video-h5-content">
+        <video id="film" controls="controls" autoplay="autoplay">
+            <source src="{{vm.videoPath}}" type="video/mp4"></source>
+        </video>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default btn-long" ng-click="vm.cancel()">关闭</button>
+    </div>
+</div>

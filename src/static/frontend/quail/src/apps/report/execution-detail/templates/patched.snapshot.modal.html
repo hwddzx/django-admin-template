@@ -1,0 +1,17 @@
+<div tb-modal class="tb-modal patched-snapshot">
+    <i class="icon icon-popup-close" ng-click="cancel()"></i>
+    <div class="tb-overflow-hidden">
+        <div class="snapshot-left">
+            <div ng-click="model.preSnapshot()">&lt;</div>
+        </div>
+        <div class="snapshot-container">
+            <div class="single-snapshot {{ model.imagesLeftIn?'repeat-left-in':'repeat-right-in' }}" ng-class="{true:'patched'}[img.is_patched]" ng-repeat="img in model.currentImages">
+                <img class="snapshot-img" ng-src="{{ img.url }}" />
+                <div class="snapshot-time">{{ img.time / 1000 | dateFilter}}</div>
+            </div>
+        </div>
+        <div class="snapshot-right">
+            <div ng-click="model.nextSnapshot()">&gt;</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+#report-compatibility-v2 {
+    @include table-class;
+    @include col-md-padding;
+    margin-top: 75px;
+    a {
+        color: #000;
+    }
+    .clickable {
+        cursor: pointer;
+        color: $tb-blue-light;
+        text-decoration: underline;
+    }
+
+    .problemStatistics {
+        .big {
+            font-size: 24px;
+            font-weight: normal;
+            span {
+                @include link-color($tb-red, 24px);
+            }
+        }
+        .small {
+            font-size: 14px;
+            margin-left: 5%;
+            span {
+                @include link-color($tb-black, 14px);
+            }
+        }
+    }
+    .distribution {
+        h1 {
+            margin: 20px 0;
+        }
+        .col-md-5 {
+            margin-bottom: 20px;
+            img {
+                height: 50px;
+                margin-right: 10px;
+                float: left;
+            }
+            .text {
+                margin-top: 15px;
+                line-height: 16px;
+                span {
+                    font-size: 18px;
+                }
+                .small {
+                    font-size: 12px;
+                    line-height: 14px;
+                }
+            }
+            table {
+                margin-bottom: 0;
+                tbody tr {
+                    td.canClick {
+                        cursor: pointer;
+                        span {
+                            color: $tb-blue-light;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .elaborate {
+        margin-top: 20px;
+        .input-group input {
+            padding-left: 20px;
+        }
+        .open > .dropdown-menu {
+            width: 186px;
+        }
+        ul li a {
+            color: $tb-gray;
+        }
+        span {
+            line-height: 34px;
+            color: $tb-gray;
+            text-align: right;
+        }
+        #remarks {
+            background: url('img/report/compatibility/remarks.png') no-repeat;
+            background-size: 15px 20px;
+            height: 20px;
+            float: right;
+            width: 15px;
+            cursor: pointer;
+        }
+        #remarks:hover {
+            background: url('img/report/compatibility/remarks-light.png') no-repeat;
+            background-size: 15px 20px;
+            height: 20px;
+            float: right;
+            width: 15px;
+            cursor: pointer;
+        }
+    }
+    .form-control {
+        height: 34px;
+    }
+}
+
+#compatibility-locale-v2 {
+    @include table-class;
+    padding: 50px 80px;
+    h1 {
+        padding-left: 10px;
+    }
+    .modal-body {
+        padding: 0;
+        text-align: center;
+        table {
+            thead {
+                th {
+                    padding-bottom: 10px;
+                }
+            }
+            tbody {
+                tr {
+                    border: none;
+                }
+            }
+        }
+        table + button {
+            color: $tb-blue;
+            background-color: #fff;
+            border-color: $tb-blue;
+            padding: 0 20px;
+        }
+    }
+}

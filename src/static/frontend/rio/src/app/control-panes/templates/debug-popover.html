@@ -1,0 +1,14 @@
+<div id="debug-popover" class="debug-popover">
+    <div class="arrow"></div>
+    <div class="debug-popover-content" ng-show="$parent.deviceType == 'android'">
+        <p>请在本地终端输入命令(部分IDE进入debug模式后会主动切断远程连接，只需重新连接一次即可):</p>
+        <p>步骤一</p>
+        <p class="cmd">{{$parent.debugInfo.debugCommand}}</p>
+        <p>步骤二</p>
+        <p class="cmd">{{$parent.debugInfo.debugAuthCommand}}</p>
+    </div>
+    <div class="debug-popover-content" ng-show="$parent.deviceType == 'ios'">
+        <p>本地命令执行:</p>
+        <p class="cmd">{{$parent.debugInfo.debugIosCommand}}</p>
+    </div>
+</div>

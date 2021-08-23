@@ -1,0 +1,153 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/report.head.html'"></ng-include>
+<!-- /头部 -->
+<div class="report-detail-container content-container" ng-init="metrics = reportDetail.metrics">
+    <div class="current-app-container">
+        <img ng-src="{{ reportDetail.app.icon_url }}"/>
+        <div class="info">
+            <div class="app-name" ng-bind="reportDetail.app.name + '&nbsp;' + reportDetail.release.version
+                                           + '&nbsp;(' + reportDetail.release.build + ')'"></div>
+            <div ng-bind="reportDetail.created|dateFilter"></div>
+            <span class="share-link" ng-bind="shareLink"></span>
+            <span tb-disabled-in-product>&nbsp;&nbsp;id:{{ reportDetail.id }}</span>
+        </div>
+        <button class="btn btn-primary btn-export-excel" ng-click="exportExcel()">导出离线Excel报告</button>
+    </div>
+    <h3>测试信息</h3>
+    <ul class="test-info">
+        <li ng-attr-title="{{ reportDetail.name }}"><span>名称</span><br/><span ng-bind="reportDetail.name"></span></li>
+        <li><span>总用时</span><br/><span ng-bind="metrics.duration | secondFilter"></span></li>
+        <li><span>问题截图</span><br/><span
+            ng-bind="metrics.patched_snapshot_count"></span></li>
+        <li><span>性能隐患</span><br/><span ng-bind="metrics.issue_type_count"></span></li>
+    </ul>
+    <div class="tb-overflow-hidden double-chart-container" >
+        <div class="report-double-chart-left">
+            <div class="title">测试概况</div>
+            <div class="bar-data">
+                <div class="total">
+                    <span>总计:</span><br/>
+                    <span class="big" ng-bind="metrics.execution_count"></span>
+                </div>
+                <div class="pass-rate">
+                    <span>通过率:</span><br/>
+                    <span class="big" ng-bind="metrics.execution_success_count | transformPercent : metrics.execution_count"></span>
+                </div>
+            </div>
+            <div report-with-issue-main-chart></div>
+        </div>
+        <div class="report-double-chart-right" ng-if="metrics.showSeverityChart">
+            <div class="title">失败用例严重程度</div>
+            <div class="bar-data">
+                <div class="total">
+                    <span>总计:</span>&nbsp;&nbsp;
+                    <span class="big" ng-bind="metrics.execution_failed_count"></span>
+                </div>
+            </div>
+            <div report-with-issue-failed-chart></div>
+        </div>
+    </div>
+    <h3>测试情况按场景统计</h3>
+    <form class="show-scenario">
+        <div class="strip"  ng-if="metrics.execution_success_count" >
+            <input type="checkbox" id="passed"  ng-model="passed"/>
+            <label for="passed"><i class="passed"></i><span>成功用例</span></label>
+        </div>
+        <div class="strip" ng-if="metrics.execution_blocked_count">
+            <input type="checkbox" id="blocked" ng-model="blocked"/>
+            <label for="blocked"><i class="blocked"></i><span>阻塞用例</span></label>
+        </div>
+        <div class="strip" ng-if="metrics.execution_failed_count" >
+            <input type="checkbox" id="failed" ng-model="failed"/>
+            <label for="failed"><i class="failed"></i><span>失败用例</span></label>
+        </div>
+    </form>
+    <div ng-repeat="scenario in reportDetail.metrics.scenarios | orderBy:'failed':true">
+        <div class="scenario">
+            <p>{{ scenario.name }}</p>
+            <div class="histogram">
+                <div ng-if="!failed" class="strip failed" scenario-histogram value="{{scenario[-1]}}" longest-scenario-total="{{longestScenario.total}}"></div>
+                <div ng-if="!blocked" class="strip blocked" scenario-histogram value="{{scenario[0]}}" longest-scenario-total="{{longestScenario.total}}"></div>
+                <div ng-if="!passed" class="strip passed" scenario-histogram value="{{scenario[1]}}" longest-scenario-total="{{longestScenario.total}}"></div>
+            </div>
+        </div>
+    </div>
+    <h3 class="margin-top-30">用例详情</h3>
+    <table class="tb-table-striped table-align-first-left margin-bottom-50" tb-sorting>
+        <thead>
+        <tr class="filter">
+            <th></th>
+            <th class="fix-fa">
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    {{ filters.deviceName.data[ filters.deviceName.selected || 'all'].text }}
+                    <i class="light fa fa-sort-down"></i>
+                    <ul class="dropdown-menu filter-list" uib-dropdown-menu>
+                        <li ng-repeat="(key, value) in filters.deviceName.data"><a
+                            ng-click="chooseFilter(key, 'deviceName')">{{ value.text }}</a>
+                        <li>
+                    </ul>
+                </span>
+            </th>
+            <th class="fix-fa">
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    {{ filters.os.data[ filters.os.selected || 'all'].text }}
+                    <i class="light fa fa-sort-down"></i>
+                    <ul class="dropdown-menu filter-list" uib-dropdown-menu>
+                        <li ng-repeat="(key, value) in filters.os.data"><a
+                            ng-click="chooseFilter(key, 'os')">{{ value.text }}</a>
+                        <li>
+                    </ul>
+                </span>
+            </th>
+            <th class="fix-fa">
+                <span class="dropdown dropdown-toggle" uib-dropdown uib-dropdown-toggle>
+                    {{ filters.result.data[ filters.result.selected || 'all'].text }}
+                    <i class="light fa fa-sort-down"></i>
+                    <ul class="dropdown-menu filter-list" uib-dropdown-menu>
+                        <li ng-repeat="(key, value) in filters.result.data"><a
+                            ng-click="chooseFilter(key, 'result')">{{ value.text }}</a>
+                        <li>
+                    </ul>
+                </span>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>
+                <input type="text" ng-model="keyword" class="form-control keyword" placeholder="输入关键字过滤"/>
+            </th>
+        </tr>
+        <tr>
+            <th>用例名</th>
+           <!-- <th>开始时间</th>
+            <th orderBy="duration" class="test-sorting">执行时长</th> -->
+            <th orderBy="device.name" class="test-sorting">机型</th>
+            <th>{{ reportDetail.app.type == "ios" ? "ios版本" : "安卓版本"}}</th>
+            <th orderBy="result" class="test-sorting">结果</th>
+            <th>问题截图</th>
+            <th>性能隐患</th>
+            <th>备注</th>
+            <th>查看详情</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="execution in filteredExecutions | filter:keyword | orderBy:order:direction">
+            <td ng-bind="execution.name"></td>
+            <!--<td ng-bind="execution.created | dateFilter"></td>
+            <td ng-bind="execution.duration | secondFilter"></td> -->
+            <td ng-bind="execution.device.name"></td>
+            <td ng-bind="execution.device.os"></td>
+            <td ng-style="{ 'color':(execution.result | executionResultTextColor) }" ng-bind="execution.result"></td>
+            <td ng-bind="execution.patched_snapshot_count"></td>
+            <td ng-bind="execution.issue_type_count"></td>
+            <td>
+                <div class="execution-desc" title="{{ execution.desc }}" ng-bind="execution.desc"></div>
+            </td>
+            <td>
+                <span ng-if="execution.status != 20 && execution.status != 10">生成中</span>
+                <a ng-if="execution.status == 20 || execution.status == 10" href="javascript:void(0);" ng-click="openExecutionDetail(execution)" class="look-detail-link" >查看</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

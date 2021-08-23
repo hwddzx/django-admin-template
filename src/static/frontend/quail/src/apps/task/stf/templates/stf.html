@@ -1,0 +1,156 @@
+<div class="control-main" kf-button-check>
+    <div class="head control-head">
+        <div class="head-left">
+            <tb-logo config="config"></tb-logo>
+            <span class="divider"></span>
+            <div class="nav">
+                <a class="nav-link" target="_blank" ng-href="{{dtUrl}}">我的产品</a>/
+                <a class="nav-link pointer" ng-click="goApps()">功能性测试平台</a>/
+                <a class="nav-link pointer" ng-click="goTasks()">{{app.name}}</a>/
+                <a class="nav-link">{{rioDevice.name}}</a>
+            </div>
+        </div>
+        <div class="head-right popover-wrap">
+            <i class="icon icon-ellipse" />
+            <a class="unlock-link btn btn-sm btn-danger " href="" ng-click="completeTask()">结束{{task.isScriptRecord ? '录制':'任务'}}</a>
+        </div>
+        <div class="head-remain">
+            {{timeCounter.times}}
+        </div>
+    </div>
+    <div class="control-panel-wrap half-mode">
+        <div class="input-text-dialog" input-text-dialog></div>
+        <div class="control-panel" fa-pane="fa-pane" style="width:96%" pane-id="control-device" pane-anchor="west" pane-size="{{remotePaneSize}}" pane-min="200px" pane-max="100% + 2px" pane-handle="4" pane-no-toggle="false">
+            <div class="remote-control">
+                <div ng-include="'apps/task/stf/device-control/templates/device-control.html'" class="fill-height"></div>
+            </div>
+        </div>
+        <div class="wait-trusted" ng-if="waitTrusted">
+            <div class="desc">
+                <p>提示：需要您在iPhone/iPad上设置信任该应用</p>
+                <p>1.设置->通用->设备管理->企业级应用 信任该应用</p>
+                <p>2.回到iPhone/iPad主界面点击启动该应用</p>
+            </div>
+            <button class="btn btn-primary" ng-click="trustedApp()">我已经信任该应用</button>
+        </div>
+    </div>
+    <div class="right-panel-wrap">
+        <div tb-accordion class="tb-accordion">
+            <div class="accordion-panel" ng-if="execution.testcase.name">
+                <div class="panel-heading">
+                        <div class="priority">优先级: <span class="value" ng-style="{ 'background-color':(priorityDef[execution.testcase.priority] | priorityBackgroundColor) }" ng-bind="priorityDef[execution.testcase.priority]"></span></div>
+                    <i class="pull-right collapse icon icon-minus"></i>
+                    <i class="pull-right collapse icon icon-plus"></i>
+                    <h4>
+                        <span class="execution-title">{{execution.testcase.id + ': ' + execution.testcase.name }}</span>
+                        <span class="case-tip">{{' 第 ' + (testcaseInitialCount - testcases.length + 1) + '/' + testcaseInitialCount + ' 条用例'}}</span>
+                    </h4>
+                </div>
+                <div class="panel-collapse">
+                    <div class="panel-content">
+                        <div class="case-row">
+                            <div class="title">标题:</div>
+                            <pre class="content">{{ execution.testcase.name }}</pre>
+                        </div>
+                        <div class="case-row">
+                            <div class="title">场景:</div>
+                            <pre class="content">{{ execution.testcase.top_scenario }}</pre>
+                        </div>
+                        <div class="case-row">
+                            <div class="title">前置条件:</div>
+                            <pre class="content">{{ execution.testcase.pre_condition }}</pre>
+                        </div>
+                        <div class="case-row">
+                            <div class="title">执行步骤:</div>
+                            <pre class="content">{{ execution.testcase.desc }}</pre>
+                        </div>
+                        <div class="case-row">
+                            <div class="title">期望结果:</div>
+                            <pre class="content">{{ execution.testcase.expect_result }}</pre>
+                        </div>
+                        <div class="case-row">
+                            <div class="title">截图:</div>
+                                <!--<div tb-snapshot-slider snapshots="execution.testcase.snapshots" editable="false"></div>-->
+                            <div class="screentshots image-box-container" tb-image-box>
+                                <div ng-repeat="shot in execution.testcase.snapshots | filter:snapshotFilter track by $index" class="screenshots-icon-item " editable="false">
+                                    <div class="image-wrap" editable="false">
+                                        <img ng-src="{{shot.url}}"  data-url="{{shot.url}}" class="screenshot-image image-box-item" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-panel full-expand" ng-class="{false:'single-panel'}[!!execution.testcase.name]" ng-controller="ScreenshotsCtrl">
+                <div class="panel-heading">
+                    <i class="pull-right collapse icon icon-minus" ng-if="execution.testcase.name"></i>
+                    <i class="pull-right collapse icon icon-plus" ng-if="execution.testcase.name"></i>
+                    <button class="btn btn-primary btn-sm pull-right" ng-show="editable" ng-click="toggleEditMode(false)">退出删除</button>
+                    <button class="btn btn-default btn-sm pull-right" ng-hide="task.isScriptRecord || editable" ng-click="toggleEditMode(true)">删除</button>
+                    <!--button class="btn btn-default btn-sm pull-right" ng-hide="editable" ng-click="resetExecution()">重置</button-->
+                    <button class="btn btn-danger  btn-sm pull-right"  ng-show="checkedSnapshots.length&&editable" ng-click="deleteSnapshots()"><i class="icon icon-trash" /></button>
+                    <h4>用例记录</h4>
+                </div>
+                <div class="panel-collapse">
+                    <div class="panel-content">
+                        <div ng-hide="editable" class="device-info text-overflow">
+                            <span class="title">机型:</span>
+                            <span class="value">{{rioDevice.name}}</span>
+                            <span class="title">系统:</span>
+                            <span class="value">{{rioDevice.os}}</span>
+                            <span class="title">分辨率:</span>
+                            <span class="value">{{rioDevice.screen_length+'x'+rioDevice.screen_width}}</span>
+                        </div>
+                        <div class="screenshot-wrap">
+                            <div class="screentshots image-box-container" tb-image-box data-offset-top="{{imageBoxConfig.offsetTop}}" data-image-margin="{{imageBoxConfig.margin}}" box-tpl-url="{{imageBoxConfig.templateUrl}}">
+                                <div ng-repeat="shot in execution.snapshots | filter:snapshotFilter track by $index" class="screenshots-icon-item cursor-select">
+                                    <div class="image-wrap">
+                                        <div class="delete-wrap" ng-show="editable">
+                                            <input type="checkbox" id="check[{{$index}}]" ng-model="shot.checked" />
+                                            <label for="check[{{$index}}]">
+                                                <i class="delete-check"></i>
+                                                <div class="delete-cover"></div>
+                                                <img ng-src="{{getSnapshotUrl(shot)}}" data-url="{{getSnapshotUrl(shot)}}" ng-class="{'screentshot-patch':shot.patch||shot.deleteStep}" class="screenshot-image"/>
+                                            </label>
+                                        </div>
+                                        <img ng-src="{{getSnapshotUrl(shot)}}" ng-hide="editable" ng-click="setCurrentSnapshot(shot)" data-url="{{getSnapshotUrl(shot)}}" class="screenshot-image image-box-item" ng-class="{'screentshot-patch':shot.patch}" />
+                                        <div class="delete-patch"  ng-hide="editable" ng-click="deleteSnapshotPatch(shot)" ng-if="shot.patch"><i class="icon icon-broom" /></div>
+                                        <div class="delete-patch"  ng-hide="editable" ng-click="deleteRecordAction(shot)" ng-if="shot.deleteStep"><i class="icon icon-broom" /></div>
+                                        <div class="snapshot-fancy-handle" ng-if="task.isScriptRecord" ng-click="showSnapshot(shot)"></div>
+                                    </div>
+                                    <div class="time">{{ shot.body.date | date:'HH:mm:ss' }}</div>
+                                    <div class="number">{{ reverseIndex(execution.snapshots.length, $index)  }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="annotation" ng-hide="task.isScriptRecord">
+                        点击截图进行标注
+                    </div>
+                </div>
+                <div class="dead-area-hint" tb-blink-block>
+                    该操作无效，请点击终端屏幕下方的Android标准键
+                </div>
+            </div>
+        </div>
+        <div class="execution-control-btns" ng-if="!task.isScriptRecord">
+            <button class="btn btn-primary" ng-click="saveExecution()">保存测试数据</button>
+        </div>
+        <div class="execution-control-btns record-control-btns" ng-if="task.isScriptRecord">
+            <button class="btn btn-primary" ng-click="saveExecution(true)">保存录制数据</button>
+        </div>
+        <div class="right-panel-overlay" ng-class="{'overlay-hide':started}" ng-if="!execution">
+            <div class="backdrop"></div>
+            <div class="guide">
+                <i class="icon icon-lock-tip" />
+                <div class="guide-text">
+                    测试未开始，您必须点击<span>"开始执行"</span>所有操作才被保存
+                </div>
+            </div>
+            <div class="play execution-control-btns">
+                <button class="btn btn-primary" ng-click="startExecution()">开始执行</button>
+            </div>
+        </div>
+    </div>
+</div>

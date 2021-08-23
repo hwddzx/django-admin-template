@@ -1,0 +1,13 @@
+<div class="tags-manage" ng-controller="TagController as vm">
+    <h3>tag管理</h3>
+    <div class="tags-container">
+        <div class="tag-item btn-add" ng-click="vm.addTag()">新增标签<i class="icon add"></i></div>
+        <div class="tag-item" ng-class="{true:'isEdit'}[tag.isEdit]" ng-repeat="tag in vm.tags" ng-click="vm.chooseTag(tag)">
+            <span ng-if="!tag.isEdit">{{ tag.name }}</span>
+            <input type="text" maxlength="20" ng-if="tag.isEdit" set-focus focus-on="true" ng-model="tag.name"/>
+            <i class="ok" ng-show="tag.isEdit" ng-click="vm.saveTag($event, tag)"></i>
+            <i class="icon remove" ng-click="vm.deleteTag($event, tag)"></i>
+        </div>
+    </div>
+</div>
+

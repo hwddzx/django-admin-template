@@ -1,0 +1,224 @@
+<!-- 头部 -->
+<ng-include src="'apps/head/templates/head.html'"></ng-include>
+<!-- /头部 -->
+<div class="apps" ng-class="{'allWidthMain': tabType == 3, 'main': tabType != 3}">
+    <ul class="apps-nav-header list-unstyled" ng-if="isSupervisor||isManager">
+        <li ng-click="chooseTab(0)" ng-class="{'active': tabType == 0}">项目进度</li>
+        <li ng-click="chooseTab(1)" ng-class="{'active': tabType == 1}">应用测试</li>
+        <li ng-click="chooseTab(5)" ng-if="isShowTasks()" ng-class="{'active': tabType == 5}">任务汇总</li>
+        <li ng-click="chooseTab(2)" ng-if="isManager" ng-class="{'active': tabType == 2}">人员配置</li>
+        <li ng-click="chooseTab(3)" ng-if="isShowMonitor()" ng-class="{'active': tabType == 3}">多手机视频监控</li>
+        <li ng-click="chooseTab(4)" ng-if="isShowPerformance()" ng-class="{'active': tabType == 4}">性能对比报告</li>
+    </ul>
+    <div class="time-group" ng-if="tabType==0">
+        <div class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{ format }}" ng-model="startPopup.date" is-open="startPopup.opened" ng-required="true"
+                   close-text="关闭"
+                   clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"/>
+                 <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="openDatePicker('startPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+        </div>
+        <div>-</div>
+        <div class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{ format }}" ng-model="endPopup.date" is-open="endPopup.opened" ng-required="true"
+                   close-text="关闭"
+                   clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"/>
+                 <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="openDatePicker('endPopup')"><i class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+        </div>
+        <div>
+            <button class="btn btn-default" ng-click="getAppsProgress()">查询</button>
+        </div>
+    </div>
+    <div class="dropdown dropdown-toggle date-dropdown" uib-dropdown uib-dropdown-toggle ng-if="tabType==0">
+        <span>时间区段: {{ date.name }}</span><i class="fa fa-sort-desc"></i>
+        <ul class="unstyled list-unstyle dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="date in dates" ng-click="chooseDate(date)"><span ng-bind="date.name"></span></li>
+        </ul>
+    </div>
+    <!--项目进度-->
+    <div class="app-progress-container" ng-if="tabType==0">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="name">app名称：</label>
+                <input id="name" type="text" ng-model="name" ng-change="inputFilter(name, 'name')" ng-enter="getAppsProgress()">
+            </div>
+            <div class="form-group">
+                <label for="version">版本号：</label>
+                <input id="version" type="text" ng-model="version" ng-change="inputFilter(version, 'version')" ng-enter="getAppsProgress()">
+            </div>
+            <div class="form-group">
+                <label for="type">所属平台：</label>
+                <input id="type" type="text" ng-model="type" ng-change="inputFilter(type, 'type')" ng-enter="getAppsProgress()">
+            </div>
+            <div class="form-group">
+                <label for="owner">负责人：</label>
+                <input id="owner" type="text" ng-model="owner" ng-change="inputFilter(owner, 'owner')" ng-enter="getAppsProgress()">
+            </div>
+        </form>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="desc">描述：</label>
+                <input id="desc" type="text" ng-model="desc" ng-change="inputFilter(desc, 'desc')" ng-enter="getAppsProgress()">
+            </div>
+        </form>
+        <div class="app-progress-item" ng-repeat="app in appsProgress">
+            <div class="app-info">
+                <img class="app-icon" ng-src="{{ app.icon_url }}"/>
+                <div class="info">
+                    <div class="app-name">
+                        <span class="text" ng-bind="app.name">{{ app.name+"("+app.version+")" }}</span>
+                        <a class="btn btn-xs btn-default set-top" ng-click="sortApp(app)">置顶</a>
+                    </div>
+                    <div>
+                        <span class="text">版本号: {{ app.version }}</span>
+                    </div>
+                    <div>
+                        <span class="text">负责人: {{ app.owner }}</span>
+                    </div>
+                    <div>
+                        <span class="text">平台: {{ app.type }}</span>
+                    </div>
+                    <div>
+                        <span class="text">描述: {{ app.desc }}</span>
+                    </div>
+                </div>
+            </div>
+            <fieldset class="statistics">
+                <legend>总计</legend>
+                <div class="item">
+                    <i class="icon icon-build"></i>
+                    <span>用例建设: {{ app.total_testcases }}</span>
+                </div>
+                <div class="item">
+                    <i class="icon icon-replay-statistics"></i>
+                    <span>运行统计: {{ app.total_executions }}</span>
+                </div>
+                <div class="item">
+                    <i class="icon icon-patch"></i>
+                    <span>标记问题: {{ app.patched_executions }}</span>
+                </div>
+            </fieldset>
+            <fieldset class="execution-build">
+                <legend>用例建设</legend>
+                <div class="total-testcases">总计: {{ app.total_testcases }}</div>
+                <div class="app-progress-chart" app-progress-chart data-app="app"></div>
+                <a class="link" ui-sref="preview({appKey:app.key})">查看详情</a>
+            </fieldset>
+            <fieldset class="replay-statistics">
+                <legend>运行统计</legend>
+                <span>发起任务</span>
+                <a class="link" ui-sref="overview({appKey:app.key, dateStr: dateStr, date: selectedDate})">查看详情</a>
+                <div class="execution-progress-chart" execution-progress-chart data-app="app"></div>
+                <div>
+                    <span>运行次数总计: </span><span ng-bind="app.total_executions"></span>
+                </div>
+                <div>
+                    <span>日期: </span><span ng-bind="app.start_date"></span> - <span ng-bind="app.end_date"></span>
+                </div>
+                <div class="legend-container">
+                    <div class="legend">
+                        <span class="icon success"></span><span>成功: </span><span ng-bind="app.success_executions"></span>
+                    </div>
+                    <div class="legend">
+                        <span class="icon blocked"></span><span>阻塞: </span><span ng-bind="app.blocked_executions"></span>
+                    </div>
+                    <div class="legend">
+                        <span class="icon failed"></span><span>失败: </span><span ng-bind="app.failed_executions"></span>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <!--应用测试-->
+    <div ng-if="tabType==1">
+        <div class="prompt">
+            <i class="icon icon-completed"></i>已完成
+            <i class="icon icon-uncompleted"></i>未完成
+        </div>
+        <h5>我创建的</h5>
+        <ul class="app-list">
+            <li class="uploadContainer" tb-app-upload data-before-upload="beforeUpload(uploadApp)" data-app="app" data-file-upload="onFileUploaded(data)">
+                <div><i class="icon icon-new-build"></i></div>
+                <p>新建应用</p>
+            </li>
+            <li ng-repeat="app in apps.mine" ng-click="gotoAppDetail(app, 'owner')" >
+                <i class="icon icon-delete" ng-click="deleteApp($event, app.id)"></i>
+                <div>
+                    <div class="icon-group">
+                        <i class="icon" ng-class="{true:'icon-android', false:'icon-ios'}[app.type=='android']"></i>
+                        <i class="icon icon-h5" ng-if="app.has_espresso_apk"></i>
+                        <span class="app-id">id: {{ app.id }}</span>
+                    </div>
+                    <img ng-src="{{app.icon_url}}" />
+                </div>
+                <p title="{{app.name}}">{{app.name}}</p>
+                <i class="icon" ng-class="{'icon-completed':app.task_state == completionStatus.completed, 'icon-uncompleted': app.task_state == completionStatus.uncompleted}"></i>
+            </li>
+        </ul>
+        <h5 ng-show="apps.invited.length>0">我被邀请的</h5>
+        <ul class="apps main app-list">
+            <li ng-repeat="app in apps.invited" ng-click="gotoAppDetail(app, 'tester')" >
+                <div>
+                    <div class="icon-group">
+                        <i class="icon" ng-class="{true:'icon-android', false:'icon-ios'}[app.type=='android']"></i>
+                        <i class="icon icon-h5" ng-if="app.has_espresso_apk"></i>
+                    </div>
+                    <img ng-src="{{app.icon_url}}" />
+                </div>
+                <p>{{app.name}}</p>
+                <i class="icon" ng-class="{'icon-completed':app.task_state == completionStatus.completed, 'icon-uncompleted': app.task_state == completionStatus.uncompleted}"></i>
+                <!--i class="icon icon-bell" ng-show="false"></i-->
+            </li>
+        </ul>
+        <div class="signing-overlay" ng-if="signObj.signing">
+            <div class="tips"><span class="loading" tb-loading data-disable-overlay="true"></span>{{ signObj.msg }}</div>
+        </div>
+    </div>
+    <!--人员配置-->
+    <div class="customer-manage-container" ng-if="tabType==2">
+        <div class="group">
+            <button class="btn btn-primary btn-add" ng-click="addCustomers()">批量添加</button>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="checkAll" tb-select-all models="allCustomer" ng-model="allCustomer.allChecked" />
+                    <label for="checkAll"></label>
+                </th>
+                <th>姓名</th>
+                <th>邮箱</th>
+                <th>操作</th>
+                <th>是否已添加</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="customer in allCustomer">
+                <td>
+                    <input type="checkbox" id="check[{{$index}}]" ng-model="customer.checked" />
+                    <label for="check[{{$index}}]"></label>
+                </td>
+                <td ng-bind="customer.name"></td>
+                <td ng-bind="customer.email"></td>
+                <td>
+                    <a ng-if="!customer.isAdded" href="" ng-click="addCustomer(customer)">添加</a>
+                    <a ng-if="customer.isAdded" href="" ng-click="deleteCustomer(customer)">删除</a>
+                </td>
+                <td>{{ customer.isAdded ? '是' : '否'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="tabType==3">
+        <ng-include src="'apps/app/templates/monitor.html'"></ng-include>
+    </div>
+    <div ng-if="tabType==4">
+        <ng-include src="'apps/app/templates/performance.comparison.html'"></ng-include>
+    </div>
+    <div ng-if="tabType==5">
+        <ng-include src="'apps/app/templates/tasks.gather.html'"></ng-include>
+    </div>
+</div>

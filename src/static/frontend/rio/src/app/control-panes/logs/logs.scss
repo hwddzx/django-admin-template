@@ -1,0 +1,62 @@
+$filtersTableBg:#191e25;
+$blueColor:#1497fc;
+.logcat-filters-table {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 20px;
+    input.form-control {
+        @include gray-radius-block;
+        border: 2px solid transparent;
+        background-color: $grayBtnBorder;
+        &:focus{
+            background-color:#fff;
+            border-color: $blue;
+        }
+    }
+    td:last-child {
+        text-align: right;
+    }
+    .log-switch {
+        width: 40px;
+        margin-left: 20px;
+        font-size: 26px;
+        cursor: pointer;
+        color: $blueColor;
+    }
+}
+
+.btn.btn-primary.control-btn {
+    width: 60px;
+    height: 30px;
+    padding: 0;
+    display: inline-block;
+    line-height: 30px;
+    border-radius: 4px!important;
+    position: absolute;
+    left: 50%;
+    margin-left: -30px;
+    top: 50%;
+    margin-top: -15px;
+    background: transparent;
+    color: #167FFC;
+    border: 2px solid #167FFC;
+    &:hover {
+        color:#fff;
+        background: #167FFC;
+        border-color: #167FFC;
+    }
+}
+
+.logcat-filters-table .btn {
+    margin: 0;
+}
+
+.logcat-filters-table thead > tr > th,
+.logcat-filters-table tbody > tr > th,
+.logcat-filters-table tfoot > tr > th,
+.logcat-filters-table thead > tr > td,
+.logcat-filters-table tbody > tr > td,
+.logcat-filters-table tfoot > tr > td {
+    border-top: none;
+    padding: 0 5px;
+}

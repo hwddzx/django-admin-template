@@ -1,0 +1,74 @@
+{% extends 'admin/admin.base.html' %}
+{% load static %}
+{% block bodyclass %}login-layout blur-login{% endblock %}
+
+{% block body %}
+
+  <div class="main-container">
+    <div class="main-content">
+      <div class="main-content-inner">
+        <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+            <div class="login-container">
+              <div class="center">
+  {#              <h3>#}
+  {#                <span class="white">TEST</span>#}
+  {#                <img src="{% static 'img/favicons/favicon-32x32.png' %}" style="padding:0px 4px 4px 0px;">#}
+  {#                <span class="white">BIRD</span>#}
+  {#              </h3>#}
+                  <!--私有云环境不显示TestBird相关信息-->
+                  {% if not is_lab %}
+                    <a href="{% url 'admin:admin_home' %}">
+                    <h1>
+                    <img src="{% static 'img/favicons/favicon-32x32.png' %}">
+                    <span class="white">TestBird Quail 管理平台</span>
+                    </h1>
+                    </a>
+                    <h4 class="light-blue">
+                      &copy;&nbsp;&nbsp;<a href="http://www.testbird.com/">TestBird</a>&#174;&nbsp;&nbsp;2014
+                    </h4>
+                  {% else %}
+                    <h1>
+                    <span class="white">Quail 管理平台</span>
+                    </h1>
+                  {% endif %}
+              </div>
+
+              <div class="space-6"></div>
+
+              <div class="position-relative">
+                {% block formarea %}{% endblock %}
+                <!-- /.login-box -->
+              </div> <!-- /.position-relative -->
+            </div><!-- /.login-container -->
+          </div> <!-- /.col -->
+        </div> <!-- /.row -->
+      </div><!-- /.main-content-inner -->
+    </div><!-- /.main-content -->
+  </div><!-- /.main-container -->
+{% endblock %}
+{% block extrajs %}
+<script type="text/javascript">
+  // this is used to swtich the box shown to the user.
+  // since the sign_up/login account level is different in yawp we don't use it
+  /*jQuery(function($) {
+    $(document).on('click', '.toolbar a[data-target]', function(e) {
+      e.preventDefault();
+      var target = $(this).data('target');
+      $('.widget-box.visible').removeClass('visible');//hide others
+      $(target).addClass('visible');//show target
+    });
+  });*/
+  $(document).ready(function() {
+    var $form = $('#id-login-form');
+    /*FIXME: If you have a remembered username and password for a site,
+    the current version of Chrome will autofill your username/email address into the field before any type=password field.
+    It does not care what the field is called - just assumes the field before password is going to be your username.
+    make a dummy input to workaround this issue.
+    for more information please check: http://stackoverflow.com/questions/15738259/disabling-chrome-autofill
+    */
+    $form.prepend('<input style="display:none" type="text" name="fakeusernameremembered">');
+    $form.prepend('<input style="display:none" type="password" name="fakepasswordremembered">');
+  });
+</script>
+{% endblock extrajs %}

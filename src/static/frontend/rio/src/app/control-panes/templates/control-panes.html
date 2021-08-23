@@ -1,0 +1,74 @@
+<div class="control-main">
+    <div class="head control-head">
+        <div class="head-left">
+            <tb-logo config="config"></tb-logo>
+            <span class="divider"></span>
+            <div class="nav">
+                <a class="nav-link" ng-href="{{dtUrl}}">我的产品</a>/
+                <a class="nav-link" ui-sref="devices">云手机</a>/
+                <a class="nav-link no-hover" href="#">{{rioDevice.name}}</a>
+            </div>
+        </div>
+        <div class="head-right popover-wrap">
+            <i class="icon icon-ellipse" ng-show="deviceType!='ios'"/>
+            <!-- <span>{{debugCommand}}</span> -->
+            <div class="debug-wrap" guide-directive data-guide-template="guide-debug.html" data-position="bottom"
+                 data-guide-index="4" ng-show="deviceType!='ios'">
+				<a href="" class="btn btn-sm btn-white btn-debug" tb-popover target-id="debug-popover">
+					<i class="icon icon-debug" />远程调试
+				</a>
+            </div>
+            <ng-include src="'app/control-panes/templates/debug-popover.html'"></ng-include>
+            <a class="unlock-link btn btn-sm btn-red" href="" ng-click="stopRent()">停止租用</a>
+        </div>
+        <div class="head-remain" id="guideRentTime" guide-directive data-guide-template="guide-rent-time.html" data-position="bottom" data-guide-index="1">
+            <div class="time-block">
+                <div class="times">
+                    {{countdown.times}}
+                <!-- 
+                <span class="points">00</span>
+                <span class="points">:</span>
+                <span class="points">12</span>
+                <span class="points">:</span>
+                <span class="points">21</span> 
+                -->
+                </div>
+            </div>
+            <a href="" class="plus-btn" ng-click="showReletModal()"><i class="add-rent-btn-guide"></i></a>
+        </div>
+        <!-- <div class="internet-speed" internet-speed></div> -->
+    </div>
+    <div ng-controller="ControlPanesHotKeysCtrl" class="control-panel-wrap">
+        <div class="control-panel" fa-pane="fa-pane" style="width:96%" pane-id="control-device" pane-anchor="west" pane-size="{{remotePaneSize}}" pane-min="200px" pane-max="100% + 2px" pane-handle="4" pane-no-toggle="false">
+            <div class="remote-control">
+                <div ng-include="'app/control-panes/device-control/templates/device-control.html'" class="fill-height"></div>
+            </div>
+        </div>
+    </div>
+    <div class="foot-bar" device-control-tabs device="device" control="control">
+        <div class="tab-conent">
+            <div ng-repeat="tab in tabs">
+                <div ng-show="tab.active" class="tab-modal-container" data-item="{{tab.name}}" id="modal-{{tab.name}}" ng-class="{'modal-show':tab.active}">
+                    <div ng-include='tab.templateUrl'> </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-nav text-unselect">
+            <ul class="tabs" id="guideWorkingStand" guide-directive data-guide-template="guide-working-stand.html" data-position="left" data-guide-index="2">
+                <li data-item="upload" title="上传"><i class="upload-icon"></i><span class="upload-badge" upload-badge></span></li>
+                <li data-item="video" title="截图"><i class="photo-icon"></i>
+                    <span class="corner" ng-show="screenshots">{{screenshots}}</span>
+                </li>
+                 <li data-item="logs" title="日志"><i class="logs-icon"></i>
+                </li>
+                <li data-item="shell" title="shell" ng-show="deviceType!='ios'">
+                    <i class="shell-icon"></i>
+                </li>
+                <li data-item="info" title="手机详情"><i class="info-icon"></i></li>
+                <li data-item="photo" title="上传照片" ng-show="deviceType!='ios'">
+                    <i class="picture-icon"></i><span class="upload-badge"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

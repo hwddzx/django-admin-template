@@ -1,0 +1,20 @@
+<div class="apk-files">
+    <div class="apk-file warning" ng-hide="isTipsHide" ng-click="hideTips()">
+        <i class="icon icon-package-green" />
+        <span class="upload-file-name tips">APP将免费为您保留两周,逾期后将被清理。</span>
+        <a href="" class="btn btn-xs" ng-click="install(file)">我知道了</a>
+    </div>
+    <div class="apk-file" ng-repeat="file in files">
+        <i class="icon icon-package-gray" />
+        <span class="upload-file-name">{{file.file_name}}</span>
+        <br/><span class="upload-date">{{file.created*1000 | date:'MM-dd HH:mm' }}</span>
+        <a href="" ng-show="installAvailable" ng-disabled="isDisableInstall(file)" ng-class="{'btn-red':isInstallError(file)}" class="btn btn-xs btn-green" ng-click="install(file)">
+            <span ng-if="!file.installation">
+                安装
+            </span>
+            <span ng-if="file.installation">
+                {{file.installation.state|installState}}
+            </span>
+        </a>
+    </div>
+</div>

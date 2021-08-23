@@ -1,0 +1,38 @@
+nav {
+    padding-left: 140px;
+    height: 36px;
+    line-height: 36px;
+    background-color: $grayDarkBg;
+    color: $gray;
+    border-bottom: 1px solid $gray-light;
+    .nav-link {
+        font-size: 14px;
+        margin-right: 5px;
+        color: $gray;
+        &:hover {
+            color: $blue;
+        }
+    }
+}
+// 
+#background_linear_blue {
+    background-image: linear-gradient(to right, rgba(18, 167, 241, 1.0), rgba(9, 82, 218, 1.0));
+}
+.timess{
+    width: 25px;
+    margin-right: 10px;
+}
+.margin_right_12px {
+    margin-right: 12px;
+}
+// 重置按钮
+.chongzhi_anniu{
+    display: inline-block;
+    width: 90px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    background: rgba(253, 138, 115, 1.0);
+    font-size: 17px;
+    border-radius: 4px;
+}

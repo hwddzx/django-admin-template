@@ -1,0 +1,38 @@
+<div tb-modal class="tb-modal app-queue-modal">
+    <h1 class="head">排队详情
+        <i class="icon icon-popup-close" ng-click="vm.close()"></i>
+    </h1>
+    <div class="modal-content">
+        <p>排队位置： 第{{ vm.execution.running_execs.length + vm.waitIndex + 1 }}位</p>
+        <div class="divider-line"></div>
+        <p>排在前面的任务：</p>
+        <div class="table-content">
+            <table class="table">
+                <thead>
+                    <td>用户信息</td>
+                    <td>APP</td>
+                    <td>用例</td>
+                    <td>状态</td>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="task in vm.execution.running_execs">
+                        <td>{{task.owner}}</td>
+                        <td>{{task.app}}</td>
+                        <td>{{task.testcase}}</td>
+                        <td>执行中</td>
+                    </tr>
+                    <tr ng-repeat="task in vm.execution.waiting_execs">
+                        <td>{{task.owner}}</td>
+                        <td>{{task.app}}</td>
+                        <td>{{task.testcase}}</td>
+                        <td>排队</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.close()">我知道了</button>
+    </div>
+</div>

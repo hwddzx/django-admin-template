@@ -1,0 +1,49 @@
+<div class="tasks-container">
+    <div class="head" tb-fix-button>
+        <h3>任务列表</h3>
+        <div class="btn-group">
+            <a href="" class="btn btn-gray btn-fix" ng-click="createTask(app)">开始测试</a>
+            <!--a href="" class="btn btn-gray btn-fix" ng-click="createEmptyTask(app)">创建空任务</a-->
+            <a href="" class="btn btn-gray btn-fix" ng-click="filterTasks(app)">筛选任务用例</a>
+            <a href="" class="btn btn-gray btn-fix is-disabled btn-report" ng-click="createReport()">生成报告</a>
+        </div>
+    </div>
+    <table tb-paging-table data-table-ctrl="pagination" class="tb-table-striped">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="checkAll" tb-select-all models="pagination.data" ng-model="pagination.data.allChecked" />
+                    <label for="checkAll"></label>
+                </th>
+                <th>任务名</th>
+                <th tb-is-system>任务ID</th>
+                <th>APP版本(Build号)</th>
+                <th>通过/失败/阻塞</th>
+                <th>起始时间</th>
+                <th>结束时间</th>
+                <th>总时间</th>
+                <th>查看</th>
+                <th>继续测试</th>
+                <th>删除</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="task in pagination.data" ng-class="{'has-click': clickedId == task.id}" ng-click="recordClickId(task.id)">
+                <td>
+                    <input type="checkbox" id="check[{{$index}}]" ng-model="task.checked" />
+                    <label for="check[{{$index}}]"></label>
+                </td>
+                <td>{{task.name}}</td>
+                <td tb-is-system>{{ task.id }}</td>
+                <td>{{task.release_version}}({{task.release_build}})</td>
+                <td>{{task.execution_success_count}}/{{task.execution_failed_count}}/{{task.execution_blocked_count}}</td>
+                <td class="date">{{task.launch_time | dateFilter}}</td>
+                <td class="date">{{task.completed_time | dateFilter }}</td>
+                <td>{{ task.duration | secondFilter }}</td>
+                <td><a href="" class="link" ui-sref="app.task({taskId:task.id})">查看</a></td>
+                <td><a href="" ng-click="reviseTask(task)"><i class="icon icon-test-added"></i></a></td>
+                <td><a href="" ng-click="deleteTask(task)"><i class="icon icon-trash-gray"></i></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,19 @@
+<div tb-modal class="tb-modal execution-result-update-modal">
+    <h1 class="head">修改结果<i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <div class="modal-content">
+        <div class="execution-result-wrap">
+            <label class="execution-result" ng-repeat="result in vm.result.result_subtypes">
+                <input type="radio" name="execution-result" ng-value="result.key" ng-model="vm.params.result_subtype_key"/>
+                {{ result.name }}
+            </label>
+            <div class="desc-wrap">
+                <label>描述:</label>
+                <textarea ng-model="vm.params.desc"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default btn-long" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.close()">确定</button>
+    </div>
+</div>

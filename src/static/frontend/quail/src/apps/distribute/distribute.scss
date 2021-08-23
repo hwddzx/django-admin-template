@@ -1,0 +1,373 @@
+.task-distribute-container {
+    width: 1130px;
+    padding: 30px;
+    .app-info {
+        position: relative;
+        height: 124px;
+        padding: 24px;
+        background: $gray-hover;
+        .app-icon {
+            float: left;
+            width: 70px;
+            height: 70px;
+        }
+        .info {
+            float: left;
+            width: calc(100% - 170px);
+            padding-left: 24px;
+            line-height: 25px;
+            color: $gray;
+            .name {
+                font-size: 18px;
+                color: $black;
+            }
+            span {
+                padding-right: 10px;
+            }
+        }
+        .member-group {
+            float: left;
+            max-width: calc(100% - 60px);
+            @include text-overflow;
+        }
+        .member-count {
+            float: left;
+        }
+        .icon-member-manage {
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            margin-right: 3px;
+            background-image: url(img/distribute/icon-member-manage.png);
+            background-size: 100% 100%;
+
+        }
+        .btn-member {
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            margin-top: -17px;
+        }
+    }
+    .create-gather-btn {
+        padding: 45px;
+        margin-top: 40px;
+        text-align: center;
+        border: 1px dotted $gray-border;
+        cursor: pointer;
+        &:hover {
+            border-color: $blue;
+            color: $blue;
+            background-color: $blue-bg-light;
+            .icon-create-gather {
+                background-image: url(img/distribute/icon-create-gather-hover.png);
+            }
+        }
+        .icon-create-gather {
+            display: inline-block;
+            width: 23px;
+            height: 23px;
+            margin-bottom: 15px;
+            background-image: url(img/distribute/icon-create-gather.png);
+            background-size: 100% 100%;
+        }
+    }
+    .no-gathers {
+        padding: 45px;
+        margin-top: 40px;
+        text-align: center;
+        border: 1px dotted $gray-border;
+    }
+    .nav {
+        border-bottom: 2px solid $gray-border;
+        font-size: 18px;
+        a {
+            padding-bottom: 6px;
+            border: none;
+            border-bottom: 2px solid $white;
+            cursor: pointer;
+        }
+        li.active > a {
+            border: none;
+            border-bottom: 3px solid $blue;
+            color: $blue;
+        }
+    }
+    .case-gather-wrap {
+        width: calc(100% - 100px);
+        margin-top: 40px;
+    }
+    .case-gather-item {
+        display: inline-block;
+        width: 120px;
+        height: 30px;
+        padding: 0 5px;
+        margin-right: 10px;
+        line-height: 28px;
+        text-align: center;
+        border: 1px solid $gray-border;
+        cursor: pointer;
+        @include text-overflow;
+        &.active,
+        &:hover {
+            background: $gray-border;
+        }
+    }
+    .case-gather-add,
+    .case-gather-edit {
+        display: inline-block;
+        overflow: hidden;
+        width: 30px;
+        height: 30px;
+        margin: -10px 5px 5px 0;
+        line-height: 28px;
+        text-align: center;
+        border: 1px solid $gray-border;
+        cursor: pointer;
+        &:hover {
+            background: $gray-border;
+        }
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url(img/distribute/icon-add-edit.png);
+            background-size: 50px 20px;
+            background-position: -4px -20px;
+        }
+    }
+    .case-gather-edit{
+        .icon {
+            background-position: 26px 0;
+        }
+    }
+    .right-btn-group {
+        float: right;
+        margin-top: -40px;
+    }
+    .ztree-column-head {
+        ul {
+            overflow: hidden;
+            height: 20px;
+            padding-left: 10px;
+            margin-top: 30px;
+            margin-bottom: 0;
+            color: $gray;
+        }
+    }
+    .ztree {
+        li {
+            line-height: 30px;
+            span[treenode_ico]{
+                float: left;
+                margin-top: 6px;
+            }
+        }
+        a {
+            width: calc(100% - 36px); //36px = (tree展开关闭)18px + (tree checkbox)18px
+            cursor: default;
+            &:hover {
+                background: $blue-bg;
+            }
+        }
+        .link {
+            padding: 0;
+            line-height: 25px;
+            color: $blue;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    .ztree-no-checkbox {
+        a {
+            width: calc(100% - 18px); //36px = (tree展开关闭)18px
+        }
+    }
+    .ztree,
+    .ztree-column-head {
+        .node_name {
+            float: left;
+            display: inline-block;
+            max-width: calc(100% - 636px);
+            @include text-overflow;
+        }
+        .tree-column-wrap {
+            float: right;
+            .tree-column {
+                display: inline-block;
+                text-align: center;
+                @include text-overflow;
+                &:nth-child(1) {
+                    width: 180px;
+                }
+                &:nth-child(2),
+                &:nth-child(3) {
+                    width: 120px;
+                }
+                &:nth-child(4),
+                &:nth-child(5),
+                &:nth-child(6) {
+                    width: 60px;
+                }
+            }
+        }
+    }
+}
+
+.member-manage-container {
+    @include input-checkbox-class;
+    .info {
+        margin-top: 22px;
+    }
+    h3 {
+        font-size: 18px;
+    }
+    .member-invite-container {
+        margin-top: 60px;
+        input {
+            width: calc(100% - 80px);
+            height: 40px;
+            padding: 0 10px;
+        }
+        .member-invite-btn {
+            width: 74px;
+            height: 40px;
+            line-height: 40px;
+            padding: 0;
+            margin-left: 2px;
+        }
+        .error {
+            width: calc(100% - 80px);
+            padding: 0 10px;
+            color: red;
+            line-height: 30px;
+        }
+    }
+    .member-container {
+        margin-top: 60px;
+        .remove-member-btn {
+            float: right;
+            width: 74px;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            margin-top: -40px;
+        }
+        .complete-member-btn {
+            float: right;
+            width: 100px;
+            margin-top: 20px;
+        }
+    }
+    ul {
+        li {
+            padding: 0;
+            margin: 0;
+            line-height: 40px;
+            border-bottom: 1px solid $gray-border;
+            &:first-child {
+                line-height: 24px;
+                border-bottom: 2px solid $gray-border;
+            }
+            input[type=checkbox] + label {
+                margin-right: 40px;
+            }
+        }
+    }
+}
+
+.gather-modal {
+    position: relative;
+    padding: 40px;
+    border-radius: 3px;
+    background-color: $white;
+    h1 {
+        line-height: 24px;
+        font-size: 24px;
+        color: $black;
+        text-align: center;
+    }
+    .check-count {
+        float: right;
+        padding-bottom: 10px;
+        color: $gray;
+    }
+    .modal-foot {
+        margin-top: 20px;
+        text-align: right;
+    }
+    .case-gather-name {
+        width: 100%;
+        height: 40px;
+        margin-top: 15px;
+        border: 1px solid $border-gray;
+    }
+    .task-type {
+        margin-top: 10px;
+        color: $gray;
+        label {
+            &:nth-child(1) {
+                margin-right: 20px;
+            }
+        }
+        input {
+            margin-right: 5px;
+        }
+    }
+    .search-panel {
+        ul {
+            top: 54px;
+            border: 1px solid $border-gray;
+        }
+    }
+}
+
+.redistribute-modal {
+    position: relative;
+    padding: 40px;
+    border-radius: 3px;
+    background-color: $white;
+    h1 {
+        line-height: 24px;
+        font-size: 24px;
+        color: $black;
+        text-align: center;
+    }
+    .modal-foot {
+        margin-top: 20px;
+        text-align: right;
+    }
+    .member {
+        width: 100%;
+        height: 40px;
+        padding: 0 10px;
+        margin: 40px 0;
+        border: 1px solid $border-gray;
+    }
+}
+
+.search-panel {
+    position: relative;
+    ul {
+        position: absolute;
+        top: 79px;
+        z-index: 1;
+        width: 100%;
+        margin: 0;
+        background: #fff;
+        border: 1px solid $border-gray;
+        li {
+            padding: 0 10px;
+            margin: 0;
+            line-height: 35px;
+            cursor: default;
+            &:hover {
+                background: $blue-bg;
+                color: $black;
+                font-weight: bold;
+            }
+        }
+    }
+}

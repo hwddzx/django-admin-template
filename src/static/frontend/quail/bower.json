@@ -1,0 +1,38 @@
+{
+  "name": "rio",
+  "version": "0.1.0",
+  "dependencies": {
+    "front-tb-ui": "git@gitlab.testbird.io:frontend/front-tb-ui.git#80d8ac63",
+    "ng-file-upload": "~2.0.5",
+    "underscore.string": "~3.2.2",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.5.0",
+    "angular-borderlayout": "git://github.com/filearts/angular-borderlayout.git#7c9716aebd9260763f798561ca49d6fbfd4a5c67",
+    "eventEmitter": "~4.2.11",
+    "socket.io": "~1.3.7",
+    "socket.io-client": "~1.3.7",
+    "bluebird": "~2.10.2",
+    "node-uuid": "~1.4.3",
+    "angular-base64": "~2.0.5",
+    "rangeslider.js": "~2.0.4",
+    "html2canvas": "https://github.com/niklasvh/html2canvas.git#~0.4.1",
+    "highcharts": "4.2.5",
+    "app-bundle-parser": "git@gitlab.testbird.io:frontend/app-bundle-parser.git#24fda558",
+    "frontend-component-qiniu": "git@gitlab.testbird.io:forxushijie/frontend-component-qiniu.git#fixed-localstorge-error",
+    "raven-js": "~1.1.20",
+    "front-stf-core": "git@gitlab.testbird.io:frontend/front-stf-core.git#c76ef228",
+    "front-js-xlsx": "git@gitlab.testbird.io:frontend/front-js-xlsx.git#ffd99d34",
+    "angular-gettext": "~2.3.4",
+    "ng-sortable": "^1.3.8",
+    "jszip": "^3.1.5",
+    "jszip-utils": "^0.0.2"
+  },
+  "private": true,
+  "devDependencies": {
+    "angular-mocks": "1.4.4"
+  },
+  "resolutions": {
+    "raven-js": "~2.3.0",
+    "angular": "1.5.1",
+    "jquery": "~2.2.2"
+  }
+}

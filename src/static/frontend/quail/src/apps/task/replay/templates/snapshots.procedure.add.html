@@ -1,0 +1,43 @@
+<div tb-modal class="tb-modal execution-snapshot-modal step-modal">
+    <h1 class="head">添加该步骤的描述<i class="icon icon-popup-close" ng-click="vm.close()" ></i></h1>
+    <div class="tb-modal-content">
+       <div class="form-group">
+            <label class="title">测试功能点:</label>
+            <input type="text" name="title" class="title form-control auto-change title-input" ng-model="vm.procedureDesc.testFunctionPoints" maxlength="128"/>
+       </div>
+       <div class="form-group table-group">
+            <label class="title">操作步骤:</label>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="8%">步骤序号</th>
+                        <th width="80%">步骤内容</th>
+                        <th width="8%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="testStep in vm.testSteps">
+                        <td>
+                            <span>{{ $index+1 }}</span>
+                        </td>
+                        <td>
+                            <input type="text" title="{{ testStep.name }}" maxlength="128" ng-model="testStep.name"/>
+                        </td>
+                        <td>
+                            <button class="btn btn-fix btn-default" ng-click="vm.addSteps()">新增</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+       </div>
+       <div class="form-group">
+            <label class="title">预期结果:</label>
+            <textarea ng-model="vm.procedureDesc.expectResult" name="desc" class="form-control" maxlength="500"></textarea>
+       </div>
+    </div>
+    <div class="modal-foot">
+        <button class="btn btn-fix btn-default btn-long" ng-click="vm.cancel()">取消</button>
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.addProcedureDesc()">确定</button>
+    </div>
+</div>
+

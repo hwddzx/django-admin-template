@@ -1,0 +1,86 @@
+<div tb-modal class="tb-modal execution-snapshot-modal">
+    <h1 class="head">编辑截图结果<i class="icon icon-popup-close" ng-click="vm.cancel()" ></i></h1>
+    <div class="comptest-modal-content" ng-class="{true: 'allHeight-modal-content'}[!vm.isComptest]">
+        <div ng-if="!vm.isAdd&&!vm.isShowProblems" class="images-container" ng-class="{true: 'allHeight-Container'}[!vm.isLookAdd]">
+            <div class="snapshot-item" ng-repeat="snapshot in vm.snapshots">
+                <div class="snapshot-box-item">
+                    <img change-img-width ng-src="{{ snapshot.url }}" ng-click="vm.showFancybox($index)" class="image-box-item"/>
+                    <div class="trash-wrap" ng-show="vm.isComptest&&vm.isShowProblems">
+                        <i class="icon snapshot-icon icon-modify" title="修改结果" ng-click="vm.updateSnapshotResult(snapshot)"></i>
+                        <i class="icon snapshot-icon icon-trash" title="删除" ng-click="vm.deleteSnapshot(snapshot.key)"></i>
+                    </div>
+                    <div class="meta">
+                        <span class="number">{{ $index + 1 }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 已标记问题列表 -->
+        <div ng-if="vm.isShowProblems" class="images-container border-bottom">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>问题大类</th>
+                        <th>问题小类</th>
+                        <th>异常描述</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="problem in vm.problems">
+                        <td>{{problem.name}}</td>
+                        <td>
+                            <a href="" class="link" ng-click="vm.checkSnapshots(problem)">{{problem.info}}</a>
+                        </td>
+                        <td>{{problem.desc}}</td>
+                        <td>
+                            <a href="" class="link" ng-click="vm.deleteProblem(problem)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="vm.isAdd||vm.isShowProblems" class="images-container">
+            <h4>{{vm.isAdd ? "选择步骤" : "选择截图"}}</h4>
+            <div class="snapshot-item" ng-repeat="snapshot in vm.snapshots" ng-click="vm.checkForAdd(snapshot, $index)">
+                <div class="snapshot-box-item">
+                    <img change-img-width ng-src="{{ snapshot.url }}" class="image-box-item"/>
+                </div>
+                <div ng-if="snapshot.checked" class="overlay">
+                    <i class="icon icon-selected"></i>
+                </div>
+            </div>
+        </div>
+        <div ng-if="vm.isLookAdd" class="new-procedure-container" data-as-sortable="vm.dragControlListeners" data-ng-model="vm.procedures">
+            <h4>新增步骤</h4>
+            <div ng-repeat="procedure in vm.procedures" data-as-sortable-item>
+                <div class="snapshot-box-item" data-as-sortable-item-handle  ng-click="vm.showProcedureImgs(procedure)">
+                    <img change-img-width ng-src="{{ procedure.urls[0] }}" class="image-box-item"/>
+                    <div class="trash-wrap">
+                        <i class="icon snapshot-icon icon-trash" title="删除" ng-click="vm.deleteProcedure($index)"></i>
+                    </div>
+                    <div class="meta">
+                        <span class="number" title="{{procedure.name}}">{{procedure.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!vm.isAdd" class="snapshot-item add-new" title="添加步骤" ng-click="vm.isAdd = true;vm.clearCheckAdds();">
+                <i class="fa fa-plus fa-3x"></i>
+            </div>
+            <div ng-if="vm.isAdd" class="snapshot-item add-confirm" title="确认添加" ng-click="vm.checkConfirm()">
+                <i class="fa fa-check fa-3x"></i>
+            </div>
+            <div ng-if="vm.isAdd" class="snapshot-item add-cancel" title="取消添加" ng-click="vm.isAdd = false;">
+                <i class="fa fa-close fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!vm.isAdd && vm.isComptest" class="modal-foot">
+        <button class="btn btn-fix btn-default btn-long" ng-click="vm.cancel()">关闭</button>
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.isShowProblems=!vm.isShowProblems" ng-show="!vm.isLookAdd">{{ vm.isShowProblems ? '仅查看截图' : '修改截图结果' }}</button>
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.isLookAdd=!vm.isLookAdd" ng-show="!vm.isShowProblems">{{ vm.isLookAdd ? '仅查看截图' : '查看新增步骤' }}</button>
+        <button class="btn btn-fix btn-primary btn-long" ng-show="vm.isShowProblems" ng-click="vm.addProblem()">修改结果</button>
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.addProcedures()">确定</button>
+        <button class="btn btn-fix btn-primary btn-long" ng-click="vm.changeStatus()">{{ vm.statusText }}</button>
+    </div>
+</div>

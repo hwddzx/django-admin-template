@@ -1,0 +1,266 @@
+$dropAreaBorderColor: #c1c9d6;
+.rio-upload {
+    height: 100%;
+}
+
+.upload-container {
+    position: relative;
+    height: calc( 100% - 250px);
+    &.widget-container {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: transparent;
+        @include box-shadow(none);
+    }
+    .drop-area.btn-file {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        text-align: center;
+        border: 1px $dropAreaBorderColor dashed;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: transparent;
+        @include vertical-column-center;
+    }
+    .alert {
+        width: 50%;
+    }
+    .install-done {
+        position: relative;
+        top: -10px;
+    }
+    .progress {
+        width: 500px;
+    }
+    .package-info {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #8e9194;
+    }
+    .icon-package {
+        margin-right: 10px;
+        vertical-align: text-top;
+        position: relative;
+        top: -2px;
+    }
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 999px;
+        text-align: right;
+        opacity: 0;
+        outline: none;
+        cursor: inherit;
+        display: block;
+    }
+    .dragover {
+        border-color: #157afb !important;
+    }
+    .upload-status {
+        margin-top: 0;
+    }
+    .manifest-text {
+        font-size: 10px;
+    }
+    .drop-area-text {
+        font-size: 14px;
+        font-weight: 300;
+        color: $gray;
+    }
+    input.form-control {
+        width: 400px;
+    }
+    .cancel-upload {
+        position: absolute;
+        margin-left: -74px;
+        margin-top: 20px;
+    }
+    .app-filename {
+        width: 400px;
+        word-wrap: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.apk-files {
+    margin-top: 10px;
+
+    .apk-file {
+        position: relative;
+        height: 50px;
+        /*line-height: 50px;*/
+        margin-bottom: 10px;
+        padding: 0 10px;
+        border: 1px solid #e0e6ec;
+        border-radius: 4px;
+        font-size: 14px;
+        color: $gray;
+        &.warning{
+            background-color: #def4d8;
+            border-color: #4eb834;
+            border-style: dashed;
+        }
+        input {
+            margin: 0;
+        }
+        .upload-file-name {
+            color: $black;
+            display: inline-block;
+            margin-top: 10px;
+            line-height: 1;
+            width: calc(100% - 100px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .upload-date {
+            font-size: 12px;
+            display: inline-block;
+            margin-top: 0;
+            line-height: 1;
+            margin-left: 50px;
+            position: relative;
+            top: -5px;
+        }
+        .icon {
+            margin: 0 13px;
+            position: relative;
+            top: 6px;
+            &.icon-package-green{
+                top:-2px;
+            }
+        }
+        .tips{
+            margin-top:18px;
+        }
+        .btn {
+            position: absolute;
+            right: 10px;
+            top: 14px;
+        }
+    }
+}
+
+.rio-upload-modal {
+    p {
+        color: #8e9194;
+        font-size: 14px;
+        &:last-child {
+            margin-bottom: 20px;
+        }
+    }
+    .upload-container {
+        height: 220px;
+    }
+    .modal-foot {
+        margin-top: 20px;
+    }
+}
+
+.rio-upload-progress.progress {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    border-radius: 0;
+    background-color: $grayDarkBorder;
+    @include transition(300ms ease-in all);
+    display: none;
+    cursor: pointer;
+    overflow: visible;
+    &.none-height {
+        height: 0;
+    }
+    &:hover {
+        height: 20px;
+        .progress-bar span {
+            display: inline;
+        }
+    }
+    .upload-tips {
+        position: absolute;
+        width: 200px;
+        height: 40px;
+        top: 4px;
+        left: 50%;
+        margin-left: -100px;
+        border-radius: 4px;
+        border-width: 1px;
+        border-style: solid;
+        line-height: 40px;
+        display: none;
+        .icon {
+            margin: 0 20px;
+        }
+        &.upload-tips-done {
+            border-color: $greenBorder;
+            background-color: $greenBg;
+            color: $green;
+        }
+        &.upload-tips-error {
+            border-color: $redBorder;
+            background-color: $redBg;
+            color: $red;
+        }
+    }
+    .progress-bar {
+        background-color: $green;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        text-align: right;
+        span{
+            display: none;
+            line-height: 20px;
+            margin-right: 10px;
+        }
+    }
+    .progress-error {
+        background-color: $red;
+    }
+}
+
+.upload-badge-wrap {
+    position: relative;
+    &.upload-link .upload-badge {
+        right: -5px;
+        top: -5px;
+    }
+    .upload-badge {
+        position: absolute;
+        /*display: none;*/
+        right: -2px;
+        top: -2px;
+        width: 20px;
+        height: 20px;
+        background-color: $red;
+        font-size: 10px;
+        text-align: center;
+        line-height: 20px;
+        border-radius: 100%;
+        color: #fff;
+        @include transform(scale(0));
+        &.show {
+            display: block;
+            @include transform(scale(1));
+            @include transition(500ms ease-in all);
+        }
+    }
+}
+.widget-content,
+.upload-area{
+    height: 100%;
+}

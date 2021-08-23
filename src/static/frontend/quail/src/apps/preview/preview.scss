@@ -1,0 +1,148 @@
+.preview-container {
+    width: 1200px;
+    height: calc(100% - 100px);
+    margin: 0 auto;
+    padding: 0 30px;
+    overflow: hidden;
+    .left {
+        float: left;
+        width: 250px;
+        height: 100%;
+        background: $blue-bg;
+        .app-info {
+            overflow: hidden;
+            .app-icon {
+                display: block;
+                width: 70px;
+                height: 70px;
+                margin: 40px auto 10px;
+                border-radius: 10px;
+            }
+            .info {
+                .name {
+                    font-size: 20px;
+                    color: $blue;
+                    width: 250px;
+                    @include text-overflow;
+                }
+                text-align: center;
+                line-height: 25px;
+            }
+        }
+        ul.user-list {
+            height: calc(100% - 175px);
+            margin: 0;
+            padding: 0;
+            li {
+                margin: 0;
+                height: 45px;
+                padding-left: 25px;
+                line-height: 45px;
+                cursor: pointer;
+                &.active,
+                &:hover {
+                    background: $blue-bg-light;
+                    .icon-total-preview {
+                        background-position: 21px 0;
+                    }
+                    .icon-user {
+                        background-position: 30px 0;
+                    }
+                }
+                .icon-user {
+                    margin: -35px 10px 0 0;
+                }
+                .name {
+                    display: inline-block;
+                    width: 170px;
+                    @include text-overflow;
+                }
+            }
+        }
+    }
+    .right {
+        float: left;
+        width: 890px;
+        height: 100%;
+        padding: 20px;
+        overflow: auto;
+        .scenarios-permission {
+            position: relative;
+            height: 40px;
+            margin-top: 20px;
+            line-height: 40px;
+            background: $blue-bg;
+            border-bottom: 1px solid $border-gray;
+            .title-left {
+                position: absolute;
+                left: 30px;
+            }
+            .title-right {
+                position: absolute;
+                right: 80px;
+            }
+        }
+        .user-progress {
+            overflow: hidden;
+            margin: 20px 0;
+            .item {
+                float: left;
+                position: relative;
+                width: 210px;
+                margin-right: 5px;
+                line-height: 35px;
+                .icon-user {
+                    position: absolute;
+                }
+                .name {
+                    display: inline-block;
+                    width: 210px;
+                    padding-left: 35px;
+                    @include text-overflow;
+                }
+            }
+        }
+        .ztree {
+            li {
+                line-height: 35px;
+                a {
+                    &.curSelectedNode {
+                        height: 35px;
+                    }
+                    width: calc(100% - 36px);
+                    padding: 0;
+                    cursor: default;
+                    z-index: 1;
+                }
+            }
+            .progress-text {
+                float: right;
+                line-height: 35px;
+            }
+            .progress{
+                float: right;
+                width: 200px;
+                margin: 10px;
+                .completed {
+                    height: 100%;
+                    background: $green;
+                }
+            }
+        }
+    }
+    .icon-total-preview {
+        width: 21px;
+        height: 21px;
+        margin-left: 5px;
+        background-image: url(img/preview/total-preview.png);
+        background-size: 51px 21px;
+        background-position: 0 0;
+    }
+    .icon-user {
+        width: 30px;
+        height: 30px;
+        background-image: url(img/preview/icon-user.png);
+        background-size: 80px 80px;
+        background-position: 0 0;
+    }
+}

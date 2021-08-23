@@ -1,0 +1,66 @@
+{% load i18n %}
+    <!-- #section:feedback.box -->
+    <div class="ace-settings-container" id="ace-settings-container">
+      <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-feedback-btn">
+        <i class="ace-icon fa fa-cog bigger-150"></i>
+      </div>
+      <div class="ace-settings-box clearfix" id="ace-settings-box">
+        <legend>{% trans '后台界面配置' %}</legend>
+        <div class="pull-left width-50">
+          <!-- #section:settings.skins -->
+          <div class="ace-settings-item">
+            <div class="pull-left">
+              <select id="skin-colorpicker" class="hide">
+                <option data-skin="no-skin" value="#438EB9">#438EB9</option>
+                <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+              </select>
+            </div>
+
+            <span>{% trans '&nbsp; 选择后台皮肤'%}</span>
+          </div>
+          <!-- /section:settings.skins -->
+        </div><!-- /.pull-left -->
+        <div class="pull-left width-50">
+          <!-- #section:basics/sidebar.options -->
+          <div class="ace-settings-item">
+            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover">
+            <label class="lbl" for="ace-settings-hover"> {% trans '侧边栏悬浮显示菜单'%}</label>
+          </div>
+
+          <div class="ace-settings-item">
+            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact">
+            <label class="lbl" for="ace-settings-compact"> {% trans '紧凑型侧边栏风格'%}</label>
+          </div>
+
+          <div class="ace-settings-item">
+            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight">
+            <label class="lbl" for="ace-settings-highlight"> {% trans '侧边栏高亮风格简化'%}</label>
+          </div>
+
+          <!-- /section:basics/sidebar.options -->
+        </div><!-- /.pull-left -->
+        <div class="pull-left width-100">
+        <form action="{% url 'admin:feedback' %}" method="post" id="id-feedback-form">{% csrf_token %}
+          <legend>{% trans '意见和建议' %}</legend>
+          <fieldset>
+            <input class="required form-control hide"
+                   id="id_name" maxlength="80" name="name" type="text"
+                   value="{% if request.session.agent_customer %}{{ request.session.agent_customer }}{% else %}{{ request.user }}{% endif %}">
+            <input class="form-control hide"
+                   id="id_email" maxlength="80" name="email" type="text"
+                   value="{% if request.session.agent_customer %}{{ request.session.agent_customer.email }}{% else %}{{ request.user.email }}{% endif %}">
+            <label for="form-field-feedback">{% trans '欢迎提交您的宝贵意见'%}</label>
+            <textarea class="form-control" id="id_message" name="message" placeholder=""></textarea>
+          </fieldset>
+          <div class="form-actions center">
+            <button type="submit" id="id-send-button" class="btn btn-sm btn-success">
+              {% trans '提交' %}
+              <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+            </button>
+          </div>
+          <div id="wait-message"></div>
+        </form>
+        </div>
+      </div><!-- /.ace-settings-box -->
+    </div>
+    <!-- /section:feedback.box -->

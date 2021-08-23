@@ -1,0 +1,4 @@
+{% extends 'admin/admin.base.html' %}
+<!--私有云环境不显示testbird相关信息-->
+{% block title %} {% if not is_lab %} {{ site_name }} {% else %}QUAIL管理后台{% endif %} - 首页 {% endblock title %}
+{% block sitename %} {{ site_name }} {% endblock sitename %}
